@@ -37,20 +37,21 @@ for LFILE in glob.glob(FILEGLOB):
 try:
     rpzfh = open(RPZPATH,'w')
 except:
-    print "Unable to open file " + RPZPATH
+    print "list2file nable to open file " + RPZPATH
 for DOM in DOMAINLIST:
     rpzfh.write(DOM + '\n')
 rpzfh.close()
 
 # move the file to the fetch it boy pick up location.
 try:
-    FIBPKG1 = shutil.move(RPZPATH,FIBHOME)
+    shutil.move(RPZPATH,FIBHOME)
 except:
-    print "unable to open file " + RPZPATH
+    print "shu-mv unable to open file " + RPZPATH
 
 # change ownership to fetchitboy.  This seems to need to run as root
 UID = pwd.getpwnam(FIBUID).pw_uid
 GID = grp.getgrnam(FIBGID).gr_gid
+FIBPKG1 = FIBHOME + "/" + FILERPZ
 try:
     os.chown(FIBPKG1,UID,GID)
 except:
