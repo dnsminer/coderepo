@@ -8,15 +8,16 @@ import sys, os, glob, time, datetime, shutil, pwd, grp
 # Define the list home directory and the fetch it boy pickup location ( to do,  import from param files)
 LISTHOME = '/home/dleece/dnseval/lists'
 FIBHOME = '/home/fib/list1'
-FIBUID = 'fetchitboy'
-FIBGID = 'fetchitboy'
+FIBUID = 'fetchitBoy'
+FIBGID = 'fetchitBoy'
 
 #ts = time.time()
 # calculate the date that is used for the prefix of the list files
 FILEPRE = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d')
 FILEGLOB = FILEPRE +'*' + '.txt'
-FILERPZ = FILEPRE + 'public-list.rpz'
+FILERPZ = FILEPRE + '-public-list.rpz'
 RPZPATH = LISTHOME + "/" + FILERPZ
+FIBPKG1 = ""
 DOMAINLIST = list()
 
 os.chdir(LISTHOME)
