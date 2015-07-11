@@ -10,6 +10,8 @@ LISTHOME = '/home/dleece/dnseval/lists'
 # calculate the date that is used for the prefix of the list files
 FILEPRE = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d')
 FILEGLOB = FILEPRE +'*' + '.txt'
+FILERPZ = FILEPRE + 'public-list.rpz'
+RPZPATH = LISTHOME + "/" + FILERPZ
 
 DOMAINLIST = list()
 
@@ -27,6 +29,15 @@ for LFILE in glob.glob(FILEGLOB):
         if DNAME not in DOMAINLIST:
             DOMAINLIST.append(DNAME)
     fh.close()
+# create the RPZ zone using de-duped list
+try:
+    rpzfh = open(RPZPATH,'w')
+except:
+    print "Unable to open file " + RPZPATH
+for DOM in DOMAINLIST:
+    rpzfh.write(DOM + '\n')
+rpzfh.close()
+
 
 #FILE2READ = str(sys.argv[1])
 #FILE2WRITE = str(sys.argv[2])
