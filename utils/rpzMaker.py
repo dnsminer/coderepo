@@ -44,7 +44,7 @@ rpzfh.close()
 
 # move the file to the fetch it boy pick up location.
 try:
-    shutil.move(RPZPATH,FIBHOME)
+    shutil.copy(RPZPATH,FIBHOME)
 except:
     print "shu-mv unable to open file " + RPZPATH
 
@@ -56,3 +56,9 @@ try:
     os.chown(FIBPKG1,UID,GID)
 except:
     print "unable to change ownership of this file: " + FIBPKG1
+
+# clen up old list file because shutil.move was locking up
+try:
+    os.remove(RPZPATH)
+except:
+    print "unable to remove/clean up file: " + RPZPATH
