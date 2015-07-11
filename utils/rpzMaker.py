@@ -3,11 +3,13 @@ __author__ = 'dleece'
 #  The main purpose of this program is to gather what ever domain lists are being regularly collected,
 #  de-duplicate them since there is often overlap, and move a copy of the list to the fetch it boy folder.
 #
-import sys, os, glob, time, datetime, shutil
+import sys, os, glob, time, datetime, shutil, pwd, grp
 #
 # Define the list home directory and the fetch it boy pickup location ( to do,  import from param files)
 LISTHOME = '/home/dleece/dnseval/lists'
 FIBHOME = '/home/fib/list1'
+FIBUID = 'fetchitboy'
+FIBGID = 'fetchitboy'
 
 #ts = time.time()
 # calculate the date that is used for the prefix of the list files
@@ -44,3 +46,11 @@ try:
     FIBPKG1 = shutil.move(RPZPATH,FIBHOME)
 except:
     print "unable to open file " + RPZPATH
+
+# change ownership to fetchitboy.  This seems to need to run as root
+UID = pwd.getpwnam(FIBUID).pw_uid
+GID = grp.getgrnam(FIBGID).gr_gid
+try:
+    os.chown(FIBPKG1,UID,GID)
+except:
+    print "unable to change ownership of this file: " + FIBPKG1
