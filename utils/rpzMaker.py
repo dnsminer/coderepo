@@ -1,10 +1,13 @@
 __author__ = 'dleece'
 #!/usr/bin/env python
-
-import sys, os, glob, time, datetime
+#  The main purpose of this program is to gather what ever domain lists are being regularly collected,
+#  de-duplicate them since there is often overlap, and move a copy of the list to the fetch it boy folder.
 #
-# Define the list home directory, ( to do,  import from param files)
+import sys, os, glob, time, datetime, shutil
+#
+# Define the list home directory and the fetch it boy pickup location ( to do,  import from param files)
 LISTHOME = '/home/dleece/dnseval/lists'
+FIBHOME = '/home/fib/list1'
 
 #ts = time.time()
 # calculate the date that is used for the prefix of the list files
@@ -27,7 +30,7 @@ for LFILE in glob.glob(FILEGLOB):
         if DNAME not in DOMAINLIST:
             DOMAINLIST.append(DNAME)
     fh.close()
-# create the RPZ zone using de-duped list
+# create the source data for the daily RPZ zone using de-duped list
 try:
     rpzfh = open(RPZPATH,'w')
 except:
@@ -36,20 +39,8 @@ for DOM in DOMAINLIST:
     rpzfh.write(DOM + '\n')
 rpzfh.close()
 
-
-#FILE2READ = str(sys.argv[1])
-#FILE2WRITE = str(sys.argv[2])
-#ENDSTRING = str(sys.argv[3])
-
-#fr = open(FILE2READ,'r')
-#fw = open(FILE2WRITE,'w')
-
-#for line in fr:
-#    testline = line.strip()
-#    #print testline
-#    if testline.endswith(ENDSTRING):
-#        #print testline,
-#        fw.write(line)
-#
-#fw.close()
-#fr.close()
+# move the file to the fetch it boy pick up location.
+try:
+    FIBPKG1 = shutil.move(RPZPATH,FIBHOME)
+except:
+    print "unable to open file " + RPZPATH
