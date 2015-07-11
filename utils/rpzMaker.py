@@ -12,9 +12,7 @@ FILEPRE = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d')
 FILEGLOB = FILEPRE +'*' + '.txt'
 FILERPZ = FILEPRE + 'public-list.rpz'
 RPZPATH = LISTHOME + "/" + FILERPZ
-
 DOMAINLIST = list()
-
 
 os.chdir(LISTHOME)
 for LFILE in glob.glob(FILEGLOB):
