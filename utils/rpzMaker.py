@@ -10,12 +10,24 @@ LISTHOME = '/home/dleece/dnseval/lists'
 # calculate the date that is used for the prefix of the list files
 FILEPRE = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d')
 FILEGLOB = FILEPRE +'*' + '.txt'
-print FILEGLOB
+
+DOMAINLIST = list()
 
 
 os.chdir(LISTHOME)
 for LFILE in glob.glob(FILEGLOB):
-    print(LFILE)
+    # open each file and dump to a list
+    try:
+        fh = open(LFILE)
+    except:
+        print "List file not available"
+        continue
+    for DNAME in fh:
+        DNAME = DNAME.strip()
+        if DNAME not in DOMAINLIST:
+            DOMAINLIST.append(DNAME)
+    fh.close()
+
 #FILE2READ = str(sys.argv[1])
 #FILE2WRITE = str(sys.argv[2])
 #ENDSTRING = str(sys.argv[3])
