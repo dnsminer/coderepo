@@ -59,6 +59,7 @@ def getAutoList(ALIST):
     except:
         print "auto list file not available"
     for linea in fha:
+        linea = linea.rstrip()
         ALIST.append(linea)
 
 
@@ -81,6 +82,7 @@ for ID in CLIENTLIST:
                 CBLIST.append(OCBLVALUES[1])
     for ADOM in AUTOLIST:
         if ADOM not in CBLIST:
+            ADOM = ADOM.rstrip()
             CBLIST.append(ADOM)
 
 # testing
