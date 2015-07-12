@@ -12,6 +12,7 @@ FIBHOME = '/home/fib'
 CLIENTLIST = list()
 BLACKLIST = list()
 AUTOLIST = list()
+AUTOLISTPATH = FIBHOME + '/' + FILEPRE + '-public-list.rpz'
 
 def getActiveClients(CLIST):
     # return a list of active customers by org ID which is the primary key
@@ -44,7 +45,7 @@ def getBlackList(BLIST):
     for linebl in fhb:
         linebl = linebl.rstrip()
         if not linebl.startswith('#'):
-            BLVALUES = line.split(',')
+            BLVALUES = linebl.split(',')
             ORGID = (BLVALUES[0])
             BDOM = (BLVALUES[1])
             OCB = ORGID + ',' + BDOM
@@ -52,10 +53,21 @@ def getBlackList(BLIST):
                 BLIST.append(OCB)
     return BLIST
 
+def getAutoList(ALIST):
+    try:
+        fha = open(AUTOLISTPATH,'r')
+    except:
+        print "auto list file not available"
+    for linea in fha:
+        ALIST.append(linea)
+
+
+
 
 # extract org ID, I.E, look up clients
 getActiveClients(CLIENTLIST)
 getBlackList(BLACKLIST)
+getAutoList(AUTOLIST)
 
 
 # debug, make sure we are reading the right files
@@ -67,6 +79,11 @@ for ID in CLIENTLIST:
         if ID == OCBLVALUES[0]:
             if OCBLVALUES[1] not in CBLIST:
                 CBLIST.append(OCBLVALUES[1])
+    for ADOM in AUTOLIST:
+        if ADOM not in CBLIST:
+            CBLIST.append(ADOM)
+
+# testing
     print ID
     for DOM in CBLIST:
         print DOM
