@@ -62,7 +62,9 @@ def getAutoList(ALIST):
         linea = linea.rstrip()
         ALIST.append(linea)
 
-
+def makeClientRpz(CID,CLIABLIST):
+    print CID
+    print len(CLIABLIST)
 
 
 # extract org ID, I.E, look up clients
@@ -84,11 +86,11 @@ for ID in CLIENTLIST:
         if ADOM not in CBLIST:
             ADOM = ADOM.rstrip()
             CBLIST.append(ADOM)
-
+    makeClientRpz(ID,CBLIST)
 # testing
-    print ID
-    for DOM in CBLIST:
-        print DOM
+    #print ID
+    #for DOM in CBLIST:
+    #    print DOM
 
 
 
