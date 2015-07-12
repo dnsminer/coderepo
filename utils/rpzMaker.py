@@ -10,6 +10,8 @@ import sys, os, glob, time, datetime, shutil, pwd, grp
 FILEPRE = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d')
 FIBHOME = '/home/fib'
 CLIENTLIST = list()
+BLACKLIST = list()
+AUTOLIST = list()
 
 def getActiveClients(CLIST):
     # return a list of active customers by org ID which is the primary key
@@ -28,10 +30,48 @@ def getActiveClients(CLIST):
             ORGID =(LVALUES[0])
             if ORGID not in CLIST:
                 CLIST.append(ORGID)
+    return CLIST
+
+
+def getBlackList(BLIST):
+    # returns a list domain and org id pairs
+    BLKDB='../var/db/blacklist.db'
+    BLKDBPATH = os.path.join(os.path.dirname(__file__),BLKDB)
+    try:
+        fhb = open(BLKDBPATH,'r')
+    except:
+        print "black list file not available"
+    for linebl in fhb:
+        linebl = linebl.rstrip()
+        if not linebl.startswith('#'):
+            BLVALUES = line.split(',')
+            ORGID = (BLVALUES[0])
+            BDOM = (BLVALUES[1])
+            OCB = ORGID + ',' + BDOM
+            if OCB not in BLIST:
+                BLIST.append(OCB)
+    return BLIST
+
 
 # extract org ID, I.E, look up clients
 getActiveClients(CLIENTLIST)
+getBlackList(BLACKLIST)
+
 
 # debug, make sure we are reading the right files
+
 for ID in CLIENTLIST:
+    CBLIST = list()
+    for OCBL in BLACKLIST:
+        OCBLVALUES = OCBL.split(',')
+        if ID == OCBLVALUES[0]:
+            if OCBLVALUES[1] not in CBLIST:
+                CBLIST.append(OCBLVALUES[1])
     print ID
+    for DOM in CBLIST:
+        print DOM
+
+
+
+
+
