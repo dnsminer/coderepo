@@ -1,4 +1,4 @@
-__author__ = 'dleece'
+#__author__ = 'dleece'
 #!/usr/bin/env python
 #  The main purpose of this program is to gather what ever domain lists are being regularly collected,
 #  de-duplicate them since there is often overlap, and move a copy of the list to the fetch it boy folder.
