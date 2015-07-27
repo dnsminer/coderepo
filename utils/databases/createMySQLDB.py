@@ -37,9 +37,8 @@ def dbUserCreate():
 
     with dbcon:
         cur=dbcon.cursor()
-        #cur.execute("USE dnsminerWA")
         SQLstring = "CREATE user 'dnsMinion'@'localhost' identified by '" + dnsMinionPWD +"'"
-        print SQLstring
+        #print SQLstring
         cur.execute (SQLstring)
         #cur.execute("CREATE TABLE IF NOT EXISTS ccircip(Id INT PRIMARY KEY auto_increment,\
         #IPINT INT UNSIGNED, LASTUPDATE DATE)")
@@ -58,9 +57,8 @@ def dbUserGrant():
 
     with dbcon:
         cur=dbcon.cursor()
-        #cur.execute("USE dnsminerWA")
         SQLstring = "GRANT ALL ON  dnsminerWA.* TO 'dnsMinion'@'localhost'"
-        print SQLstring
+        #print SQLstring
         cur.execute (SQLstring)
         #cur.execute("CREATE TABLE IF NOT EXISTS ccircip(Id INT PRIMARY KEY auto_increment,\
         #IPINT INT UNSIGNED, LASTUPDATE DATE)")
