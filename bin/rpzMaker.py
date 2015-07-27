@@ -1,5 +1,5 @@
-__author__ = 'dleece'
 #!/usr/bin/env python
+#__author__ = 'dleece'
 #  The main purpose of this program is to integrate white lie, black list and the de-duped domains from auto sources.
 #
 # white and black lists will be pulled from database after POC developed using flat files.
