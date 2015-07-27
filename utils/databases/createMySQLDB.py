@@ -38,7 +38,7 @@ def dbUserCreate():
     with dbcon:
         cur=dbcon.cursor()
         #cur.execute("USE dnsminerWA")
-        SQLstring = "CREATE user IF NOT EXISTS 'dnsMinion'@'localhost' identified by '" + dnsMinionPWD +"'"
+        SQLstring = "CREATE user 'dnsMinion'@'localhost' identified by '" + dnsMinionPWD +"'"
         print SQLstring
         cur.execute (SQLstring)
         #cur.execute("CREATE TABLE IF NOT EXISTS ccircip(Id INT PRIMARY KEY auto_increment,\
