@@ -19,7 +19,7 @@ def dbCreate():
     with dbcon:
         cur=dbcon.cursor()
         cur.execute("USE mysql")
-        cur.execute ("CREATE database dnsminerWA")
+        cur.execute ("CREATE database IF NOT EXISTS  dnsminerWA")
         #cur.execute("CREATE TABLE IF NOT EXISTS ccircip(Id INT PRIMARY KEY auto_increment,\
         #IPINT INT UNSIGNED, LASTUPDATE DATE)")
     dbcon.commit()
@@ -38,7 +38,7 @@ def dbUserCreate():
     with dbcon:
         cur=dbcon.cursor()
         #cur.execute("USE dnsminerWA")
-        SQLstring = "CREATE user 'dnsMinion'@'localhost' identified by '" + dnsMinionPWD +"'"
+        SQLstring = "CREATE user IF NOT EXISTS 'dnsMinion'@'localhost' identified by '" + dnsMinionPWD +"'"
         print SQLstring
         cur.execute (SQLstring)
         #cur.execute("CREATE TABLE IF NOT EXISTS ccircip(Id INT PRIMARY KEY auto_increment,\
