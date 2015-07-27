@@ -59,7 +59,7 @@ def dbUserGrant():
     with dbcon:
         cur=dbcon.cursor()
         #cur.execute("USE dnsminerWA")
-        SQLstring = "GRANT ALL ON  'dnsminerWA'.* TO 'dnsMinion'@'localhost'"
+        SQLstring = "GRANT ALL ON  dnsminerWA.* TO 'dnsMinion'@'localhost'"
         print SQLstring
         cur.execute (SQLstring)
         #cur.execute("CREATE TABLE IF NOT EXISTS ccircip(Id INT PRIMARY KEY auto_increment,\
