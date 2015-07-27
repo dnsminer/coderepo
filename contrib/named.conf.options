@@ -18,18 +18,15 @@ options {
                 8.8.4.4;
         };
 
-        //===================================================================
-=====
+        //========================================================================
         // If BIND logs error messages about the root key being expired,
-        // you will need to update your keys.  See https://www.isc.org/bind-k
-eys
-        //===================================================================
-=====
+        // you will need to update your keys.  See https://www.isc.org/bind-keys
+        //========================================================================
         dnssec-validation auto;
 
         auth-nxdomain no;    # conform to RFC1035
         //
-         // DNS Miner  disable IPV6 listening, by commenting the line out,
+        // DNS Miner  disable IPV6 listening, by commenting the line out,
         //listen-on-v6 { any; };
         // DNS Miner, define two ports to listen on, change the public IP to be the IP of
         // the server you are building the recursive node on
