@@ -37,7 +37,7 @@ def dbUserCreate():
 
     with dbcon:
         cur=dbcon.cursor()
-        cur.execute("USE dnsminerWA")
+        #cur.execute("USE dnsminerWA")
         SQLstring = "CREATE user 'dnsMinion'@'localhost' identified by '" + dnsMinionPWD +"'"
         print SQLstring
         cur.execute (SQLstring)
@@ -58,7 +58,7 @@ def dbUserGrant():
 
     with dbcon:
         cur=dbcon.cursor()
-        cur.execute("USE dnsminerWA")
+        #cur.execute("USE dnsminerWA")
         SQLstring = "GRANT all dnsminerWA.* TO 'dnsMinion'@'localhost'"
         print SQLstring
         cur.execute (SQLstring)
