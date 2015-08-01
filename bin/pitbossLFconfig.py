@@ -11,7 +11,7 @@ def minInput():
     FEPort = raw_input("Enter the logstash receiver TCP/IP port, EG  2112: ")
     print "Enter the path to the SSL public cert copied from FE server"
     SSLCertPath = raw_input( "EG, /var/lib/logstash-forwarder/keys/fePub.crt : ")
-    minInputVals = [FEFQDN,FEPORT,SSLCertPath]
+    minInputVals = [FEFQDN,FEPort,SSLCertPath]
     return minInputVals
 
 def confMinInput(miList):
