@@ -27,12 +27,16 @@ def confMinInput(miList):
         print "\n......... attention............"
         print "\nhmm, might want to double check, path to SSL cert may not be correct"
     return miList
+
 def confDQPath():
     # This tests for default location of the pitboss query log, alerts if missing and
     # gives admin options to correct.  Teh logstash forwarder config file can also be
     # manually edited if that is preferential or the config program is buggy.
-
-    DQLogs = isPathValid('/var/log/named/dnsQueries.log')
+    #
+    # This is the correct path the logfile if the logging inclusion statement was added
+    # to the named.conf file
+    DQPath='/var/log/named/dnsQueries.log'
+    DQLogs = isPathValid(DQPath)
     while DQLogs is False:
         print "\n......... attention............"
         print "\nhmm, the DNS query logs are usually here: "
@@ -55,8 +59,10 @@ def confPDNSPath():
     # This tests for default location of the pitboss query log, alerts if missing and
     # gives admin options to correct.  Teh logstash forwarder config file can also be
     # manually edited if that is preferential or the config program is buggy.
-
-    PDNSLogs = isPathValid('/usr/local/bro/logs/current/dns.log')
+    #
+    #This is the correct path if Bro was installed from source using default config settings
+    PDNSPath = '/usr/local/bro/logs/current/dns.log'
+    PDNSLogs = isPathValid(PDNSPath)
     while PDNSLogs is False:
         print "\n......... attention............"
         print "\nhmm, the Passive DNS response logs are usually here: "
