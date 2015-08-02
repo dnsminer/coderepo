@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #__author__ = 'dleece'
-import sys, os
+import sys, os, time
 
 # Vars used through out the program
 FEFQDN=""
@@ -18,15 +18,63 @@ def minInput():
     return minInputVals
 
 def confMinInput(miList):
-    print "confirm settings"
+    print "\n\nconfirm settings"
     print "FQDN of Find Evil server: " + miList[0]
     print "TCP/IP port for Logstash on FE server: " + miList[1]
     print "The full path to the FE public SSL cert: " + miList[2]
     testFilePath = isPathValid(miList[2])
     if not testFilePath:
-        print "......... attention............"
-        print "hmm, might want to double check, path to SSL cert may not be correct"
+        print "\n......... attention............"
+        print "\nhmm, might want to double check, path to SSL cert may not be correct"
     return miList
+def confDQPath():
+    # This tests for default location of the pitboss query log, alerts if missing and
+    # gives admin options to correct.  Teh logstash forwarder config file can also be
+    # manually edited if that is preferential or the config program is buggy.
+
+    DQLogs = confFilePaths('/var/log/named/dnsQueries.log')
+    while DQLogs is False:
+        print "\n......... attention............"
+        print "\nhmm, the DNS query logs are usually here: "
+        print "/var/log/named/dnsQueries.log"
+        inqDNSRun = raw_input("Is DNS running and writing logs (yes|no)?:")
+        if inqDNSRun.strip(str.lower()) == 'yes':
+            print " might want to double check the path and file permissions"
+            DQPath = raw_input( "Enter the path to the DNS query logs please : ")
+            DQPath = DQPath.strip()
+            DQLogs = confFilePaths(DQPath)
+        if inqDNSRun.strip(str.lower()) == 'no':
+            DQPath = raw_input( "No problem, just enter the path to the DNS query logs please : ")
+            DQPath = DQPath.strip()
+            # Fake out the test for file path,
+            DQLogs = True
+    if DQLogs:
+        confList.append(DQPath)
+
+def confPDNSPath():
+    # This tests for default location of the pitboss query log, alerts if missing and
+    # gives admin options to correct.  Teh logstash forwarder config file can also be
+    # manually edited if that is preferential or the config program is buggy.
+
+    PDNSLogs = confFilePaths('/usr/local/bro/logs/current/dns.log')
+    while PDNSLogs is False:
+        print "\n......... attention............"
+        print "\nhmm, the Passive DNS response logs are usually here: "
+        print "/usr/local/bro/logs/current/dns.log"
+        inqDNSRun = raw_input("Is Bro running and writing logs (yes|no)?:")
+        if inqPDNSRun.strip(str.lower()) == 'yes':
+            print " might want to double check the path and file permissions"
+            PDNSPath = raw_input( "Enter the path to the current Bro DNS log please : ")
+            PDNSPath = PDNSPath.strip()
+            PDNSLogs = confFilePaths(PDNSPath)
+        if inqPDNSRun.strip(str.lower()) == 'no':
+            PDNSPath = raw_input( "No problem, just enter the path to the current Bro DNS log please : ")
+            PDNSPath = PDNSPath.strip()
+            # Fake out the test for file path,
+            PDNSLogs = True
+    if PDNSLogs:
+        confList.append(DQPath)
+
 
 def isPathValid(pathStr):
     TBool = os.path.isfile(pathStr);
@@ -44,3 +92,13 @@ while True:
     confList=confMinInput(thisList)
     RI=raw_input("Are these settings correct (yes|no)?:")
     MIConf=str.lower(RI.strip())
+
+# confirm the paths to the log files being monitored
+if len(confList)==5:
+    print "Good job eh, looks like all the config data is in place"
+    for items in confList:
+        print items
+else :
+    print "We seem to be missing some config data, please rerun or edit the logstash-forwarder.conf file manually"
+    time.sleep(5)
+    exit()
