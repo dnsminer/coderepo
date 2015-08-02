@@ -121,9 +121,9 @@ def genConfig(valList):
     CFGfh.write(wline)
     CFGfh.close()
     if isPathValid(CFG):
-        cStatus = 'the new logstash forwarder config file is good to go'
+        cStatus = 'the new Logstash forwarder config file is good to go, \n make sure you have log files before starting the forwarder\n'
     else:
-        cStatus = ' Sorry, something seems to have gone wrong in the config creation, maybe manually editing is needed'
+        cStatus = ' Sorry, something seems to have gone wrong in the config creation, maybe manually editing is needed\n'
     return cStatus
 
 ### main
