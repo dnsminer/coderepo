@@ -2,15 +2,18 @@
 #__author__ = 'dleece'
 import sys, os
 
+# Vars used through out the program
 FEFQDN=""
 FEPort=""
 SSLCertPath=""
 MIConf="no"
+
+# functions
 def minInput():
     FEFQDN = raw_input("Enter the FQDN for the Find Evil server, EG fe2.dnsminer.net: ")
     FEPort = raw_input("Enter the logstash receiver TCP/IP port, EG  2112: ")
     print "Enter the path to the SSL public cert copied from FE server"
-    SSLCertPath = raw_input( "EG, /var/lib/logstash-forwarder/keys/fePub.crt : ")
+    SSLCertPath = raw_input( "EG, /var/lib/logstash-forwarder/fePub.crt : ")
     minInputVals = [FEFQDN,FEPort,SSLCertPath]
     return minInputVals
 
@@ -26,9 +29,10 @@ def confMinInput(miList):
     return miList
 
 def isPathValid(pathStr):
-    os.path.isfile(pathStr);
-    return
+    TBool = os.path.isfile(pathStr);
+    return TBool
 
+### main
 while True:
     thisList = []
     if MIConf=='yes':
