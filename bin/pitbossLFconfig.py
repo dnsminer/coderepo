@@ -109,14 +109,14 @@ def genConfig(valList):
     # break it in two for debugging
     wline = "  \"files\": [\n{\n"
     wline = wline + "  \"paths\": [\n"
-    wline = wline + "    \"" + valList[3] +"\"\n    ],"
-    wline = wline + "  \"fields\": { \"type\": \"DNSQRYPBOSS\" }\n},"
+    wline = wline + "    \"" + valList[3] +"\"\n    ],\n"
+    wline = wline + "  \"fields\": { \"type\": \"DNSQRYPBOSS\" }\n},\n"
     CFGfh.write(wline)
     wline = "{\n"
     wline = wline + "  \"paths\": [\n"
     wline = wline + "    \"/usr/local/bro/spool/bro/dns.log\"\n"
-    wline = wline + "  \],\n"
-    wline = wline + "  \"fields\": { \"type\": \"PDNS\" }\n}"
+    wline = wline + "  ],\n"
+    wline = wline + "  \"fields\": { \"type\": \"PDNS\" }\n}\n"
     wline = wline + "  ]\n}"
     CFGfh.write(wline)
     CFGfh.close()
