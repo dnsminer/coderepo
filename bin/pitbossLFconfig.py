@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #__author__ = 'dleece'
-import sys, os, time
+import sys, os, time, shutil
 
 # Vars used through out the program
 FEFQDN=""
@@ -86,6 +86,46 @@ def isPathValid(pathStr):
     TBool = os.path.isfile(pathStr)
     return TBool
 
+def genConfig(valList):
+    # current file location when installing package from elastic search
+    CFG = '/etc/logstash-forwarder.conf'
+    CFGOrig = '/etc/logstash-forwarder.conf-pkgOrig'
+    if isPathValid(CFG):
+        try:
+            shutil.move(CFG,CFGOrig)
+            print "Package config backed up to " + CFGOrig
+        except:
+            print " unable to move file"
+            cStatus = "Check file permissions"
+    # Rather than mess with the package version which could change over time just write from scratch
+    CFGfh = open(CFG,'a')
+    #
+    wline = "{\n"
+    wline = wline + "  \"network\": {\n"
+    wline = wline + "    \"servers\": [ \"" + valList[0] + ":" + valList[1] +"\" ],\n"
+    wline = wline + "    \"ssl ca\": \"" + valList[2] + "\",\n"
+    wline = wline + "    \"timeout\": 15\n  },\n"
+    CFGfh.write(wline)
+    # break it in two for debugging
+    wline = "  \"files\": [\n{"
+    wline = wline + "  \"paths\": ["
+    wline = wline + "    \"" + valList[3] +"\"\n    ],"
+    wline = wline + "  \"fields\": { \"type\": \"DNSQRYPBOSS\" }\n},"
+    CFGfh.write(wline)
+    wline = "{\n"
+    wline = wline + "  \"paths\": [\n"
+    wline = wline + "    \"/usr/local/bro/spool/bro/dns.log\"\n"
+    wline = wline + "  \],\n"
+    wline = wline + "  \"fields\": { \"type\": \"PDNS\" }\n}"
+    wline = wline + "  ]\n}"
+    CFGfh.write(wline)
+    CFGfh.close()
+    if isPathValid(CFG):
+        cStatus = 'the new logstash forwarder config file is good to go'
+    else:
+        cStatus = ' Sorry, something seems to have gone wrong in the config creation, maybe manually editing is needed'
+    return cStatus
+
 ### main
 while True:
     thisList = []
@@ -104,9 +144,13 @@ confDQPath()
 confPDNSPath()
 # assuming all went well above should have enough to write a config file that works
 if len(confList)==5:
-    print "Good job eh, looks like all the config data is in place"
+    print "Good job eh,\nlooks like all the config data is in place"
     for items in confList:
         print items
+    print " Generating a replacement /etc/logstash-forwarder.conf file"
+    status=genConfig(confList)
+    print status
+
 else :
     print "We seem to be missing some config data, please rerun or edit the logstash-forwarder.conf file manually"
     time.sleep(5)
