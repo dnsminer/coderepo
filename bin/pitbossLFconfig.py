@@ -32,7 +32,7 @@ def confDQPath():
     # gives admin options to correct.  Teh logstash forwarder config file can also be
     # manually edited if that is preferential or the config program is buggy.
 
-    DQLogs = confFilePaths('/var/log/named/dnsQueries.log')
+    DQLogs = isPathValid('/var/log/named/dnsQueries.log')
     while DQLogs is False:
         print "\n......... attention............"
         print "\nhmm, the DNS query logs are usually here: "
@@ -42,7 +42,7 @@ def confDQPath():
             print " might want to double check the path and file permissions"
             DQPath = raw_input( "Enter the path to the DNS query logs please : ")
             DQPath = DQPath.strip()
-            DQLogs = confFilePaths(DQPath)
+            DQLogs = isPathValid(DQPath)
         if inqDNSRun.strip(str.lower()) == 'no':
             DQPath = raw_input( "No problem, just enter the path to the DNS query logs please : ")
             DQPath = DQPath.strip()
@@ -56,28 +56,28 @@ def confPDNSPath():
     # gives admin options to correct.  Teh logstash forwarder config file can also be
     # manually edited if that is preferential or the config program is buggy.
 
-    PDNSLogs = confFilePaths('/usr/local/bro/logs/current/dns.log')
+    PDNSLogs = isPathValid('/usr/local/bro/logs/current/dns.log')
     while PDNSLogs is False:
         print "\n......... attention............"
         print "\nhmm, the Passive DNS response logs are usually here: "
         print "/usr/local/bro/logs/current/dns.log"
-        inqDNSRun = raw_input("Is Bro running and writing logs (yes|no)?:")
+        inqPDNSRun = raw_input("Is Bro running and writing logs (yes|no)?:")
         if inqPDNSRun.strip(str.lower()) == 'yes':
             print " might want to double check the path and file permissions"
             PDNSPath = raw_input( "Enter the path to the current Bro DNS log please : ")
             PDNSPath = PDNSPath.strip()
-            PDNSLogs = confFilePaths(PDNSPath)
+            PDNSLogs = isPathValid(PDNSPath)
         if inqPDNSRun.strip(str.lower()) == 'no':
             PDNSPath = raw_input( "No problem, just enter the path to the current Bro DNS log please : ")
             PDNSPath = PDNSPath.strip()
             # Fake out the test for file path,
             PDNSLogs = True
     if PDNSLogs:
-        confList.append(DQPath)
+        confList.append(PDNSPath)
 
 
 def isPathValid(pathStr):
-    TBool = os.path.isfile(pathStr);
+    TBool = os.path.isfile(pathStr)
     return TBool
 
 ### main
