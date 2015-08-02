@@ -104,11 +104,11 @@ def genConfig(valList):
     wline = wline + "  \"network\": {\n"
     wline = wline + "    \"servers\": [ \"" + valList[0] + ":" + valList[1] +"\" ],\n"
     wline = wline + "    \"ssl ca\": \"" + valList[2] + "\",\n"
-    wline = wline + "    \"timeout\": 15\n  },\n"
+    wline = wline + "    \"timeout\": 15\n  },\n\n"
     CFGfh.write(wline)
     # break it in two for debugging
-    wline = "  \"files\": [\n{"
-    wline = wline + "  \"paths\": ["
+    wline = "  \"files\": [\n{\n"
+    wline = wline + "  \"paths\": [\n"
     wline = wline + "    \"" + valList[3] +"\"\n    ],"
     wline = wline + "  \"fields\": { \"type\": \"DNSQRYPBOSS\" }\n},"
     CFGfh.write(wline)
