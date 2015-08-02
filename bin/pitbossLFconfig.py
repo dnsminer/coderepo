@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 #__author__ = 'dleece'
-import sys
+import sys, os
 
-#FEFQDN=""
-#FEPORT=""
-#SSLCertPath=""
+FEFQDN=""
+FEPort=""
+SSLCertPath=""
 MIConf="no"
 def minInput():
     FEFQDN = raw_input("Enter the FQDN for the Find Evil server, EG fe2.dnsminer.net: ")
@@ -19,12 +19,23 @@ def confMinInput(miList):
     print "FQDN of Find Evil server: " + miList[0]
     print "TCP/IP port for Logstash on FE server: " + miList[1]
     print "The full path to the FE public SSL cert: " + miList[2]
+    testFilePath = isPathValid(miList[2])
+    if not testFilePath:
+        print "hmm, might want to double check, path to SSL cert may not be correct"
+    return miList
 
+def isPathValid(pathStr):
+    os.path.isfile(pathStr);
+    return
 
 while True:
+    thisList()
     if MIConf=='yes':
+        FEFQDN=confList[0]
+        FEPort=confList[1]
+        SSLCertPath=confList[2]
         break
     thisList=minInput()
-    confMinInput(thisList)
+    confList=confMinInput(thisList)
     RI=raw_input("Are these settings correct?  yes/no:")
     MIConf=str.lower(RI.strip())
