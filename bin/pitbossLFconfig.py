@@ -21,6 +21,7 @@ def confMinInput(miList):
     print "The full path to the FE public SSL cert: " + miList[2]
     testFilePath = isPathValid(miList[2])
     if not testFilePath:
+        print "......... attention............"
         print "hmm, might want to double check, path to SSL cert may not be correct"
     return miList
 
@@ -37,5 +38,5 @@ while True:
         break
     thisList=minInput()
     confList=confMinInput(thisList)
-    RI=raw_input("Are these settings correct?  yes/no:")
+    RI=raw_input("Are these settings correct (yes|no)?:")
     MIConf=str.lower(RI.strip())
