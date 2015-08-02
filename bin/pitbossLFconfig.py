@@ -29,7 +29,7 @@ def isPathValid(pathStr):
     return
 
 while True:
-    thisList()
+    thisList = []
     if MIConf=='yes':
         FEFQDN=confList[0]
         FEPort=confList[1]
