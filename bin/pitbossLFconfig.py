@@ -94,6 +94,9 @@ while True:
     MIConf=str.lower(RI.strip())
 
 # confirm the paths to the log files being monitored
+confDQPath()
+confPDNSPath()
+# assuming all went well above should have enough to write a config file that works
 if len(confList)==5:
     print "Good job eh, looks like all the config data is in place"
     for items in confList:
