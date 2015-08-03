@@ -46,7 +46,7 @@ def genConfig(valList):
     wline = wline + "    error_log /var/log/nginx/nginx_error.log notice;\n\n"
     wline = wline + "location / {\n"
     wline = wline + "  include proxy.conf;\n"
-    wline = wline + "  auth_basic  \" Restricted to authorized users only\"\n"
+    wline = wline + "  auth_basic  \" Restricted to authorized users only\";\n"
     wline = wline + "  auth_basic_user_file /etc/nginx/local/user_auth;\n"
     wline = wline + "  proxy_pass http://127.0.0.1:" + valList[2] + ";\n"
     wline = wline + " }\n}\n"
