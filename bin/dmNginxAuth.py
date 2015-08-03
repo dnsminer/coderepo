@@ -5,7 +5,7 @@ import sys, os, time, shutil, subprocess
 # while we could build this by hand in python, it's easier to add the apache2-utils
 # These are the default paths expected, seldom require editing but can be safely adjusted
 htppwbin='/usr/bin/htpasswd'
-uauthfile='etc/nginx/local/user_auth'
+uauthfile='/etc/nginx/local/user_auth'
 nginxlocal= '/etc/nginx/local'
 
 # functions
