@@ -1,0 +1,17 @@
+server {
+ server_name  fe.yourdom.net;
+   listen   443 default ssl;
+   ssl_certificate      /etc/nginx/local/dnsminer.crt;
+   ssl_certificate_key  /etc/nginx/local/dnsminerpriv.key;
+   access_log  /var/log/nginx/nginx.access.log combined;
+   error_log  /var/log/nginx/nginx_error.log notice;
+
+location / {
+  include proxy.conf;
+  auth_basic    "Restricted to Alpha Testers only, Call A.J if you need access";
+  auth_basic_user_file  /etc/nginx/local/user_auth;
+  proxy_pass         http://127.0.0.1:5601;
+ }
+}
+
+
