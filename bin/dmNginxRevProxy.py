@@ -26,7 +26,7 @@ def genConfig(valList):
     # current file location when installing package from elastic search
     CFG = nginxdir + "/sites-available/revproxynew"
     CFGOrig = nginxdir + "/sites-enabled/default"
-    if isPathValid(CFGOrig):
+    if isFileValid(CFGOrig):
         try:
             os.unlink(CFGOrig)
             print "Symlink to "+ CFGOrig + " has been removed"
@@ -42,7 +42,7 @@ def genConfig(valList):
     wline = wline + "    ssl_certificate  /etc/nginx/local/dnsminer.crt;\n"
     wline = wline + "    ssl_certificate_key /etc/nginx/local/dnsminerpriv.key;\n"
     wline = wline + "    access_log /var/log/nginx/nginx.access.log combined;\n"
-    wline = wline + "    error_log /var/log/nginx/nginx_error.log notice;\n\n"
+    wline = wline + "    error_log /var/log/nginx/nginx_error.log notice;\n"
     wline = wline + "location / {\n"
     wline = wline + "  include proxy.conf;\n"
     wline = wline + "  auth_basic  \" Restricted to authorized users only\"\n"
