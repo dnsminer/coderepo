@@ -11,15 +11,22 @@ def minInput():
     return minInputVals
 
 
-def isPathValid(pathStr):
+def isFileValid(pathStr):
     print pathStr
     TBool = os.path.isfile(pathStr)
     print TBool
     return TBool
 
+def isPathValid(pathStr):
+    print pathStr
+    TBool = os.path.isdir(pathStr)
+    print TBool
+    return TBool
+
+
 
 print "testing"
-if isPathValid('/usr/sbin/nginx') and isPathValid('/etc/nginx'):
+if isFileValid('/usr/sbin/nginx') and isPathValid('/etc/nginx'):
     print "looks good, Nginx is installed "
 else:
     print "Nginx does not appear to be installed"
