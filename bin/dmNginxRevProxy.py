@@ -12,6 +12,7 @@ def minInput():
 
 
 def isPathValid(pathStr):
+    print pathStr
     TBool = os.path.isfile(pathStr)
     return TBool
 
