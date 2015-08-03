@@ -29,9 +29,9 @@ def doHTPASSWD(udata):
     if isFileValid(uauthfile):
         cmdArgStr = "[\"" + htppwbin + "\", \"-b\", \"" + uauthfile + "\", \"" +  udata[0] + "\", \"" + udata[1] + "\"]"
     else:
-        cmdArgStr = "[\"" + htppwbin + "\", \"-b\", \"-c\", " + uauthfile + "\", \"" +  udata[0] + "\", \"" + udata[1] + "\"]"
+        cmdArgStr = "[\"" + htppwbin + "\", \"-b\", \"-c\", \"" + uauthfile + "\", \"" +  udata[0] + "\", \"" + udata[1] + "\"]"
     print cmdArgStr
-    #subprocess.call(cmdArgStr)
+    subprocess.call(cmdArgStr)
 
 ### main
 # We need to stop if htpasswd isn't installed or nginx/local is missing
