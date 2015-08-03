@@ -60,7 +60,7 @@ def genConfig(valList):
         except:
             print "Unable to create symlink, check file permissions"
 
-def copyProxyConf:
+def copyProxyConf():
     PConf = DNSMHome + "/contrib/proxy.conf"
     NGINXLocal = nginxdir +"/local/"
     if isFileValid('PConf'):
