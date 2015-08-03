@@ -35,6 +35,7 @@ if not isFileValid(htppwbin):
     print "install the apache2-utils package from your OS or correct the path in this script"
     exit()
 print nginxlocal
+
 if not isFileValid(nginxlocal):
     print "Oops, looks like the nginx config is not quite as expected"
     print "If you haven't done so, install nginx and then run dmNginxRevProxy.py"
