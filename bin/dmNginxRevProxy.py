@@ -64,7 +64,7 @@ def copyProxyConf:
     PConf = DNSMHome + "/contrib/proxy.conf"
     NGINXLocal = nginxdir +"/local/"
     if isFileValid('PConf'):
-        shutil.copy(PConf,NGINXLocal)
+        shutil.copy(PConf,nginxdir)
 
 
 if isFileValid(nginxbin) and isPathValid(nginxdir):
