@@ -76,7 +76,7 @@ def copyProxyConf():
     if isFileValid('PConf'):
         shutil.copy(PConf,nginxdir)
     else:
-        print "unable to locate "+DNSMHome + "/contrib/proxy.conf"
+        print "unable to locate " + PConf
         print " repull git reop and run dmNginxRevProxy.py again"
 
 
