@@ -31,9 +31,11 @@ def doHTPASSWD(udata):
     else:
         cmdArgStr = "[\"" + htppwbin + "\", \"-b\", \"-c\", \"" + uauthfile + "\", \"" +  udata[0] + "\", \"" + udata[1] + "\"]"
     print cmdArgStr
-    subprocess.call(cmdArgStr)
+    htpaswdresult=subprocess.Popen(cmdArgStr,stdout=subprocess.PIPE)
+    return htpaswdresult
 
 ### main
+
 # We need to stop if htpasswd isn't installed or nginx/local is missing
 if not isFileValid(htppwbin):
     print "Oops, we need the htpasswd binary and can't find it"
@@ -54,6 +56,7 @@ while True:
         thisList=minInput()
         print thisList[0]
         print thisList[1]
-        doHTPASSWD(thisList)
+        showResult=doHTPASSWD(thisList)
+        print showResult
     RI=raw_input("Add another user? (yes|no)?:")
     ADDUSERS=str.lower(RI.strip())
