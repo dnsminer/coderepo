@@ -75,7 +75,7 @@ def genConfig(valList):
 def copyProxyConf():
     PConf = DNSMHome + "/contrib/proxy.conf"
     NGINXLocal = nginxdir +"/local/"
-    if isFileValid('PConf'):
+    if isFileValid(PConf):
         shutil.copy(PConf,nginxdir)
     else:
         print "unable to locate " + PConf
