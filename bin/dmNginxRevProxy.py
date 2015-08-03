@@ -3,6 +3,7 @@
 import sys, os, time, shutil
 # functions
 
+
 def minInput():
     FEFQDN = raw_input("Enter the FQDN for the Find Evil server, EG fe2.dnsminer.net: ")
     FEPort = raw_input("Enter the HTTPS port , Usually 443: ")
@@ -12,22 +13,23 @@ def minInput():
 
 
 def isFileValid(pathStr):
-    print pathStr
     TBool = os.path.isfile(pathStr)
-    print TBool
     return TBool
 
 def isPathValid(pathStr):
-    print pathStr
     TBool = os.path.isdir(pathStr)
-    print TBool
     return TBool
 
 
 
-print "testing"
+
 if isFileValid('/usr/sbin/nginx') and isPathValid('/etc/nginx'):
     print "looks good, Nginx is installed "
 else:
     print "Nginx does not appear to be installed"
     quit()
+
+conflist = minInput()
+
+for items in conflist:
+    print items
