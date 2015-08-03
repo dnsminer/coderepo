@@ -15,11 +15,11 @@ def isPathValid(pathStr):
     TBool = os.path.isfile(pathStr)
     return TBool
 
-def checkPath(BIN):
-    BFILE=shutil(BIN)
-    print BFILE
-    return
+
 
 print "testing"
-checkPath('nginx')
-checkPath('fred')
+if isPathValid('/usr/sbin/nginx') and isPathValid('/etc/nginx'):
+    print "looks good, Nginx is installed "
+else:
+    print "Nginx does not appear to be installed"
+    quit()
