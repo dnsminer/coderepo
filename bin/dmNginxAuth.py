@@ -52,7 +52,7 @@ while True:
     thisList = []
     if ADDUSERS=='yes':
         thisList=minInput()
-        confList=confMinInput(thisList)
+        confList=minInput(thisList)
         print confList[0]
         print confList[1]
         doHTPASSWD(confList)
