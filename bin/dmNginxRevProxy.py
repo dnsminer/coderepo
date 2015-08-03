@@ -16,7 +16,6 @@ def isPathValid(pathStr):
     return TBool
 
 
-
 print "testing"
 if isPathValid('/usr/sbin/nginx') and isPathValid('/etc/nginx'):
     print "looks good, Nginx is installed "
