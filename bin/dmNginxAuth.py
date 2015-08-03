@@ -32,7 +32,7 @@ def doHTPASSWD(udata):
     else:
         cmdStr = htppwbin + " -b -c " + uauthfile + " " + udata[0] + " " + udata[1]
         #cmdArgStr = "[\"" + htppwbin + "\", \"-b\", \"-c\", \"" + uauthfile + "\", \"" +  udata[0] + "\", \"" + udata[1] + "\"]"
-    print cmdStr
+    #print cmdStr
     cmdArgs = shlex.split(cmdStr)
     #htpaswdresult=subprocess.Popen(cmdArgStr,stdout=subprocess.PIPE)
     p=subprocess.Popen(cmdArgs)
@@ -58,9 +58,11 @@ while True:
     thisList = []
     if ADDUSERS=='yes':
         thisList=minInput()
-        print thisList[0]
-        print thisList[1]
+        #print thisList[0]
+        #print thisList[1]
         doHTPASSWD(thisList)
         #print showResult
-    RI=raw_input("Add another user? (yes|no)?:")
-    ADDUSERS=str.lower(RI.strip())
+        RI=raw_input("Add another user? (yes|no)?:")
+        ADDUSERS=str.lower(RI.strip())
+    else:
+        break
