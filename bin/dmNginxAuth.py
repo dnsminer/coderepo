@@ -20,6 +20,11 @@ def minInput():
 def isFileValid(pathStr):
     TBool = os.path.isfile(pathStr)
     return TBool
+
+def isPathValid(pathStr):
+    TBool = os.path.isdir(pathStr)
+    return TBool
+
 def doHTPASSWD(udata):
     if isFileValid(uauthfile):
         cmdArgStr = "[\"" + htppwbin + "\", \"-b\", \"" + uauthfile + "\", \"" +  udata[0] + "\", \"" + udata[1] + "\"]"
@@ -34,12 +39,12 @@ if not isFileValid(htppwbin):
     print "Oops, we need the htpasswd binary and can't find it"
     print "install the apache2-utils package from your OS or correct the path in this script"
     exit()
-print nginxlocal
 
-if not isFileValid(nginxlocal):
+if not isPathValid(nginxlocal):
     print "Oops, looks like the nginx config is not quite as expected"
     print "If you haven't done so, install nginx and then run dmNginxRevProxy.py"
     exit()
+
 
 while True:
     print "Adding users to the local htpasswd file"
