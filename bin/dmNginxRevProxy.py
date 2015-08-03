@@ -14,7 +14,6 @@ def minInput():
     minInputVals = [FEFQDN,FEPort,KPORT]
     return minInputVals
 
-
 def isFileValid(pathStr):
     TBool = os.path.isfile(pathStr)
     return TBool
