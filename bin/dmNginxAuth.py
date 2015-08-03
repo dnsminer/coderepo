@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #__author__ = 'dleece'
-import sys, os, time, shutil, subprocess
+import sys, os, time, shutil, subprocess, shlex
 
 # while we could build this by hand in python, it's easier to add the apache2-utils
 # These are the default paths expected, seldom require editing but can be safely adjusted
@@ -27,12 +27,15 @@ def isPathValid(pathStr):
 
 def doHTPASSWD(udata):
     if isFileValid(uauthfile):
-        cmdArgStr = "[\"" + htppwbin + "\", \"-b\", \"" + uauthfile + "\", \"" +  udata[0] + "\", \"" + udata[1] + "\"]"
+        cmdStr = htppwbin + " -b " + uauthfile + " " + udata[0] + " " + udata[1]
+        #cmdArgStr = "[\"" + htppwbin + "\", \"-b\", \"" + uauthfile + "\", \"" +  udata[0] + "\", \"" + udata[1] + "\"]"
     else:
-        cmdArgStr = "[\"" + htppwbin + "\", \"-b\", \"-c\", \"" + uauthfile + "\", \"" +  udata[0] + "\", \"" + udata[1] + "\"]"
-    print cmdArgStr
+        cmdStr = htppwbin + " -b -c " + uauthfile + " " + udata[0] + " " + udata[1]
+        #cmdArgStr = "[\"" + htppwbin + "\", \"-b\", \"-c\", \"" + uauthfile + "\", \"" +  udata[0] + "\", \"" + udata[1] + "\"]"
+    print cmdStr
+    cmdArgs = shlex.split(cmdStr)
     #htpaswdresult=subprocess.Popen(cmdArgStr,stdout=subprocess.PIPE)
-    subprocess.call(cmdArgStr,shell=True)
+    p=subprocess.Popen(cmdArgs)
     return
 
 ### main
