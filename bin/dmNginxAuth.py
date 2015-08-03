@@ -52,9 +52,8 @@ while True:
     thisList = []
     if ADDUSERS=='yes':
         thisList=minInput()
-        confList=minInput(thisList)
-        print confList[0]
-        print confList[1]
-        doHTPASSWD(confList)
+        print thisList[0]
+        print thisList[1]
+        doHTPASSWD(thisList)
     RI=raw_input("Add another user? (yes|no)?:")
     ADDUSERS=str.lower(RI.strip())
