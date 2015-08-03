@@ -38,7 +38,7 @@ def genConfig(valList):
     if isFileValid(CFGLn):
         try:
             os.unlink(CFGLn)
-            print "Symlink to "+ CFGLn + " has been removed"
+            print "old symlink to "+ CFGLn + " has been removed"
         except:
             print " unable to remove symfile"# Remove old symlink
             cStatus = "Check file permissions"
@@ -75,6 +75,9 @@ def copyProxyConf():
     NGINXLocal = nginxdir +"/local/"
     if isFileValid('PConf'):
         shutil.copy(PConf,nginxdir)
+    else:
+        print "unable to locate "+DNSMHome + "/contrib/proxy.conf"
+        print " repull git reop and run dmNginxRevProxy.py again"
 
 
 if isFileValid(nginxbin) and isPathValid(nginxdir):
