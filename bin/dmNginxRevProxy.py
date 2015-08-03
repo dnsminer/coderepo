@@ -32,10 +32,19 @@ def genConfig(valList):
             os.unlink(CFGOrig)
             print "Symlink to "+ CFGOrig + " has been removed"
         except:
-            print " unable to remove symfile"
+            print " unable to remove symfile"# Remove old symlink
             cStatus = "Check file permissions"
+    # remove old reverse proxy symlink to deal with this script being rerun
+    if isFileValid(CFGLn):
+        try:
+            os.unlink(CFGLn)
+            print "Symlink to "+ CFGLn + " has been removed"
+        except:
+            print " unable to remove symfile"# Remove old symlink
+            cStatus = "Check file permissions"
+
     # Rather than mess with the package version which could change over time just write from scratch
-    CFGfh = open(CFG,'a')
+    CFGfh = open(CFG,'w')
     # build the config
     wline = "server {\n"
     wline = wline + "  server_name " + valList[0] + ";\n"
@@ -52,6 +61,7 @@ def genConfig(valList):
     wline = wline + " }\n}\n"
     CFGfh.write(wline)
     CFGfh.close()
+
 
     if isFileValid(CFG):
         try:
