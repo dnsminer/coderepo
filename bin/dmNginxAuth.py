@@ -35,8 +35,9 @@ def doHTPASSWD(udata):
     #print cmdStr
     cmdArgs = shlex.split(cmdStr)
     #htpaswdresult=subprocess.Popen(cmdArgStr,stdout=subprocess.PIPE)
-    p=subprocess.Popen(cmdArgs)
-    return
+    p=subprocess.Popen(cmdArgs,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    htpasswdResult = p.communicate()
+    return htpasswdResult
 
 ### main
 
@@ -51,17 +52,17 @@ if not isPathValid(nginxlocal):
     print "If you haven't done so, install nginx and then run dmNginxRevProxy.py"
     exit()
 
-
+# start teh loop to add users
+ADDUSERS='yes'
 while True:
     print "Adding users to the local htpasswd file"
-    ADDUSERS='yes'
     thisList = []
     if ADDUSERS=='yes':
         thisList=minInput()
         #print thisList[0]
         #print thisList[1]
-        doHTPASSWD(thisList)
-        #print showResult
+        showResult=doHTPASSWD(thisList)
+        print showResult
         RI=raw_input("Add another user? (yes|no)?:")
         ADDUSERS=str.lower(RI.strip())
     else:
