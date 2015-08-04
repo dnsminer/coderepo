@@ -62,8 +62,8 @@ while True:
         #print thisList[0]
         #print thisList[1]
         procResult=doHTPASSWD(thisList)
-        showResult = procResult.stdout.read()
-        print showResult
+        print procResult
+        print len(procResult)
         RI=raw_input("Add another user? (yes|no)?:")
         ADDUSERS=str.lower(RI.strip())
     else:
