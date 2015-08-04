@@ -1,5 +1,5 @@
 server {
- server_name  fe.yourdom.net;
+ server_name  FE-HOST.YOURDOM.NET;
    listen   443 default ssl;
    ssl_certificate      /etc/nginx/local/dnsminer.crt;
    ssl_certificate_key  /etc/nginx/local/dnsminerpriv.key;

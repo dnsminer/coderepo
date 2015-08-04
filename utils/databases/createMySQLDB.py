@@ -6,12 +6,12 @@ import MySQLdb as mdb
 dbAdmin = raw_input("Enter mysql admin user,(typically root): ")
 dbAdminPWD = raw_input("Enter mysql admin's  passwd: ")
 dnsMinionPWD = raw_input("Enter the password for dnsMinion -- application DB acct: ")
-def dbCreate():
 
+def dbCreate():
+    print "creating database for mineboss application"
     try:
         dbcon = mdb.connect('localhost',dbAdmin,dbAdminPWD,'mysql')
         #print "connected"
-
     except mdb.Error, e:
         print e.args[0]
         sys.exit(1)
@@ -24,17 +24,15 @@ def dbCreate():
         #IPINT INT UNSIGNED, LASTUPDATE DATE)")
     dbcon.commit()
     dbcon.close()
-    var = 'Create Database done'
+    var = 'Creating mineboss database done'
     return var
 def dbUserCreate():
     try:
         dbcon = mdb.connect('localhost',dbAdmin,dbAdminPWD,'mysql')
         #print "connected"
-
     except mdb.Error, e:
         print e.args[0]
         sys.exit(1)
-
     with dbcon:
         cur=dbcon.cursor()
         SQLstring = "CREATE user 'dnsMinion'@'localhost' identified by '" + dnsMinionPWD +"'"
@@ -44,17 +42,15 @@ def dbUserCreate():
         #IPINT INT UNSIGNED, LASTUPDATE DATE)")
     dbcon.commit()
     dbcon.close()
-    var = 'Create Database User done'
+    var = 'Creating database user for mineboss application done'
     return var
 def dbUserGrant():
     try:
         dbcon = mdb.connect('localhost',dbAdmin,dbAdminPWD,'mysql')
         #print "connected"
-
     except mdb.Error, e:
         print e.args[0]
         sys.exit(1)
-
     with dbcon:
         cur=dbcon.cursor()
         SQLstring = "GRANT ALL ON  dnsminerWA.* TO 'dnsMinion'@'localhost'"
@@ -64,7 +60,7 @@ def dbUserGrant():
         #IPINT INT UNSIGNED, LASTUPDATE DATE)")
     dbcon.commit()
     dbcon.close()
-    var = 'Create Database User Permissions  done'
+    var = 'The dnsMinion application user account permissions done'
     return var
 print "Debug"
 print dbCreate()

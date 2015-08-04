@@ -87,8 +87,8 @@ else:
     quit()
 
 conflist = minInput()
-for items in conflist:
-    print items
+#for items in conflist:
+#    print items
 
 genConfig(conflist)
 copyProxyConf()
