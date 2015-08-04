@@ -41,7 +41,8 @@ def doHTPASSWD(udata):
 
 def printPopen(PCOM):
     for PopenResult in PCOM:
-        print PopenResult
+        if len(PopenResult) > 0:
+            print "command output: " + PopenResult
     return
 ### main
 
