@@ -36,8 +36,8 @@ def doHTPASSWD(udata):
     cmdArgs = shlex.split(cmdStr)
     #htpaswdresult=subprocess.Popen(cmdArgStr,stdout=subprocess.PIPE)
     p=subprocess.Popen(cmdArgs,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-    #htpasswdResult = p.communicate()
-    return p #htpasswdResult
+    htpasswdResult = p.communicate()
+    return htpasswdResult
 
 ### main
 
