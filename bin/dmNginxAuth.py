@@ -39,6 +39,10 @@ def doHTPASSWD(udata):
     htpasswdResult = p.communicate()
     return htpasswdResult
 
+def printPopen(PCOM):
+    for PopenResult in PCOM:
+        print PopenResult
+    return
 ### main
 
 # We need to stop if htpasswd isn't installed or nginx/local is missing
@@ -62,8 +66,7 @@ while True:
         #print thisList[0]
         #print thisList[1]
         procResult=doHTPASSWD(thisList)
-        print procResult
-        print len(procResult)
+        printPopen(procResult)
         RI=raw_input("Add another user? (yes|no)?:")
         ADDUSERS=str.lower(RI.strip())
     else:
