@@ -6,10 +6,10 @@
 import sys, os, glob, time, datetime, shutil, pwd, grp
 #
 # Define the list home directory and the fetch it boy pickup location ( to do,  import from param files)
-LISTHOME = '/home/dleece/dnseval/lists'
-FIBHOME = '/home/fib/list1'
-FIBUID = 'fetchitBoy'
-FIBGID = 'fetchitBoy'
+LISTHOME = '/opt/dnsminertmp/fib/lists'
+FIBHOME = '/opt/dnsminertmp/fib/lists'
+FIBUID = 'fetchItBoy'
+FIBGID = 'fetchItBoy'
 
 #ts = time.time()
 # calculate the date that is used for the prefix of the list files
@@ -29,9 +29,10 @@ for LFILE in glob.glob(FILEGLOB):
         print "List file not available"
         continue
     for DNAME in fh:
-        DNAME = DNAME.strip()
-        if DNAME not in DOMAINLIST:
-            DOMAINLIST.append(DNAME)
+        if not DNAME.strip():
+            DNAME = DNAME.strip()
+            if DNAME not in DOMAINLIST:
+                DOMAINLIST.append(DNAME)
     fh.close()
 # create the source data for the daily RPZ zone using de-duped list
 try:
