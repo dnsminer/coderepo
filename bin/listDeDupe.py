@@ -59,7 +59,7 @@ except:
     print "unable to change ownership of this file: " + FIBPKG1
 
 # clen up old list file because shutil.move was locking up
-try:
-    os.remove(RPZPATH)
-except:
-    print "unable to remove/clean up file: " + RPZPATH
+#try:
+#    #os.remove(RPZPATH)
+#except:
+#    print "unable to remove/clean up file: " + RPZPATH
