@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #__author__ = 'dleece'
-import sys
+import sys, time
 import MySQLdb as mdb
 
 dbAdmin = raw_input("Enter mysql admin user,(typically root): ")
@@ -64,5 +64,7 @@ def dbUserGrant():
     return var
 print "Debug"
 print dbCreate()
+time.sleep(2)
 print dbUserCreate()
+time.sleep(2)
 print dbUserGrant()
