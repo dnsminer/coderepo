@@ -86,7 +86,8 @@ def isPathValid(pathStr):
     TBool = os.path.isfile(pathStr)
     return TBool
 
-def genConfig(valList):
+
+def genConfig(vallist):
     # current file location when installing package from elastic search
     CFG = '/etc/logstash-forwarder.conf'
     CFGOrig = '/etc/logstash-forwarder.conf-pkgOrig'
@@ -102,14 +103,14 @@ def genConfig(valList):
     #
     wline = "{\n"
     wline = wline + "  \"network\": {\n"
-    wline = wline + "    \"servers\": [ \"" + valList[0] + ":" + valList[1] +"\" ],\n"
-    wline = wline + "    \"ssl ca\": \"" + valList[2] + "\",\n"
+    wline = wline + "    \"servers\": [ \"" + vallist[0] + ":" + vallist[1] +"\" ],\n"
+    wline = wline + "    \"ssl ca\": \"" + vallist[2] + "\",\n"
     wline = wline + "    \"timeout\": 15\n  },\n\n"
     CFGfh.write(wline)
     # break it in two for debugging
     wline = "  \"files\": [\n{\n"
     wline = wline + "  \"paths\": [\n"
-    wline = wline + "    \"" + valList[3] +"\"\n    ],\n"
+    wline = wline + "    \"" + vallist[3] +"\"\n    ],\n"
     wline = wline + "  \"fields\": { \"type\": \"DNSQRYPBOSS\" }\n},\n"
     CFGfh.write(wline)
     wline = "{\n"
