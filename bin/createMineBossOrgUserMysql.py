@@ -42,13 +42,12 @@ def getOrgInfo():
         orgName = inputSanitizer(orgName,'defstring')
         checkit= ['org_name','org_info',orgName]
         inputtest=dbRecordCheck(checkit)
-        print inputtest
     # reset for next input test
     inputtest=True
     while inputtest:
         orgContact  = raw_input("Enter org admin email address : ")
         orgContact = inputSanitizer(orgContact,'emailstring')
-        checkit= ['org_contact','org_id',orgContact]
+        checkit= ['org_contact','org_info',orgContact]
         inputtest=dbRecordCheck(checkit)
     orgAlert = raw_input("Enter the org monitoring email or sms address: ")
     orgAlert = inputSanitizer(orgAlert,'emailstring')
@@ -98,14 +97,11 @@ def dbRecordCheck(checkinput):
         cur.execute(sqlStr)
         sqlStr = "SELECT count(1) from " + checktable + " WHERE " + checkcolumn + " = '" + checkvalue +"';"
         cur.execute(sqlStr)
-        #print sqlStr
-        #row = cur.fetchone()
         if cur.fetchone()[0]:
             print "Sorry, that record appears to be in use, please provide a different value"
             var= True
     dbcon.commit()
     dbcon.close()
-    print "returning var " + str(var)
     return var
 
 def createSQLInsertDict(inputvals):
