@@ -5,6 +5,7 @@ import string
 import ConfigParser
 from itertools import izip
 
+# noinspection PyUnresolvedReferences
 import MySQLdb as mdb
 
 DNSMinerHome='/opt/dnsminer-alpha'
@@ -53,7 +54,6 @@ def getOrgInfo():
     orgPasswd = raw_input("Enter org admin's password : ")
     orgPasswd = inputSanitizer(orgPasswd,'password')
     orginputvals = ['org_name',orgName,'org_contact',orgContact,'alert_contact',orgAlert,'pwd',orgPasswd]
-    # Need to run inputs through sanitization
     return orginputvals
 
 def inputSanitizer(inputstring,type):
@@ -104,15 +104,23 @@ def dbRecordCheck(checkinput):
     dbcon.close()
     return var
 
-def dbTblInsertOrg(inputvals):
+def createSQLInsertDict(inputvals):
+    # broke this out from the main org input collection to reduce clutter and allow debugging
+    iraw=iter(inputvals)
+    insertdict = dict(izip(iraw,iraw))
+    #for key, value in insertdict.iteritems():
+    #    print "Column: " + key
+    #    print "Value: " + value
+    return insertdict
+
+
+def dbTblInsert(insertdict,dbtable):
     # by default config parser converts keys to lowercase , https://docs.python.org/2/library/configparser.html
     adminVar= ConfigSectionMap("SectionOne")['databaseuser']
     adminPwd= ConfigSectionMap("SectionOne")['databasepwd']
     ivDBName= ConfigSectionMap("SectionOne")['databasename']
     var = 'Record inserted successfully'
 
-    iraw=iter(inputvals)
-    insertdict = dict(izip(iraw,iraw))
     columnlist = []
     valuelist = []
     for key, value in insertdict.iteritems():
@@ -120,6 +128,10 @@ def dbTblInsertOrg(inputvals):
         columnlist.append(key)
         print "Value: " + value
         valuelist.append(value)
+    valstring =",".join(valuelist)
+    colstring =",".join(columnlist)
+    sqlStr = "INSERT INTO " + dbtable + "(" + colstring +") VALUES (" + valstring +");"
+    print sqlStr
 
     try:
         dbcon = mdb.connect('localhost',adminVar,adminPwd,ivDBName)
@@ -146,8 +158,10 @@ def dbTblInsertOrg(inputvals):
 dbconnect=ConfigParser.ConfigParser()
 dbconnect.read(dbcfg)
 
-# gather org input
+# gather org input, outputs an array of table columns and values to be feed into a dictionary
 orginfoinputs=getOrgInfo()
+# Parse input array into SQL return a dictionary
+dbinsertdict=createSQLInsertDict(orginfoinputs)
 
-# feed array into sql insert
-dbTblInsertOrg(orginfoinputs)
+# feed dictionary into sql insert
+#dbTblInsert(dbinsertdict,'org')
