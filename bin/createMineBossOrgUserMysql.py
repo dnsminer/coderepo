@@ -78,9 +78,10 @@ def inputSanitizer(inputstring,type):
 #    return resultVar
 def dbRecordCheck(checkinput):
     print "checking existing database records"
-    adminVar= ConfigSectionMap("SectionOne")['DatabaseUser']
-    adminPwd= ConfigSectionMap("SectionOne")['DatabasePwd']
-    ivDBName= ConfigSectionMap("SectionOne")['DatabaseName']
+    # by default config parser converts keys to lowercase , https://docs.python.org/2/library/configparser.html
+    adminVar= ConfigSectionMap("SectionOne")['databaseuser']
+    adminPwd= ConfigSectionMap("SectionOne")['databasepwd']
+    ivDBName= ConfigSectionMap("SectionOne")['databasename']
     checkcolumn = checkinput[0]
     checktable = checkinput[1]
     checkvalue = checkinput[2]
