@@ -95,7 +95,8 @@ def dbRecordCheck(checkinput):
         cur=dbcon.cursor()
         sqlStr = "USE " + ivDBName
         cur.execute(sqlStr)
-        sqlStr = "SELECT count(" + checkcolumn +") from " + checktable + " WHERE " + checkcolumn + " = " + checkvalue
+        sqlStr = "SELECT count(" + checkcolumn +") from " + checktable + " WHERE " + checkcolumn + " = '" + checkvalue +"';"
+        print sqlStr
         checkresult = cur.fetchone()
         if checkresult is not None:
             print "Sorry, that record appears to be in use, please provide a different value"
@@ -130,8 +131,8 @@ def dbTblInsert(insertdict,dbtable):
         valuelist.append(value)
     valstring ="','".join(valuelist)  # need the ticks for sql insert to work in mysql
     colstring =",".join(columnlist)
-    sqlStr = "INSERT INTO " + dbtable + "(" + colstring +") VALUES ('" + valstring +"');"
-    print sqlStr
+    sqlStrI = "INSERT INTO " + dbtable + "(" + colstring +") VALUES ('" + valstring +"');"
+    print sqlStrI
 
     try:
         dbcon = mdb.connect('localhost',adminVar,adminPwd,ivDBName)
@@ -147,7 +148,7 @@ def dbTblInsert(insertdict,dbtable):
         #for sqlStr in fh:
         #    if sqlStr.strip():
         #        #print sqlStr
-        #        cur.execute (sqlStr)
+        cur.execute (sqlStrI)
     dbcon.commit()
     dbcon.close()
     return var
