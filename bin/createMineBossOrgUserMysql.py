@@ -18,7 +18,7 @@ def ConfigSectionMap(section):
     for cfgoption in cfgoptions:
         try:
             dbcfgdict[cfgoption] = dbconnect.get(section, cfgoption)
-            if dbcfgdict[cfgoption] -- -1
+            if dbcfgdict[cfgoption] == -1:
                 print "invalid parameter" + cfgoption
         except:
             print ('exception thrown, on %s' % cfgoption)
