@@ -32,7 +32,7 @@ def userLogin():
     credtest=False
     while not credtest:
         orgContact = raw_input("Enter your org contact email  : ")
-        orgContact = inputSanitizer(orgName,'emailstring')
+        orgContact = inputSanitizer(orgContact,'emailstring')
         orgPasswd = raw_input("Enter org admin's password : ")
         orgPasswd = inputSanitizer(orgPasswd,'password')
         credlist= [orgContact,orgPasswd]
