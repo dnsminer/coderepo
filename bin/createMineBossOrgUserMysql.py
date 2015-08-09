@@ -99,8 +99,7 @@ def dbRecordCheck(checkinput):
         cur.execute(sqlStr)
         print sqlStr
         row = cur.fetchone()
-        for val in row:
-            print row
+        print row[0]
         #if cur.fetchone():
         #    print "Sorry, that record appears to be in use, please provide a different value"
         #    var= True
