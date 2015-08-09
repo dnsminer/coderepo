@@ -98,8 +98,7 @@ def dbRecordCheck(checkinput):
 
         sqlStr = "SELECT count(" + checkcolumn +") from " + checktable + " WHERE " + checkcolumn + " = '" + checkvalue +"';"
         print sqlStr
-        cur.fetchone(sqlStr)
-        checkresult = cur.fetchone()[0]
+        checkresult = cur.fetchone(sqlStr)
         print checkresult
         if checkresult is not None:
             print "Sorry, that record appears to be in use, please provide a different value"
