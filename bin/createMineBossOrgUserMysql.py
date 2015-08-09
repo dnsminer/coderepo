@@ -154,7 +154,7 @@ def dbTblInsert(insertdict,dbtable):
     return var
 
 def genBcrpytHash(plainString):
-    hashedpwd=bcrypt.hashpw(plainString,bcrpyt.gensalt(14))
+    hashedpwd=bcrypt.hashpw(plainString,bcrypt.gensalt(14))
     return hashedpwd
 # --- main -----------------------------------
 
