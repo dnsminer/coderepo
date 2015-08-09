@@ -3,7 +3,7 @@
 import sys
 import string
 import ConfigParser
-import bcrpyt
+import bcrypt
 from itertools import izip
 
 # noinspection PyUnresolvedReferences
