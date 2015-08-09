@@ -7,7 +7,7 @@ def getCreateValues():
     dbAdmin = raw_input("Enter mysql admin user,(typically root): ")
     dbAdminPWD = raw_input("Enter mysql admin's  passwd: ")
     dbName = raw_input("What do you want to call your mineboss application database? :")
-    print "\n You need to create an new account specifically for this application to access it's database,  "
+    print "\n You need to create an new account specifically for this application to access its database,  "
     print " don't reuse the mysql root account, create a minion\n"
     dbMinionUser = raw_input("What is the application account name? : ")
     dnsMinionPWD = raw_input("Enter the password for  the database minion acct: ")
