@@ -33,12 +33,6 @@ def dbTblCreateMB(inputvals):
         print "SQL tables file not available"
         return
 
-    for CMD DNAME in fh:
-        if not DNAME.strip():
-            DNAME = DNAME.strip()
-            if DNAME not in DOMAINLIST:
-                DOMAINLIST.append(DNAME)
-    fh.close()
 
     try:
         dbcon = mdb.connect('localhost',adminVar,adminPwd,'mysql')
@@ -57,6 +51,7 @@ def dbTblCreateMB(inputvals):
                #cur.execute (sqlStr)
     dbcon.commit()
     dbcon.close()
+    fh.close()
     var = 'Creating mineboss database tables done'
     return var
 
