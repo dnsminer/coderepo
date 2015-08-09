@@ -48,7 +48,7 @@ def dbTblCreateMB(inputvals):
         for sqlStr in fh:
             if sqlStr.strip():
                 print sqlStr
-               #cur.execute (sqlStr)
+               cur.execute (sqlStr)
     dbcon.commit()
     dbcon.close()
     fh.close()
