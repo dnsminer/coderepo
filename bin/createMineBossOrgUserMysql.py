@@ -95,8 +95,10 @@ def dbRecordCheck(checkinput):
         cur=dbcon.cursor()
         sqlStr = "USE " + ivDBName
         cur.execute(sqlStr)
+
         sqlStr = "SELECT count(" + checkcolumn +") from " + checktable + " WHERE " + checkcolumn + " = '" + checkvalue +"';"
         print sqlStr
+        cur.fetchone(sqlStr)
         checkresult = cur.fetchone()[0]
         print checkresult
         if checkresult is not None:
