@@ -7,8 +7,8 @@ DNSMinerHome='/opt/dnsminer-alpha'
 dbUtilsHome = DNSMinerHome + '/utils/databases/'
 
 def getTableCreateValues():
-    dbAdmin = raw_input("Enter mysql admin user,(typically root): ")
-    dbAdminPWD = raw_input("Enter mysql admin's  passwd: ")
+    dbAdmin = raw_input("Enter application admin user,(the minion account): ")
+    dbAdminPWD = raw_input("Enter application admin's  passwd: ")
     dbName = raw_input("What is the name of your application database? :")
     dbType = raw_input("Which application tables are you creating (mineboss|something not yet buit) ? :")
     dbType = dbType.strip().lower()
@@ -35,7 +35,7 @@ def dbTblCreateMB(inputvals):
 
 
     try:
-        dbcon = mdb.connect('localhost',adminVar,adminPwd,'mysql')
+        dbcon = mdb.connect('localhost',adminVar,adminPwd,ivDBName)
         #print "connected"
     except mdb.Error, e:
         print e.args[0]
