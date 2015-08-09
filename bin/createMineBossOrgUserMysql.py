@@ -128,9 +128,9 @@ def dbTblInsert(insertdict,dbtable):
         columnlist.append(key)
         print "Value: " + value
         valuelist.append(value)
-    valstring =",".join(valuelist)
+    valstring ="','".join(valuelist)  # need the ticks for sql insert to work in mysql
     colstring =",".join(columnlist)
-    sqlStr = "INSERT INTO " + dbtable + "(" + colstring +") VALUES (" + valstring +");"
+    sqlStr = "INSERT INTO " + dbtable + "(" + colstring +") VALUES ('" + valstring +"');"
     print sqlStr
 
     try:
@@ -164,4 +164,4 @@ orginfoinputs=getOrgInfo()
 dbinsertdict=createSQLInsertDict(orginfoinputs)
 
 # feed dictionary into sql insert
-dbTblInsert(dbinsertdict,'org')
+dbTblInsert(dbinsertdict,'org_info')
