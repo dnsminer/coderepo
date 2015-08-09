@@ -42,6 +42,7 @@ def getOrgInfo():
         orgName = inputSanitizer(orgName,'defstring')
         checkit= ['org_name','org_info',orgName]
         inputtest=dbRecordCheck(checkit)
+        print inputtest
     # reset for next input test
     inputtest=True
     while inputtest:
@@ -104,6 +105,7 @@ def dbRecordCheck(checkinput):
             var= True
     dbcon.commit()
     dbcon.close()
+    print "returning var " + var
     return var
 
 def createSQLInsertDict(inputvals):
