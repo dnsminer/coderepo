@@ -40,7 +40,7 @@ def getOrgInfo():
     while inputtest:
         orgName = raw_input("Enter the organization name please : ")
         orgName = inputSanitizer(orgName,'defstring')
-        checkit= ['org_name','org_id',orgName]
+        checkit= ['org_name','org_info',orgName]
         inputtest=dbRecordCheck(checkit)
     # reset for next input test
     inputtest=True
