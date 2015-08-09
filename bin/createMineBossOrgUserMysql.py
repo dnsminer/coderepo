@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 #__author__ = 'dleece'
-import sys, time,os, shutil, string, ConfigParser
+import sys
+import string
+import ConfigParser
+from itertools import izip
+
 import MySQLdb as mdb
 
 DNSMinerHome='/opt/dnsminer-alpha'
 dbUtilsHome = DNSMinerHome + '/utils/databases/'
 dbcfg= DNSMinerHome + "/etc/dbConnections.cfg"
 
-
-#def readConfigIni(cfgfile):
-#    dbconnect=ConfigParser.ConfigParser()
-#    dbconnect.read(cfgfile)
 
 def ConfigSectionMap(section):
     dbcfgdict = {}
@@ -25,11 +25,13 @@ def ConfigSectionMap(section):
             dbcfgdict[cfgoption] = None
     return  dbcfgdict
 
+# Could use this as a check to handle the lack of a database config file
 def getDBConnectionValues():
     dbAdmin = raw_input("Enter application admin user,(the minion account): ")
     dbAdminPWD = raw_input("Enter application admin's  passwd: ")
     dbName = raw_input("What is the name of your application database? :")
-    minInputVals = [dbAdmin,dbAdminPWD,dbName]
+    dbType = raw_input("What type of database is this (mysql|postgres)? :")
+    minInputVals = [dbType,dbName,dbAdmin,dbAdminPWD]
     return minInputVals
 
 def getOrgInfo():
@@ -50,7 +52,7 @@ def getOrgInfo():
     orgAlert = inputSanitizer(orgAlert,'emailstring')
     orgPasswd = raw_input("Enter org admin's password : ")
     orgPasswd = inputSanitizer(orgPasswd,'password')
-    orginputvals = [orgName,orgContact,orgAlert,orgPasswd]
+    orginputvals = ['org_name',orgName,'org_contact',orgContact,'alert_contact',orgAlert,'pwd',orgPasswd]
     # Need to run inputs through sanitization
     return orginputvals
 
@@ -72,10 +74,6 @@ def inputSanitizer(inputstring,type):
     outstring = tmpchar
     return outstring
 
-#def getDBTableDef(inputvals):
-#    if inputvals[3] == 'mineboss':
-#        resultVar = dbTblCreateMB(inputvals)
-#    return resultVar
 def dbRecordCheck(checkinput):
     print "checking existing database records"
     # by default config parser converts keys to lowercase , https://docs.python.org/2/library/configparser.html
@@ -106,21 +104,22 @@ def dbRecordCheck(checkinput):
     dbcon.close()
     return var
 
+def dbTblInsertOrg(inputvals):
+    # by default config parser converts keys to lowercase , https://docs.python.org/2/library/configparser.html
+    adminVar= ConfigSectionMap("SectionOne")['databaseuser']
+    adminPwd= ConfigSectionMap("SectionOne")['databasepwd']
+    ivDBName= ConfigSectionMap("SectionOne")['databasename']
+    var = 'Record inserted successfully'
 
-
-def dbTblCreateMB(inputvals):
-    print "creating database tables for mineboss application"
-    adminVar=inputvals[0]
-    adminPwd=inputvals[1]
-    ivDBName=inputvals[2]
-    # Open the SQL script to be used for table creation
-    sqlfile = dbUtilsHome + 'mbtables.sql'
-    try:
-        fh = open(sqlfile)
-    except:
-        print "SQL tables file not available"
-        return
-
+    iraw=iter(inputvals)
+    insertdict = dict(izip(iraw,iraw))
+    columnlist = []
+    valuelist = []
+    for key, value in insertdict.iteritems():
+        print "Column: " + key
+        columnlist.append(key)
+        print "Value: " + value
+        valuelist.append(value)
 
     try:
         dbcon = mdb.connect('localhost',adminVar,adminPwd,ivDBName)
@@ -133,23 +132,22 @@ def dbTblCreateMB(inputvals):
         cur=dbcon.cursor()
         sqlStr = "USE " + ivDBName
         cur.execute(sqlStr)
-        for sqlStr in fh:
-            if sqlStr.strip():
-                #print sqlStr
-                cur.execute (sqlStr)
+        #for sqlStr in fh:
+        #    if sqlStr.strip():
+        #        #print sqlStr
+        #        cur.execute (sqlStr)
     dbcon.commit()
     dbcon.close()
-    fh.close()
-    var = 'Creating mineboss database tables done'
     return var
 
 # --- main -----------------------------------
 
-
+#readConfigIni(dbcfg)  ( convert to function )
 dbconnect=ConfigParser.ConfigParser()
 dbconnect.read(dbcfg)
 
-#readConfigIni(dbcfg)
-getOrgInfo()
-#newtblvals=getDBConnectionValues()
-#print getDBTableDef(newtblvals)
+# gather org input
+orginfoinputs=getOrgInfo()
+
+# feed array into sql insert
+dbTblInsertOrg(orginfoinputs)
