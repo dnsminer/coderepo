@@ -37,15 +37,15 @@ def getOrgInfo():
     while inputtest:
         orgName = raw_input("Enter the organization name please : ")
         orgName = inputSanitizer(orgName,'defstring')
-        checkit= ['org_name','org_id'.orgName]
+        checkit= ['org_name','org_id',orgName]
         inputtest=dbRecordCheck(checkit)
+    # reset for next input test
     inputtest=True
     while inputtest:
         orgContact  = raw_input("Enter org admin email address : ")
-        checkit= ['org_contact','org_id'.orgContact]
+        orgContact = inputSanitizer(orgContact,'emailstring')
+        checkit= ['org_contact','org_id',orgContact]
         inputtest=dbRecordCheck(checkit)
-
-    orgContact = inputSanitizer(orgContact,'emailstring')
     orgAlert = raw_input("Enter the org monitoring email or sms address: ")
     orgAlert = inputSanitizer(orgAlert,'emailstring')
     orgPasswd = raw_input("Enter org admin's password : ")
