@@ -95,12 +95,11 @@ def dbRecordCheck(checkinput):
         cur=dbcon.cursor()
         sqlStr = "USE " + ivDBName
         cur.execute(sqlStr)
-
         sqlStr = "SELECT count(1) from " + checktable + " WHERE " + checkcolumn + " = '" + checkvalue +"';"
+        cur.execute(sqlStr)
         print sqlStr
         row = cur.fetchone()
-        for val in row:
-            print val
+        print row
         #if cur.fetchone():
         #    print "Sorry, that record appears to be in use, please provide a different value"
         #    var= True
