@@ -164,4 +164,4 @@ orginfoinputs=getOrgInfo()
 dbinsertdict=createSQLInsertDict(orginfoinputs)
 
 # feed dictionary into sql insert
-#dbTblInsert(dbinsertdict,'org')
+dbTblInsert(dbinsertdict,'org')
