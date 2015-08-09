@@ -105,7 +105,7 @@ def dbRecordCheck(checkinput):
             var= True
     dbcon.commit()
     dbcon.close()
-    print "returning var " + var
+    print "returning var " + str(var)
     return var
 
 def createSQLInsertDict(inputvals):
