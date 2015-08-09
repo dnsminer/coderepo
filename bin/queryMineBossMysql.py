@@ -37,7 +37,6 @@ def userLogin():
         orgPasswd = inputSanitizer(orgPasswd,'password')
         credlist= [orgContact,orgPasswd]
         credauthz = checkauthn(credlist) # return boolean for authenticated and org number ( honey token this?)
-        print credauthz[0]
         if not credauthz[0]:
             print "credentail failure"
         else:
@@ -95,6 +94,11 @@ def checkauthn(checkinput):
         if  authzlist[0]:
             print "cool, you have a good set of creds "
             # from here we'd generated a second query to grab the org_id and over write authzlist[1]
+            sqlStr = "SELECT org_id from org_info WHERE org_contact = '" + contactEmail +"';"
+            cur.execute(sqlStr)
+            storedOrgId = cur.fetchone()[0]
+            print storedOrgId
+            authzlist[1]= storedOrgId
     dbcon.commit()
     dbcon.close()
     return authzlist
@@ -145,12 +149,15 @@ def dbTblInsert(insertdict,dbtable):
     dbcon.commit()
     dbcon.close()
     return var
+
 def checkPwd(storedpwd,clearpasswd):
     pwdtest = storedpwd==bcrypt.hashpw(clearpasswd,storedpwd)
     return pwdtest
+
 def genBcrpytHash(plainString):
     hashedpwd=bcrypt.hashpw(plainString,bcrypt.gensalt(14))
     return hashedpwd
+
 # --- main -----------------------------------
 
 #readConfigIni(dbcfg)  ( convert to function )
@@ -159,11 +166,12 @@ dbconnect.read(dbcfg)
 
 # gather org input, outputs a boolean and if true and org_id
 loginresult=userLogin()
+for val in loginresult:
+    print val
 #
 #userMenu() # allow user to modify and update various fields
 # All database changes done via functions
 # Parse input array into SQL return a dictionary
 #dbinsertdict=createSQLInsertDict(orginfoinputs)
 
-# feed dictionary into sql insert
-#dbTblInsert(dbinsertdict,'org_info')
+
