@@ -3,6 +3,7 @@
 import sys
 import string
 import ConfigParser
+import bcrpyt
 from itertools import izip
 
 # noinspection PyUnresolvedReferences
@@ -53,6 +54,7 @@ def getOrgInfo():
     orgAlert = inputSanitizer(orgAlert,'emailstring')
     orgPasswd = raw_input("Enter org admin's password : ")
     orgPasswd = inputSanitizer(orgPasswd,'password')
+    orgPasswd = genBcrpytHash(orgPasswd)
     orginputvals = ['org_name',orgName,'org_contact',orgContact,'alert_contact',orgAlert,'pwd',orgPasswd]
     return orginputvals
 
@@ -124,15 +126,14 @@ def dbTblInsert(insertdict,dbtable):
     columnlist = []
     valuelist = []
     for key, value in insertdict.iteritems():
-        print "Column: " + key
+        #print "Column: " + key
         columnlist.append(key)
-        print "Value: " + value
+        #print "Value: " + value
         valuelist.append(value)
     valstring ="','".join(valuelist)  # need the ticks for sql insert to work in mysql
     colstring =",".join(columnlist)
     sqlStrI = "INSERT INTO " + dbtable + "(" + colstring +") VALUES ('" + valstring +"');"
-    print sqlStrI
-
+    #print sqlStrI
     try:
         dbcon = mdb.connect('localhost',adminVar,adminPwd,ivDBName)
         #print "connected"
@@ -152,6 +153,9 @@ def dbTblInsert(insertdict,dbtable):
     dbcon.close()
     return var
 
+def genBcrpytHash(plainString):
+    hashedpwd=bcrypt.hashpw(plainString,bcrpyt.gensalt(14))
+    return hashedpwd
 # --- main -----------------------------------
 
 #readConfigIni(dbcfg)  ( convert to function )
