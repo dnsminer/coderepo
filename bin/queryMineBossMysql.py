@@ -37,8 +37,11 @@ def userLogin():
         orgPasswd = inputSanitizer(orgPasswd,'password')
         credlist= [orgContact,orgPasswd]
         credauthz = checkauthn(credlist) # return boolean for authenticated and org number ( honey token this?)
+        print credauthz[0]
         if not credauthz[0]:
             print "credentail failure"
+        else:
+            credtest = True
 
     return credauthz
 
