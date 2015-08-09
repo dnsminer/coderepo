@@ -96,11 +96,9 @@ def dbRecordCheck(checkinput):
         sqlStr = "USE " + ivDBName
         cur.execute(sqlStr)
 
-        sqlStr = "SELECT count(" + checkcolumn +") from " + checktable + " WHERE " + checkcolumn + " = '" + checkvalue +"';"
+        sqlStr = "SELECT count(1) from " + checktable + " WHERE " + checkcolumn + " = '" + checkvalue +"';"
         print sqlStr
-        checkresult = cur.fetchone(sqlStr)
-        print checkresult
-        if checkresult is not None:
+        if cur.fetchone()[0]:
             print "Sorry, that record appears to be in use, please provide a different value"
             var= True
     dbcon.commit()
