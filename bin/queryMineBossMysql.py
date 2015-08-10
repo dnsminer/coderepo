@@ -44,6 +44,22 @@ def userLogin():
 
     return credauthz
 
+def inputMenu(inputstring):
+    menuchoices = ['view','blacklist','whitelist','exit']
+    menurequest = []
+    if inputstring not in menuchoices:
+        print "Sorry, that is not a valid menu choice"
+        menurequest = []
+    else:
+        if inputstring == 'exit':
+            menurequest = []
+        else:
+            operrequest = inputstring
+            method = raw_input("creaste new or update existing (new|update)? :")
+            menurequest = [operrequest,method]
+    return menurequest
+
+
 def inputSanitizer(inputstring,type):
     # sanitize based on whitelist and what type of input we're expecting
     charwl = string.ascii_letters + string.whitespace + string.digits
@@ -166,8 +182,13 @@ def userMenu(azlist):
             print "Customize Mineboss application settings to suit your organization"
             print "menu choices are: view, blacklist, whitelist, exit"
             uinput = raw_input("Enter choice: ")
-            uinput = inputSanitizer(uinput,menu)
-
+            uinput = uinput.strip().lower()
+            mresult = inputMenu(uinput) # needed to get the status, using lenth of list to avoid global vars
+            if not mresult:
+                menuactive = False
+            else:
+                for val in mresult:
+                    print val
     else:
         print "invalid credentials"
         exit()
