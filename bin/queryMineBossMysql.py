@@ -175,8 +175,6 @@ def genBcrpytHash(plainString):
 
 def userMenu(azlist):
     # accepts a boolean and integer, boolean is proof of authentication and org id is required for all user menu items
-    for val in azlist:
-        print val
     if azlist[0]:
         menuactive=True
         while menuactive:
@@ -191,8 +189,6 @@ def userMenu(azlist):
             elif mresult[0] == 'invalid':  # catch the bad input and keep menu open for retry
                 menuactive = True
             else:
-            #    for val in mresult:
-            #        print val
                 print azlist[1]
                 doMenuSelect(mresult,azlist[1])
     else:
@@ -204,19 +200,19 @@ def doMenuSelect(menulist,orgid):
     # sort of a long way around sanitizing the input and then calling the SQL function required
     if menulist[0] == 'view':
         if menulist[1] == 'update':
-            print "send view,update to view function for org " + orgid
+            print "send view,update to view function for org " + str(orgid)
         else:
-            print "send view,new to view function for org " + orgid
+            print "send view,new to view function for org " + str(orgid)
     elif menulist[0] == 'blacklist':
         if menulist[1] == 'update':
-            print "send blacklist,update to blacklist function for org " + orgid
+            print "send blacklist,update to blacklist function for org " + str(orgid)
         else:
-            print "send blacklist,new to blacklist function for org " + orgid
+            print "send blacklist,new to blacklist function for org " + str(orgid)
     else:
         if menulist[1] == 'update':
-            print "send whitelist,update to whitelist function for org " + orgid
+            print "send whitelist,update to whitelist function for org " + str(orgid)
         else:
-            print "send whitelist,new to whitelist function for org " + orgid
+            print "send whitelist,new to whitelist function for org " + str(orgid)
     return
 
 # --- main -----------------------------------
