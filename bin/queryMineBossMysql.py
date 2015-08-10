@@ -13,7 +13,6 @@ DNSMinerHome='/opt/dnsminer-alpha'
 dbUtilsHome = DNSMinerHome + '/utils/databases/'
 dbcfg= DNSMinerHome + "/etc/dbConnections.cfg"
 
-
 def ConfigSectionMap(section):
     dbcfgdict = {}
     cfgoptions = dbconnect.options(section)
@@ -189,12 +188,31 @@ def userMenu(azlist):
             else:
                 for val in mresult:
                     print val
+                doMenuSelect(mresult)
     else:
         print "invalid credentials"
         exit()
     return
 
-def
+def doMenuSelect(menulist):
+    # sort of a long way around sanitizing the input and then calling the SQL function required
+    if menulist[0] == 'view':
+        if menulist[1] == 'update':
+            print "send view,update to view function"
+        else:
+            print "send view,new to view function"
+    elif menulist[0] == 'blacklist':
+        if menulist[1] == 'update':
+            print "send blacklist,update to blacklist function"
+        else:
+            print "send blacklist,new to blacklist function"
+    else:
+        if menulist[1] == 'update':
+            print "send whitelist,update to whitelist function"
+        else:
+            print "send whitelist,new to whitelist function"
+    return
+
 # --- main -----------------------------------
 
 #readConfigIni(dbcfg)  ( convert to function )
@@ -204,10 +222,5 @@ dbconnect.read(dbcfg)
 # gather org input, outputs a boolean and if true and org_id
 loginresult=userLogin()
 
-#
 userMenu(loginresult) # allow user to modify and update various fields
-# All database changes done via functions
-# Parse input array into SQL return a dictionary
-#dbinsertdict=createSQLInsertDict(orginfoinputs)
-
-
+# All database changes done via functions called from doMenuSelect
