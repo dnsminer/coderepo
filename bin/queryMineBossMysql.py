@@ -175,6 +175,8 @@ def genBcrpytHash(plainString):
 
 def userMenu(azlist):
     # accepts a boolean and integer, boolean is proof of authentication and org id is required for all user menu items
+    for val in azlist:
+        print val
     if azlist[0]:
         menuactive=True
         while menuactive:
@@ -188,9 +190,10 @@ def userMenu(azlist):
             else:
                 for val in mresult:
                     print val
+                print azlist[1]
                 doMenuSelect(mresult,azlist[1])
     else:
-        print "invalid credentials"
+        print "invalid credentials and something funny is going on here, quitting now"
         exit()
     return
 
