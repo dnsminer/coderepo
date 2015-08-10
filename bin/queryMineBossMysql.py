@@ -180,16 +180,17 @@ def userMenu(azlist):
     if azlist[0]:
         menuactive=True
         while menuactive:
-            print "Customize Mineboss application settings to suit your organization"
-            print "menu choices are: view, blacklist, whitelist, exit"
+            print "\nCustomize Mineboss application settings to suit your organization"
+            print "menu choices are: view, blacklist, whitelist, exit\n"
             uinput = raw_input("Enter choice: ")
             uinput = uinput.strip().lower()
             mresult = inputMenu(uinput) # needed to get the status, using length of list to avoid global vars
             if not mresult:
                 menuactive = False
-            if mresult[0] == 'invalid':  # catch the bad input and keep menu open for retry
+                print "\nThankyou, goodbye\n"
+            elif mresult[0] == 'invalid':  # catch the bad input and keep menu open for retry
                 menuactive = True
-            #else:
+            else:
             #    for val in mresult:
             #        print val
                 print azlist[1]
