@@ -158,6 +158,21 @@ def genBcrpytHash(plainString):
     hashedpwd=bcrypt.hashpw(plainString,bcrypt.gensalt(14))
     return hashedpwd
 
+def userMenu(azlist):
+    # accepts a boolean and integer, boolean is proof of authentication and org id is required for all user menu items
+    if azlist[0]:
+        menuactive=True
+        while menuactive:
+            print "Customize Mineboss application settings to suit your organization"
+            print "menu choices are: view, blacklist, whitelist, exit"
+            uinput = raw_input("Enter choice: ")
+            uinput = inputSanitizer(uinput,menu)
+
+    else:
+        print "invalid credentials"
+        exit()
+    return
+
 # --- main -----------------------------------
 
 #readConfigIni(dbcfg)  ( convert to function )
@@ -166,10 +181,9 @@ dbconnect.read(dbcfg)
 
 # gather org input, outputs a boolean and if true and org_id
 loginresult=userLogin()
-for val in loginresult:
-    print val
+
 #
-#userMenu() # allow user to modify and update various fields
+userMenu(loginresult) # allow user to modify and update various fields
 # All database changes done via functions
 # Parse input array into SQL return a dictionary
 #dbinsertdict=createSQLInsertDict(orginfoinputs)
