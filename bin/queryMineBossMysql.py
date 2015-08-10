@@ -100,20 +100,20 @@ def checkauthn(checkinput):
         sqlStr = "USE " + ivDBName
         cur.execute(sqlStr)
         sqlStr = "SELECT pwd from org_info WHERE org_contact = '" + contactEmail +"';"
-        print sqlStr
+        #print sqlStr
         cur.execute(sqlStr)
         storedpwd = cur.fetchone()[0]
-        print storedpwd
+        #print storedpwd
         # pass the stoed hash to checkPW(st
         testPwd = checkPwd(storedpwd,clearpasswd)
         authzlist[0] = testPwd
         if  authzlist[0]:
-            print "cool, you have a good set of creds "
+            print "cool, you have a valid set of creds "
             # from here we'd generated a second query to grab the org_id and over write authzlist[1]
             sqlStr = "SELECT org_id from org_info WHERE org_contact = '" + contactEmail +"';"
             cur.execute(sqlStr)
             storedOrgId = cur.fetchone()[0]
-            print storedOrgId
+            #print storedOrgId
             authzlist[1]= storedOrgId
     dbcon.commit()
     dbcon.close()
