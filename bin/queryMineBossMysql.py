@@ -49,7 +49,7 @@ def inputMenu(inputstring):
     menurequest = []
     if inputstring not in menuchoices:
         print "Sorry, that is not a valid menu choice"
-        menurequest = []
+        menurequest = ['invalid']
     else:
         if inputstring == 'exit':
             menurequest = []
@@ -104,7 +104,7 @@ def checkauthn(checkinput):
         cur.execute(sqlStr)
         storedpwd = cur.fetchone()[0]
         #print storedpwd
-        # pass the stoed hash to checkPW(st
+        # pass the stored hash to checkPW(st
         testPwd = checkPwd(storedpwd,clearpasswd)
         authzlist[0] = testPwd
         if  authzlist[0]:
@@ -183,7 +183,7 @@ def userMenu(azlist):
             print "menu choices are: view, blacklist, whitelist, exit"
             uinput = raw_input("Enter choice: ")
             uinput = uinput.strip().lower()
-            mresult = inputMenu(uinput) # needed to get the status, using lenth of list to avoid global vars
+            mresult = inputMenu(uinput) # needed to get the status, using length of list to avoid global vars
             if not mresult:
                 menuactive = False
             else:
@@ -194,6 +194,7 @@ def userMenu(azlist):
         exit()
     return
 
+def
 # --- main -----------------------------------
 
 #readConfigIni(dbcfg)  ( convert to function )
