@@ -187,9 +187,11 @@ def userMenu(azlist):
             mresult = inputMenu(uinput) # needed to get the status, using length of list to avoid global vars
             if not mresult:
                 menuactive = False
-            else:
-                for val in mresult:
-                    print val
+            if mresult[0] == 'invalid':  # catch the bad input and keep menu open for retry
+                menuactive = True
+            #else:
+            #    for val in mresult:
+            #        print val
                 print azlist[1]
                 doMenuSelect(mresult,azlist[1])
     else:
