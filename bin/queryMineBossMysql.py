@@ -188,29 +188,29 @@ def userMenu(azlist):
             else:
                 for val in mresult:
                     print val
-                doMenuSelect(mresult)
+                doMenuSelect(mresult,azlist[1])
     else:
         print "invalid credentials"
         exit()
     return
 
-def doMenuSelect(menulist):
+def doMenuSelect(menulist,orgid):
     # sort of a long way around sanitizing the input and then calling the SQL function required
     if menulist[0] == 'view':
         if menulist[1] == 'update':
-            print "send view,update to view function"
+            print "send view,update to view function for org " + orgid
         else:
-            print "send view,new to view function"
+            print "send view,new to view function for org " + orgid
     elif menulist[0] == 'blacklist':
         if menulist[1] == 'update':
-            print "send blacklist,update to blacklist function"
+            print "send blacklist,update to blacklist function for org " + orgid
         else:
-            print "send blacklist,new to blacklist function"
+            print "send blacklist,new to blacklist function for org " + orgid
     else:
         if menulist[1] == 'update':
-            print "send whitelist,update to whitelist function"
+            print "send whitelist,update to whitelist function for org " + orgid
         else:
-            print "send whitelist,new to whitelist function"
+            print "send whitelist,new to whitelist function for org " + orgid
     return
 
 # --- main -----------------------------------
