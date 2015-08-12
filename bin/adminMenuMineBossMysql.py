@@ -234,9 +234,9 @@ def userMenu(azlist):
 def doMenuSelect(menulist,orgid):
     # sort of a long way around sanitizing the input and then calling the SQL function required
     if menulist[0] == 'view':
-        if menulist[1] == 'update':
-            doMWList = [menulist[0],menulist[1],orgid]
-            doMWView(doMWList)
+        #if menulist[1] == 'update':
+        doMWList = [menulist[0],menulist[1],orgid]
+        doMWView(doMWList)
     elif menulist[0] == 'blacklist':
         if menulist[1] == 'update':
             print "\nsend blacklist,update to blacklist function for org " + str(orgid)
