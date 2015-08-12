@@ -261,10 +261,13 @@ def inputView(vname):
 
 def dotQuadtoInt(dquad):
     ipInt = struct.unpack('>L',socket.inet_aton(dquad))[0]
-    print dquad
-    print ipInt
+    #print dquad
+    #print ipInt
     return  ipInt
 
+def intTodotQuad(ipint):
+    dotquad = socket.inet_ntoa(struct.pack('>L',ipint))
+    return  dotquad
 def doMWView(mwlist):
     print "do menu view"
     for val in mwlist:
@@ -287,8 +290,20 @@ def doMWView(mwlist):
                     viewDict['view_name'] = vresult[1]
                     getviewname = False
             uvlinput = raw_input("What is the internal IP for the monitoring application? ( dotted quad")
+            # need input sanitizer for IP addresses
             uvlinput = dotQuadtoInt(uvlinput)
             viewDict['sh_ip'] = uvlinput
+            getviewip = True
+            viewIPList=[]
+            while getviewip:
+                uvlinput = raw_input("What is/are the source IP(s) for the monitoring application? ( dotted quad")
+                uvsinput = dotQuadtoInt(uvsinput)
+                viewIPList.append(uvsinput)
+                nextIP = raw_input("Do you need to add another IP address (yes|no)?")
+                nextIP = nextIP.strip().lower()
+                if nextIP == 'no':
+                    getviewip = False
+            viewDict['view_src_ip'] = viewIPList[0]  # build into an ACL data structure later on
             viewmenuactive = False
         print viewDict
 
