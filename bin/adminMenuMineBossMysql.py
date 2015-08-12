@@ -200,9 +200,8 @@ def doMenuSelect(menulist,orgid):
     # sort of a long way around sanitizing the input and then calling the SQL function required
     if menulist[0] == 'view':
         if menulist[1] == 'update':
-            print "\nsend view,update to view function for org " + str(orgid)
-        else:
-            print "\nsend view,new to view function for org " + str(orgid)
+            doMWList = [menulist[0],menulist[1],orgid]
+            doMWView(doMWList)
     elif menulist[0] == 'blacklist':
         if menulist[1] == 'update':
             print "\nsend blacklist,update to blacklist function for org " + str(orgid)
@@ -214,6 +213,11 @@ def doMenuSelect(menulist,orgid):
         else:
             print "\nsend whitelist,new to whitelist function for org " + str(orgid)
     return
+
+def doMWView(mwlist):
+    print "do menu view"
+    for val in mwlist:
+        print val
 
 # --- main -----------------------------------
 
