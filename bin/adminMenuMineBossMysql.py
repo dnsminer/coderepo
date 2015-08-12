@@ -289,14 +289,14 @@ def doMWView(mwlist):
                 if not vresult[0]:
                     viewDict['view_name'] = vresult[1]
                     getviewname = False
-            uvlinput = raw_input("What is the internal IP for the monitoring application? ( dotted quad")
+            uvlinput = raw_input("What is the internal IP for the monitoring application? ( dotted quad): ")
             # need input sanitizer for IP addresses
             uvlinput = dotQuadtoInt(uvlinput)
             viewDict['sh_ip'] = uvlinput
             getviewip = True
             viewIPList=[]
             while getviewip:
-                uvlinput = raw_input("What is/are the source IP(s) for the monitoring application? ( dotted quad")
+                uvsinput = raw_input("What is/are the source IP(s) for the monitoring application? ( dotted quad): ")
                 uvsinput = dotQuadtoInt(uvsinput)
                 viewIPList.append(uvsinput)
                 nextIP = raw_input("Do you need to add another IP address (yes|no)?")
