@@ -3,6 +3,7 @@
 import sys
 import string
 import ConfigParser
+import socket, struct
 import bcrypt
 from itertools import izip
 
@@ -259,7 +260,7 @@ def inputView(vname):
     return  checkviewlist
 
 def dotQuadtoInt(dquad):
-    ipInt = ''.join([bin(int(x))[3:] for x in dquad.split('.')])
+    ipInt = struct.unpack('>L',socket.inet_aton(dquad))[0]
     print dquad
     print ipInt
     return  ipInt
