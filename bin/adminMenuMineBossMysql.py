@@ -12,6 +12,7 @@ import MySQLdb as mdb
 DNSMinerHome='/opt/dnsminer-alpha'
 dbUtilsHome = DNSMinerHome + '/utils/databases/'
 dbcfg= DNSMinerHome + "/etc/dbConnections.cfg"
+nodecfg = DNSMinerHome + "/etc/nodes.cfg"
 
 def ConfigSectionMap(section):
     dbcfgdict = {}
@@ -66,16 +67,50 @@ def inputSanitizer(inputstring,type):
         charwl = charwl + '@._-'
     if type ==  'password':
         charwl = string.printable
+    if type == 'view':
+        charwl = string.ascii_letters + string.digits + '-_'
 
     outstring = inputstring.strip()
     tmpchar=''
     for tchar in outstring:
         if tchar not in charwl:
-            print "replacing invalid character " + tchar
+            print "replacing invalid character " + tchar + " with an underscore _ "
             tchar = '_'
         tmpchar = tmpchar + tchar
     outstring = tmpchar
     return outstring
+
+def dbRecordCheck(checkinput):
+    print "checking existing database records"
+    # by default config parser converts keys to lowercase , https://docs.python.org/2/library/configparser.html
+    adminVar= ConfigSectionMap("SectionOne")['databaseuser']
+    adminPwd= ConfigSectionMap("SectionOne")['databasepwd']
+    ivDBName= ConfigSectionMap("SectionOne")['databasename']
+    checkcolumn = checkinput[0]
+    checktable = checkinput[1]
+    checkvalue = checkinput[2]
+    var = False
+    try:
+        dbcon = mdb.connect('localhost',adminVar,adminPwd,ivDBName)
+        #print "connected"
+    except mdb.Error, e:
+        print e.args[0]
+        sys.exit(1)
+
+    with dbcon:
+        cur=dbcon.cursor()
+        sqlStr = "USE " + ivDBName
+        cur.execute(sqlStr)
+        sqlStr = "SELECT count(1) from " + checktable + " WHERE " + checkcolumn + " = '" + checkvalue +"';"
+        cur.execute(sqlStr)
+        if cur.fetchone()[0]:
+            print "Sorry, that record appears to be in use, please provide a different value"
+            var= True
+    dbcon.commit()
+    dbcon.close()
+    return var
+
+
 
 def checkauthn(checkinput):
     print "checking credentials supplied"
@@ -214,10 +249,72 @@ def doMenuSelect(menulist,orgid):
             print "\nsend whitelist,new to whitelist function for org " + str(orgid)
     return
 
+def inputView(vname):
+    #check for no spaces and make sure it's not already used.
+    viewName = inputSanitizer(vname,'view')
+    print "confirming view name is unique in the system"
+    checkviewname=['view_name','bind_views',viewName]  # Column, table, value
+    boolVar= dbRecordCheck(checkviewname)
+    checkviewlist = [boolVar,viewName]   # return result of uniqueness test and view name value if it's usable.
+    return  checkviewlist
+
+def dotQuadtoInt(dquad):
+    ipInt = ''.join([bin(int(x))[3:] for x in dquad.split('.')])
+    print dquad
+    print ipInt
+    return  ipInt
+
 def doMWView(mwlist):
     print "do menu view"
     for val in mwlist:
         print val
+    # create a dictionary to collect all the results to generate SQL insert or update
+    viewDict = dict()
+    if mwlist[1] != 'update':
+        # start the menu to gather view details
+        viewmenuactive=True
+        while viewmenuactive:
+            getviewname = True
+            while getviewname:
+                print "\nYou are about to create a new Bind View and related zone files."
+                print "\nThe view must be a unique name within the system,"
+                print "it must also be a single word with no spaces, letters, dashes, underscores and digits ok"
+                uvinput = raw_input("Enter view name: ")
+                uvinput = uvinput.strip().lower()
+                vresult = inputView(uvinput) # needed to get the status, using length of list to avoid global vars
+                if not vresult[0]:
+                    viewDict['view_name'] = vresult[1]
+                    getviewname = False
+            uvlinput = raw_input("What is the internal IP for the monitoring application? ( dotted quad")
+            uvlinput = dotQuadtoInt(uvlinput)
+            viewDict['sh_ip'] = uvlinput
+            viewmenuactive = False
+        print viewDict
+
+
+
+
+
+    # store all answers in a dictinary and then use dictionry to create SQL
+    # prompt for view name,   check for no spaces and make sure it's not already used.
+    # prompt for ip address inside org to be populated into the zone file
+    # prompt for ip address view traffic will be coming from.  Make this a list which could be turned into an ACL.
+    # generate tsig key ( seperate function)
+    # generate random domain name
+    # build zone file using random domain name and local IP address
+    # if update:
+    # prompt for view name,   check for no spaces and make sure it's not already used.
+    # prompt for ip address inside org to be populated into the zone file
+    # prompt for ip address view traffic will be coming from.  Make this a list which could be turned into an ACL.
+    return
+
+
+def genRPZCname():
+    # Each view needs an authoritiative zone to resolve the cname. Although the view could be reused per view
+    # generating random makes it very difficult for anyone to guess the name and potentially probe for zone contents.
+    dom = ''.join(random.choice(string.ascii_lowercase) for _ in range(8))
+    dom = dom + '.local'
+    return  dom
 
 # --- main -----------------------------------
 
