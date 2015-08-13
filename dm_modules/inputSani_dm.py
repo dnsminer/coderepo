@@ -16,9 +16,10 @@ def inputSanitizer(inputstring,type):
         charwl = string.ascii_letters + string.digits + '-_'
         chkdstring = checkwhitelist(inputstring,charwl)
     if type == 'ip':
-        print "testing IP"
+        print "testing IP" + inputstring
         v4pat = re.compile(('^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'))
         chkv4pat = v4pat.match(inputstring)
+        print chkv4pat
         if not chkv4pat:
             print "Invalid IP address, please redo"
         else:
