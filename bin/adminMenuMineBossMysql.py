@@ -6,6 +6,7 @@ import ConfigParser
 import socket
 import struct
 from itertools import izip
+import random
 
 import bcrypt
 from dm_modules import cfgparse_dm, dbchk_dm, inputSani_dm, iptoint_dm
