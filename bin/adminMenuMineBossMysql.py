@@ -6,10 +6,12 @@ import ConfigParser
 import socket
 import struct
 from itertools import izip
-import inputSani_dm
+
 import bcrypt
-import dbchk_dm
-import  cfgparse_dm
+from dm_modules import cfgparse_dm, dbchk_dm, inputSani_dm, iptoint_dm
+
+
+
 
 
 # noinspection PyUnresolvedReferences
@@ -124,7 +126,7 @@ def checkauthn(checkinput):
     print "checking credentials supplied"
     # by default config parser converts keys to lowercase , https://docs.python.org/2/library/configparser.html
     thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionOne')
-    print thisCfgDict
+    #print thisCfgDict
     #adminVar= ConfigSectionMap("SectionOne")['databaseuser']
     adminVar = thisCfgDict['databaseuser']
     #adminPwd= ConfigSectionMap("SectionOne")['databasepwd']
@@ -178,9 +180,14 @@ def createSQLInsertDict(inputvals):
 
 def dbTblInsert(insertdict,dbtable):
     # by default config parser converts keys to lowercase , https://docs.python.org/2/library/configparser.html
-    adminVar= ConfigSectionMap("SectionOne")['databaseuser']
-    adminPwd= ConfigSectionMap("SectionOne")['databasepwd']
-    ivDBName= ConfigSectionMap("SectionOne")['databasename']
+    #print thisCfgDict
+    #adminVar= ConfigSectionMap("SectionOne")['databaseuser']
+    #adminPwd= ConfigSectionMap("SectionOne")['databasepwd']
+    #ivDBName= ConfigSectionMap("SectionOne")['databasename']
+    thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionOne')
+    adminVar = thisCfgDict['databaseuser']
+    adminPwd= thisCfgDict['databasepwd']
+    ivDBName = thisCfgDict['databasename']
     var = 'Record inserted successfully'
 
     columnlist = []
@@ -205,9 +212,6 @@ def dbTblInsert(insertdict,dbtable):
         cur=dbcon.cursor()
         sqlStr = "USE " + ivDBName
         cur.execute(sqlStr)
-        #for sqlStr in fh:
-        #    if sqlStr.strip():
-        #        #print sqlStr
         cur.execute (sqlStrI)
     dbcon.commit()
     dbcon.close()
@@ -274,7 +278,11 @@ def inputView(vname):
     return  checkviewlist
 
 def dotQuadtoInt(dquad):
-    ipInt = struct.unpack('>L',socket.inet_aton(dquad))[0]
+    dquad = inputSani_dm.inputSanitizer(dquad,'ip')
+    if dquad =='invalid_format':
+        ipInt = 10
+    else:
+        ipInt = struct.unpack('>L',socket.inet_aton(dquad))[0]
     #print dquad
     #print ipInt
     return  ipInt
@@ -303,21 +311,41 @@ def doMWView(mwlist):
                 if not vresult[0]:
                     viewDict['view_name'] = vresult[1]
                     getviewname = False
-            uvlinput = raw_input("What is the internal IP for the monitoring application? ( dotted quad): ")
-            # need input sanitizer for IP addresses
-            uvlinput = dotQuadtoInt(uvlinput)
-            viewDict['sh_ip'] = uvlinput
+            getmonip = True
+            while getmonip:
+                uvlinput = raw_input("What is the internal IP for the monitoring application? ( dotted quad): ")
+                #uvlinput = dotQuadtoInt(uvlinput)
+                uvlinput = iptoint_dm(uvlinput)
+                if uvlinput > 10:
+                    viewDict['sh_ip'] = uvlinput
+                    getmonip = False
+                else:
+                    print "hmm, looks like that wasn't a dotted quad, EG 172.16.28.7, please enter again"
+
             getviewip = True
-            viewIPList=[]
+            viewClientIPList=[]
             while getviewip:
-                uvsinput = raw_input("What is/are the source IP(s) for the monitoring application? ( dotted quad): ")
-                uvsinput = dotQuadtoInt(uvsinput)
-                viewIPList.append(uvsinput)
+                uvsinput = raw_input("What is/are the source IP(s) for the monitoring application? ( dotted quad or cidr): ")
+                addrtype= raw_input("Is this a single IP or subnet (ip|cidr)? ")
+                addrtype = addrtype.strip().lower()
+                if addrtype == 'ip':
+                    uvsinput = inputSani_dm.inputSanitizer(uvsinput,'ip')
+                    if uvsinput == 'invalid_format'
+                        print "hmm, looks like that wasn't a dotted quad, EG 172.16.28.7, please enter again"
+                        continue
+                else:
+                    uvsinput = inputSani_dm.inputSanitizer(uvsinput,'cidr')
+                    if uvsinput == 'invalid_format'
+                        print "hmm, looks like that wasn't cidr notation, EG 172.16.28.0/26, please enter again"
+                        continue
+                viewClientIPList.append(uvsinput)
                 nextIP = raw_input("Do you need to add another IP address (yes|no)?")
                 nextIP = nextIP.strip().lower()
                 if nextIP == 'no':
                     getviewip = False
-            viewDict['view_src_ip'] = viewIPList[0]  # build into an ACL data structure later on
+                # build IPs and cidr into a CSV string to be used with views
+                rcsvclients  = ",".join(map(str,viewClientIPList))
+            viewDict['view_src_ip'] = rcsvclients  # build into an ACL data structure later on
             viewmenuactive = False
         print viewDict
 
