@@ -8,6 +8,7 @@ import inputSani_dm
 
 def dotQuadtoInt(dquad):
     dquad = inputSani_dm.inputSanitizer(dquad,'ip')
+    print dquad
     if dquad =='invalid_format':
         ipInt = 10
     else:
