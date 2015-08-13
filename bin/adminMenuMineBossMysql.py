@@ -125,9 +125,12 @@ def checkauthn(checkinput):
     # by default config parser converts keys to lowercase , https://docs.python.org/2/library/configparser.html
     thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionOne')
     print thisCfgDict
-    adminVar= ConfigSectionMap("SectionOne")['databaseuser']
-    adminPwd= ConfigSectionMap("SectionOne")['databasepwd']
-    ivDBName= ConfigSectionMap("SectionOne")['databasename']
+    #adminVar= ConfigSectionMap("SectionOne")['databaseuser']
+    adminVar = thisCfgDict['databaseuser']
+    #adminPwd= ConfigSectionMap("SectionOne")['databasepwd']
+    adminPwd= thisCfgDict['databasepwd']
+    #ivDBName= ConfigSectionMap("SectionOne")['databasename']
+    ivDBName = thisCfgDict['databasename']
     contactEmail = checkinput[0]
     clearpasswd = checkinput[1]
 
