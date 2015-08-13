@@ -24,7 +24,7 @@ def inputSanitizer(inputstring,type):
         else:
             chkdstring = inputstring
     if type == 'cidr':
-        print "testing cidr"
+        #print "testing cidr"
         v4pat = re.compile(('^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/\d{1,2}'))
         chkv4pat = v4pat.match(inputstring)
         if not chkv4pat:
