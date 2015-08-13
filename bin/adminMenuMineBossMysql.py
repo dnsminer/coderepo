@@ -325,8 +325,8 @@ def doMWView(mwlist):
 
             getviewip = True
             viewClientIPList=[]
+            print "\nDefine the the source IP(s)/ subnets for the recursive clients using this view( dotted quad or cidr): "
             while getviewip:
-                print "Define the the source IP(s)/ subnets for the recursive clients using this view( dotted quad or cidr): "
                 addrtype= raw_input("Is this a single IP or subnet (ip|cidr)? ")
                 addrtype = addrtype.strip().lower()
                 if addrtype == 'ip':
