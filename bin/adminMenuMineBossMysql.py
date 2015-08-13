@@ -3,9 +3,12 @@
 import sys
 import string
 import ConfigParser
-import socket, struct
-import bcrypt
+import socket
+import struct
 from itertools import izip
+import inputSani_dm
+import bcrypt
+
 
 # noinspection PyUnresolvedReferences
 import MySQLdb as mdb
@@ -33,9 +36,11 @@ def userLogin():
     credtest=False
     while not credtest:
         orgContact = raw_input("Enter your org contact email  : ")
-        orgContact = inputSanitizer(orgContact,'emailstring')
+        #orgContact = inputSanitizer(orgContact,'emailstring')
+        orgContact = inputSani_dm.inputSanitizer(orgContact,'emailstring')
         orgPasswd = raw_input("Enter org admin's password : ")
-        orgPasswd = inputSanitizer(orgPasswd,'password')
+        orgPasswd = inputSani_dm.inputSanitizer(orgPasswd,'password')
+        #orgPasswd = inputSanitizer(orgPasswd,'password')
         credlist= [orgContact,orgPasswd]
         credauthz = checkauthn(credlist) # return boolean for authenticated and org number ( honey token this?)
         if not credauthz[0]:
@@ -252,7 +257,8 @@ def doMenuSelect(menulist,orgid):
 
 def inputView(vname):
     #check for no spaces and make sure it's not already used.
-    viewName = inputSanitizer(vname,'view')
+    #viewName = inputSanitizer(vname,'view')
+    viewName = inputSani_dm.inputSanitizer(vname,'view')
     print "confirming view name is unique in the system"
     checkviewname=['view_name','bind_views',viewName]  # Column, table, value
     boolVar= dbRecordCheck(checkviewname)
