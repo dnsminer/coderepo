@@ -326,15 +326,17 @@ def doMWView(mwlist):
             getviewip = True
             viewClientIPList=[]
             while getviewip:
-                uvsinput = raw_input("What is/are the source IP(s) for the monitoring application? ( dotted quad or cidr): ")
+                print "Define the the source IP(s)/ subnets for the recursive clients using this view( dotted quad or cidr): "
                 addrtype= raw_input("Is this a single IP or subnet (ip|cidr)? ")
                 addrtype = addrtype.strip().lower()
                 if addrtype == 'ip':
+                    uvsinput = raw_input("What is the source IP for the recursive clients?( dotted quad): ")
                     uvsinput = inputSani_dm.inputSanitizer(uvsinput,'ip')
                     if uvsinput == 'invalid_format':
                         print "hmm, looks like that wasn't a dotted quad, EG 172.16.28.7, please enter again"
                         continue
                 else:
+                    uvsinput = raw_input("What is the source subnet for the recursive clients?( cidr notation): ")
                     uvsinput = inputSani_dm.inputSanitizer(uvsinput,'cidr')
                     if uvsinput == 'invalid_format':
                         print "hmm, looks like that wasn't cidr notation, EG 172.16.28.0/26, please enter again"
