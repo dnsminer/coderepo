@@ -331,12 +331,12 @@ def doMWView(mwlist):
                 addrtype = addrtype.strip().lower()
                 if addrtype == 'ip':
                     uvsinput = inputSani_dm.inputSanitizer(uvsinput,'ip')
-                    if uvsinput == 'invalid_format'
+                    if uvsinput == 'invalid_format':
                         print "hmm, looks like that wasn't a dotted quad, EG 172.16.28.7, please enter again"
                         continue
                 else:
                     uvsinput = inputSani_dm.inputSanitizer(uvsinput,'cidr')
-                    if uvsinput == 'invalid_format'
+                    if uvsinput == 'invalid_format':
                         print "hmm, looks like that wasn't cidr notation, EG 172.16.28.0/26, please enter again"
                         continue
                 viewClientIPList.append(uvsinput)
