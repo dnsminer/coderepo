@@ -316,7 +316,7 @@ def doMWView(mwlist):
             while getmonip:
                 uvlinput = raw_input("What is the internal IP for the monitoring application? ( dotted quad): ")
                 #uvlinput = dotQuadtoInt(uvlinput)
-                uvlinput = iptoint_dm(uvlinput)
+                uvlinput = iptoint_dm.dotQuadtoInt(uvlinput)
                 if uvlinput > 10:
                     viewDict['sh_ip'] = uvlinput
                     getmonip = False
