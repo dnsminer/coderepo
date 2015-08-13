@@ -1,5 +1,32 @@
 ##__author__ = 'dleece'
 ## Module to be used for checking data values in database tables before updating or creating.
+## requires dbConnections.cfg file have valid credentials.
+##
+## !!!!!!!!!! Warning !!!!!!!!!!!!!!!!!
+##  databse creds are stored in clear text, make sure this is a stand alone application account
+##  rather than mysql root. The utils/databases/createDBnUserMysql.py script will create an
+##  account suitable for the app with no other privs.
+
+import ConfigParser
+import MySQLdb as mdb
+
+DNSMinerHome='/opt/dnsminer-alpha'
+dbcfg= DNSMinerHome + "/etc/dbConnections.cfg"
+
+def ConfigSectionMap(section):
+    cfgdict = {}
+    cfgoptions = dbconnect.options(section)
+    for cfgoption in cfgoptions:
+        try:
+            cfgdict[cfgoption] = dbconnect.get(section, cfgoption)
+            if cfgdict[cfgoption] == -1:
+                print "invalid parameter" + cfgoption
+        except:
+            print ('exception thrown, on %s' % cfgoption)
+            cfgdict[cfgoption] = None
+    return  cfgdict
+
+
 def dbRecordCheck(checkinput):
     print "checking existing database records"
     # by default config parser converts keys to lowercase , https://docs.python.org/2/library/configparser.html
@@ -29,3 +56,6 @@ def dbRecordCheck(checkinput):
     dbcon.commit()
     dbcon.close()
     return var
+
+dbconnect=ConfigParser.ConfigParser()
+dbconnect.read(dbcfg)

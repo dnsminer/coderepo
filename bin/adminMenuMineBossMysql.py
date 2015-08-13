@@ -8,6 +8,7 @@ import struct
 from itertools import izip
 import inputSani_dm
 import bcrypt
+import dbchk_dm
 
 
 # noinspection PyUnresolvedReferences
@@ -261,7 +262,8 @@ def inputView(vname):
     viewName = inputSani_dm.inputSanitizer(vname,'view')
     print "confirming view name is unique in the system"
     checkviewname=['view_name','bind_views',viewName]  # Column, table, value
-    boolVar= dbRecordCheck(checkviewname)
+    #boolVar= dbRecordCheck(checkviewname)
+    boolVar= dbchk_dm.dbRecordCheck(checkviewname)
     checkviewlist = [boolVar,viewName]   # return result of uniqueness test and view name value if it's usable.
     return  checkviewlist
 
