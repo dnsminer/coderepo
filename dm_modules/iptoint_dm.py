@@ -4,6 +4,7 @@
 
 import socket
 import struct
+import inputSani_dm
 
 def dotQuadtoInt(dquad):
     dquad = inputSani_dm.inputSanitizer(dquad,'ip')
