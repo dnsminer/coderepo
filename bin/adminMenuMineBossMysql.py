@@ -9,6 +9,7 @@ from itertools import izip
 import inputSani_dm
 import bcrypt
 import dbchk_dm
+import  cfgparse_dm
 
 
 # noinspection PyUnresolvedReferences
@@ -122,6 +123,8 @@ def dbRecordCheck(checkinput):
 def checkauthn(checkinput):
     print "checking credentials supplied"
     # by default config parser converts keys to lowercase , https://docs.python.org/2/library/configparser.html
+    thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionOne')
+    print thisCfgDict
     adminVar= ConfigSectionMap("SectionOne")['databaseuser']
     adminPwd= ConfigSectionMap("SectionOne")['databasepwd']
     ivDBName= ConfigSectionMap("SectionOne")['databasename']
