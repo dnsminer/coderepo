@@ -1,6 +1,7 @@
 #__author__ = 'dleece'
 import  string
 import re
+import socket
 
 def inputSanitizer(inputstring,type):
     # sanitize based on whitelist and what type of input we're expecting
@@ -17,21 +18,20 @@ def inputSanitizer(inputstring,type):
         chkdstring = checkwhitelist(inputstring,charwl)
     if type == 'ip':
         print "testing IP" + inputstring
-        v4pat = re.compile(('^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'))
-        chkv4pat = v4pat.match(inputstring)
-        print chkv4pat
-        if not chkv4pat:
-            print "Invalid IP address, please redo"
-        else:
+        testres = checkIPsock(inputstring)
+        if testres:
             chkdstring = inputstring
+        else:
+            print "Invalid IP address, please redo"
     if type == 'cidr':
         print "testing cidr"
-        v4pat = re.compile(('^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/\d{1,2}'))
-        chkv4pat = v4pat.match(inputstring)
-        if not chkv4pat:
-            print "Invalid CIDR address, please redo"
-        else:
+        ipipmask = inputstring.split('/')
+        testres = checkIPsock(ipipmask[0])
+        testmask = int(ipipmask[1])
+        if  testres and testmask < 33 and testmask > 0 :
             chkdstring = inputstring
+        else:
+            print "Invalid IP address or subnet mask, please redo"
 
         # do some ip regex check
 
@@ -47,3 +47,10 @@ def checkwhitelist(istring,wl):
         tmpchar = tmpchar + tchar
     outstring = tmpchar
     return outstring
+
+def checkIPsock(addr):
+    try:
+        socket.inet_aton(addr)
+        return True
+    except:
+        return False
