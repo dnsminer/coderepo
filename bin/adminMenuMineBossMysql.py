@@ -1,13 +1,17 @@
 #!/usr/bin/env python
 #__author__ = 'dleece'
+# Set the path to include the dns miner modules directory
 import sys
+DNSMinerHome='/opt/dnsminer-alpha'
+dm_modules = DNSMinerHome + "/dm_modules"
+sys.path.append(dm_modules)
+
 import string
 import ConfigParser
 import socket
 import struct
 from itertools import izip
 import random
-
 import bcrypt
 from dm_modules import cfgparse_dm, dbchk_dm, inputSani_dm, iptoint_dm
 
@@ -18,7 +22,7 @@ from dm_modules import cfgparse_dm, dbchk_dm, inputSani_dm, iptoint_dm
 # noinspection PyUnresolvedReferences
 import MySQLdb as mdb
 
-DNSMinerHome='/opt/dnsminer-alpha'
+#DNSMinerHome='/opt/dnsminer-alpha'
 dbUtilsHome = DNSMinerHome + '/utils/databases/'
 dbcfg= DNSMinerHome + "/etc/dbConnections.cfg"
 nodecfg = DNSMinerHome + "/etc/nodes.cfg"
