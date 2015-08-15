@@ -1,6 +1,6 @@
 __author__ = 'dleece'
 #from dm_modules
-import dbchk_dm, inputSani_dm, iptoint_dm
+import dbchk_dm, inputSani_dm, iptoint_dm, genRandomString_dm, insertsinkholedata_dm
 
 def inputView(vname):
     #check for no spaces and make sure it's not already used.
@@ -20,6 +20,8 @@ def doView(mwlist):
     #    print val
     # create a dictionary to collect all the results to generate SQL inserts or update
     viewDict = dict()
+    # insert org id into dictionary
+    viewDict['org_id'] = mwlist[2]
     if mwlist[1] != 'update':
         # start the menu to gather view details
         viewmenuactive=True
@@ -85,8 +87,21 @@ def doView(mwlist):
                 # build IPs and cidr into a CSV string to be used with views
                 rcsvclients  = ",".join(map(str,viewClientIPList))
             viewDict['view_src_acl_ips'] = rcsvclients  # build into an ACL data structure later on
-            viewmenuactive = False
+
+
+        print "\n please standby, generating a view specific domain for RPZ usage."
+        dompart = genRandomString_dm(8)
+        hostpart = genRandomString_dm(6)
+        shfqdn = hostpart + '.' + dompart + '.local'
+        print "\n created this virtually unguessable FQDN just for this view: " + shfqdn
+        viewDict['sh_fqdn'] = shfqdn
+        # generate the list to be fed to db-insert_sinkholedata
+        sinkholesql = insertsinkholedata_dm(viewDict)
         print viewDict
+        print sinkholesql
+
+        viewmenuactive = False
+
 
 
         return
