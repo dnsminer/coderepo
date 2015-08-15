@@ -23,7 +23,7 @@ def inputSanitizer(inputstring,type):
         charwl = string.ascii_letters + string.digits + '-_'
         chkdstring = checkwhitelist(inputstring,charwl)
     if type == 'ip':
-        print "testing IP" + inputstring
+        #print "testing IP" + inputstring
         testres = checkIPsock(inputstring)
         if testres:
             chkdstring = inputstring

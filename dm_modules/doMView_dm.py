@@ -43,9 +43,13 @@ def doView(mwlist):
                 uvlinput = iptoint_dm.dotQuadtoInt(uvlinput)
                 if uvlinput > 10:
                     viewDict['sh_ip'] = uvlinput
+                    getmonip = False
                 else:
                     print "hmm, looks like that wasn't a dotted quad, EG 172.16.28.7, please enter again"
-                print"\nProvide a short description of this sink hole, EG, .net app running in Calgary office"
+
+            print"\nProvide a short description of this sink hole, EG, .net app running in Calgary office"
+            getmondesc = True
+            while getmondesc:
                 uvlinput = raw_input("Description: ")
                 uvlinput = inputSani_dm.inputSanitizer(uvlinput,'desc1')
                 print uvlinput
@@ -53,7 +57,8 @@ def doView(mwlist):
                     continue
                 else:
                     viewDict['sh_desc'] = uvlinput
-                    getmonip = False
+                    getmondesc = False
+
             getviewip = True
             viewClientIPList=[]
             print "\nDefine the the source IP(s)/ subnets for the recursive clients using this view( dotted quad or cidr): "
