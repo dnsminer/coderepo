@@ -89,7 +89,7 @@ def doView(mwlist):
                     viewDict['view_src_acl_ips'] = rcsvclients  # build into an ACL data structure later on
 
             print "\n please standby, generating a view specific domain for RPZ usage."
-            dompart = genRandomString_dm.genString(8)
+            dompart = genRandomString_dm.genString(7)
             hostpart = genRandomString_dm.genString(6)
             shfqdn = hostpart + '.' + dompart + '.local'
             print "\n created this virtually unguessable FQDN just for this view: " + shfqdn
@@ -98,7 +98,11 @@ def doView(mwlist):
             sinkholesql = insertsinkholedata_dm.parsemenudict(viewDict)
             print viewDict
             print sinkholesql
-            menudbinsert_dm.dbinsert(sinkholesql)
+            shresult=menudbinsert_dm.dbinsert(sinkholesql)
+            if shresult == '1':
+                print "sinkhole table entry created successfully"
+            else:
+                print "You may need to manually check the view_sinkholes table"
 
             viewmenuactive=False
 

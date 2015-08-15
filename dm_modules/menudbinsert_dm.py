@@ -28,7 +28,7 @@ def dbinsert(insertstr):
         sqlStr = insertstr
         #print sqlStr
         cur.execute(sqlStr)
-        print("affected rows = {}".format(cur.rowcount))
+        insresult=(cur.rowcount)
     dbcon.commit()
     dbcon.close()
-    return
+    return insresult
