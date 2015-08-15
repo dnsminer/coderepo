@@ -10,6 +10,7 @@ def parsemenudict(vdict):
     thisval=vdict['sh_ip']
     thislist.append(thisval)
     thisval=vdict['sh_desc']
+    thislist.append(thisval)
     thisInsertStr = genSHsqlString(thislist)
     return thisInsertStr
 

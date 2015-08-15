@@ -1,6 +1,6 @@
 __author__ = 'dleece'
 #from dm_modules
-import dbchk_dm, inputSani_dm, iptoint_dm, genRandomString_dm, insertsinkholedata_dm
+import dbchk_dm, inputSani_dm, iptoint_dm, genRandomString_dm, insertsinkholedata_dm, menudbinsert_dm
 
 def inputView(vname):
     #check for no spaces and make sure it's not already used.
@@ -98,6 +98,7 @@ def doView(mwlist):
             sinkholesql = insertsinkholedata_dm.parsemenudict(viewDict)
             print viewDict
             print sinkholesql
+            menudbinsert_dm.dbinsert(sinkholesql)
 
             viewmenuactive=False
 
