@@ -8,31 +8,37 @@
 ##  account suitable for the app with no other privs.
 
 import ConfigParser
+import sys
 import MySQLdb as mdb
+from dm_modules import cfgparse_dm, inputSani_dm, iptoint_dm, doMView_dm
 
 DNSMinerHome='/opt/dnsminer-alpha'
 dbcfg= DNSMinerHome + "/etc/dbConnections.cfg"
 
-def ConfigSectionMap(section):
-    cfgdict = {}
-    cfgoptions = dbconnect.options(section)
-    for cfgoption in cfgoptions:
-        try:
-            cfgdict[cfgoption] = dbconnect.get(section, cfgoption)
-            if cfgdict[cfgoption] == -1:
-                print "invalid parameter" + cfgoption
-        except:
-            print ('exception thrown, on %s' % cfgoption)
-            cfgdict[cfgoption] = None
-    return  cfgdict
+#def ConfigSectionMap(section):
+#    cfgdict = {}
+#    cfgoptions = dbconnect.options(section)
+#    for cfgoption in cfgoptions:
+#        try:
+#            cfgdict[cfgoption] = dbconnect.get(section, cfgoption)
+#            if cfgdict[cfgoption] == -1:
+#                print "invalid parameter" + cfgoption
+#        except:
+#            print ('exception thrown, on %s' % cfgoption)
+#            cfgdict[cfgoption] = None
+#    return  cfgdict
 
 
 def dbRecordCheck(checkinput):
+    thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionOne')
+    adminVar = thisCfgDict['databaseuser']
+    adminPwd= thisCfgDict['databasepwd']
+    ivDBName = thisCfgDict['databasename']
     print "checking existing database records"
     # by default config parser converts keys to lowercase , https://docs.python.org/2/library/configparser.html
-    adminVar= ConfigSectionMap("SectionOne")['databaseuser']
-    adminPwd= ConfigSectionMap("SectionOne")['databasepwd']
-    ivDBName= ConfigSectionMap("SectionOne")['databasename']
+    #adminVar= ConfigSectionMap("SectionOne")['databaseuser']
+    #adminPwd= ConfigSectionMap("SectionOne")['databasepwd']
+    #ivDBName= ConfigSectionMap("SectionOne")['databasename']
     checkcolumn = checkinput[0]
     checktable = checkinput[1]
     checkvalue = checkinput[2]
@@ -57,5 +63,6 @@ def dbRecordCheck(checkinput):
     dbcon.close()
     return var
 
-dbconnect=ConfigParser.ConfigParser()
-dbconnect.read(dbcfg)
+
+#dbconnect=ConfigParser.ConfigParser()
+#dbconnect.read(dbcfg)
