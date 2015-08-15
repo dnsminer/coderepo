@@ -84,22 +84,27 @@ def doView(mwlist):
                 nextIP = nextIP.strip().lower()
                 if nextIP == 'no':
                     getviewip = False
-                # build IPs and cidr into a CSV string to be used with views
-                rcsvclients  = ",".join(map(str,viewClientIPList))
-                viewDict['view_src_acl_ips'] = rcsvclients  # build into an ACL data structure later on
+                    # build IPs and cidr into a CSV string to be used with views
+                    rcsvclients  = ",".join(map(str,viewClientIPList))
+                    viewDict['view_src_acl_ips'] = rcsvclients  # build into an ACL data structure later on
 
-        print "\n please standby, generating a view specific domain for RPZ usage."
-        dompart = genRandomString_dm(8)
-        hostpart = genRandomString_dm(6)
-        shfqdn = hostpart + '.' + dompart + '.local'
-        print "\n created this virtually unguessable FQDN just for this view: " + shfqdn
-        viewDict['sh_fqdn'] = shfqdn
-        # generate the list to be fed to db-insert_sinkholedata
-        sinkholesql = insertsinkholedata_dm(viewDict)
-        print viewDict
-        print sinkholesql
+            print "\n please standby, generating a view specific domain for RPZ usage."
+            dompart = genRandomString_dm(8)
+            hostpart = genRandomString_dm(6)
+            shfqdn = hostpart + '.' + dompart + '.local'
+            print "\n created this virtually unguessable FQDN just for this view: " + shfqdn
+            viewDict['sh_fqdn'] = shfqdn
+            # generate the list to be fed to db-insert_sinkholedata
+            sinkholesql = insertsinkholedata_dm(viewDict)
+            print viewDict
+            print sinkholesql
 
-        viewmenuactive = False
+            viewmenuactive=False
+
+
+
+
+
 
 
 
