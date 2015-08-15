@@ -18,7 +18,7 @@ def doView(mwlist):
     print "do menu view"
     for val in mwlist:
         print val
-    # create a dictionary to collect all the results to generate SQL insert or update
+    # create a dictionary to collect all the results to generate SQL inserts or update
     viewDict = dict()
     if mwlist[1] != 'update':
         # start the menu to gather view details
@@ -38,15 +38,18 @@ def doView(mwlist):
 
             getmonip = True
             while getmonip:
+                print "\nIdeally you want to direct traffic to a server you control, AKA, sinkhole"
                 uvlinput = raw_input("What is the internal IP for the monitoring application? ( dotted quad): ")
-                #uvlinput = dotQuadtoInt(uvlinput)
                 uvlinput = iptoint_dm.dotQuadtoInt(uvlinput)
                 if uvlinput > 10:
                     viewDict['sh_ip'] = uvlinput
-                    getmonip = False
                 else:
                     print "hmm, looks like that wasn't a dotted quad, EG 172.16.28.7, please enter again"
-
+                print"\n provide a short description of this sink hole, EG, .net app running in Calgary office"
+                uvlinput = raw_input("Description: ")
+                uvlinput = inputSani_dm.inputSanitizer(uvlinput,'desc1')
+                viewDict['sh_desc'] = uvlinput
+                getmonip = False
             getviewip = True
             viewClientIPList=[]
             print "\nDefine the the source IP(s)/ subnets for the recursive clients using this view( dotted quad or cidr): "
@@ -66,7 +69,7 @@ def doView(mwlist):
                         print "hmm, looks like that wasn't cidr notation, EG 172.16.28.0/26, please enter again"
                         continue
                 viewClientIPList.append(uvsinput)
-                nextIP = raw_input("Do you need to add another IP address (yes|no)?")
+                nextIP = raw_input("\nDo you need to add another IP address (yes|no)?")
                 nextIP = nextIP.strip().lower()
                 if nextIP == 'no':
                     getviewip = False

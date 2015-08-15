@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS bind_views,blacklist_domain,blacklist_host,whitelist_host,w
 
 CREATE TABLE org_info ( org_id INT NOT NULL AUTO_INCREMENT, org_name VARCHAR(60) NOT NULL, org_contact VARCHAR(80) NOT NULL, alert_contact VARCHAR(80) NOT NULL, pwd VARCHAR(60) NOT NULL, PRIMARY KEY (org_id) ) ENGINE=InnoDB;
 
-CREATE TABLE view_sinkholes ( sinkhole_id INT NOT NULL AUTO_INCREMENT, org_id INT NOT NULL, cname_zone VARCHAR(16) NOT NULL, sh_ip BIGINT NOT NULL,  description VARCHAR(80), PRIMARY KEY (sinkhole_id), FOREIGN KEY (org_id) REFERENCES org_info(org_id) ON UPDATE CASCADE ON DELETE NO ACTION ) ENGINE=INNODB;
+CREATE TABLE view_sinkholes ( sinkhole_id INT NOT NULL AUTO_INCREMENT, org_id INT NOT NULL, cname_zone VARCHAR(16) NOT NULL, sh_ip BIGINT NOT NULL,  sh_desc VARCHAR(80), PRIMARY KEY (sinkhole_id), FOREIGN KEY (org_id) REFERENCES org_info(org_id) ON UPDATE CASCADE ON DELETE NO ACTION ) ENGINE=INNODB;
 
 CREATE TABLE bind_views ( view_id INT NOT NULL AUTO_INCREMENT, org_id INT NOT NULL, view_name VARCHAR(40) NOT NULL, def_sh_id INT NOT NULL, view_src_ip bigint NOT NULL, description VARCHAR(80), PRIMARY KEY (view_ID), FOREIGN KEY (org_id) REFERENCES org_info(org_id) ON UPDATE CASCADE ON DELETE NO ACTION, FOREIGN KEY (def_sh_id) REFERENCES view_sinkholes(sinkhole_id) ON UPDATE CASCADE ON DELETE NO ACTION ) ENGINE=INNODB;
 
