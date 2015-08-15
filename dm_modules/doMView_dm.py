@@ -99,6 +99,7 @@ def doView(mwlist):
             print viewDict
             print sinkholesql
             shresult=menudbinsert_dm.dbinsert(sinkholesql)
+            print shresult
             if shresult == '1':
                 print "sinkhole table entry created successfully"
             else:
