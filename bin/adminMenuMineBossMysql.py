@@ -24,18 +24,18 @@ dbUtilsHome = DNSMinerHome + '/utils/databases/'
 dbcfg= DNSMinerHome + "/etc/dbConnections.cfg"
 nodecfg = DNSMinerHome + "/etc/nodes.cfg"
 
-def ConfigSectionMap(section):
-    dbcfgdict = {}
-    cfgoptions = dbconnect.options(section)
-    for cfgoption in cfgoptions:
-        try:
-            dbcfgdict[cfgoption] = dbconnect.get(section, cfgoption)
-            if dbcfgdict[cfgoption] == -1:
-                print "invalid parameter" + cfgoption
-        except:
-            print ('exception thrown, on %s' % cfgoption)
-            dbcfgdict[cfgoption] = None
-    return  dbcfgdict
+#def ConfigSectionMap(section):
+#    dbcfgdict = {}
+#    cfgoptions = dbconnect.options(section)
+#    for cfgoption in cfgoptions:
+#        try:
+#            dbcfgdict[cfgoption] = dbconnect.get(section, cfgoption)
+#            if dbcfgdict[cfgoption] == -1:
+#                print "invalid parameter" + cfgoption
+#        except:
+#            print ('exception thrown, on %s' % cfgoption)
+#            dbcfgdict[cfgoption] = None
+#    return  dbcfgdict
 
 
 def userLogin():
@@ -72,55 +72,55 @@ def inputMenu(inputstring):
     return menurequest
 
 
-def inputSanitizer(inputstring,type):
-    # sanitize based on whitelist and what type of input we're expecting
-    charwl = string.ascii_letters + string.whitespace + string.digits
-    if type == 'emailstring':
-        charwl = charwl + '@._-'
-    if type ==  'password':
-        charwl = string.printable
-    if type == 'view':
-        charwl = string.ascii_letters + string.digits + '-_'
+#def inputSanitizer(inputstring,type):
+#    # sanitize based on whitelist and what type of input we're expecting
+#    charwl = string.ascii_letters + string.whitespace + string.digits
+#    if type == 'emailstring':
+#        charwl = charwl + '@._-'
+#    if type ==  'password':
+#        charwl = string.printable
+#    if type == 'view':
+#        charwl = string.ascii_letters + string.digits + '-_'
+#
+#    outstring = inputstring.strip()
+#    tmpchar=''
+#    for tchar in outstring:
+#        if tchar not in charwl:
+#            print "replacing invalid character " + tchar + " with an underscore _ "
+#            tchar = '_'
+#        tmpchar = tmpchar + tchar
+#    outstring = tmpchar
+#    return outstring
 
-    outstring = inputstring.strip()
-    tmpchar=''
-    for tchar in outstring:
-        if tchar not in charwl:
-            print "replacing invalid character " + tchar + " with an underscore _ "
-            tchar = '_'
-        tmpchar = tmpchar + tchar
-    outstring = tmpchar
-    return outstring
-
-def dbRecordCheck(checkinput):
-    print "checking existing database records"
-    # by default config parser converts keys to lowercase , https://docs.python.org/2/library/configparser.html
-    adminVar= ConfigSectionMap("SectionOne")['databaseuser']
-    adminPwd= ConfigSectionMap("SectionOne")['databasepwd']
-    ivDBName= ConfigSectionMap("SectionOne")['databasename']
-    checkcolumn = checkinput[0]
-    checktable = checkinput[1]
-    checkvalue = checkinput[2]
-    var = False
-    try:
-        dbcon = mdb.connect('localhost',adminVar,adminPwd,ivDBName)
-        #print "connected"
-    except mdb.Error, e:
-        print e.args[0]
-        sys.exit(1)
-
-    with dbcon:
-        cur=dbcon.cursor()
-        sqlStr = "USE " + ivDBName
-        cur.execute(sqlStr)
-        sqlStr = "SELECT count(1) from " + checktable + " WHERE " + checkcolumn + " = '" + checkvalue +"';"
-        cur.execute(sqlStr)
-        if cur.fetchone()[0]:
-            print "Sorry, that record appears to be in use, please provide a different value"
-            var= True
-    dbcon.commit()
-    dbcon.close()
-    return var
+#def dbRecordCheck(checkinput):
+#    print "checking existing database records"
+#    # by default config parser converts keys to lowercase , https://docs.python.org/2/library/configparser.html
+#    adminVar= ConfigSectionMap("SectionOne")['databaseuser']
+#    adminPwd= ConfigSectionMap("SectionOne")['databasepwd']
+#    ivDBName= ConfigSectionMap("SectionOne")['databasename']
+#    checkcolumn = checkinput[0]
+#    checktable = checkinput[1]
+#    checkvalue = checkinput[2]
+#    var = False
+#    try:
+#        dbcon = mdb.connect('localhost',adminVar,adminPwd,ivDBName)
+#        #print "connected"
+#    except mdb.Error, e:
+#        print e.args[0]
+#        sys.exit(1)
+#
+#    with dbcon:
+#        cur=dbcon.cursor()
+#        sqlStr = "USE " + ivDBName
+#        cur.execute(sqlStr)
+#        sqlStr = "SELECT count(1) from " + checktable + " WHERE " + checkcolumn + " = '" + checkvalue +"';"
+#        cur.execute(sqlStr)
+#        if cur.fetchone()[0]:
+#            print "Sorry, that record appears to be in use, please provide a different value"
+#            var= True
+#    dbcon.commit()
+#    dbcon.close()
+#    return var
 
 
 
@@ -269,26 +269,6 @@ def doMenuSelect(menulist,orgid):
     return
 
 
-
-def dotQuadtoInt(dquad):
-    dquad = inputSani_dm.inputSanitizer(dquad,'ip')
-    if dquad =='invalid_format':
-        ipInt = 10
-    else:
-        ipInt = struct.unpack('>L',socket.inet_aton(dquad))[0]
-    #print dquad
-    #print ipInt
-    return  ipInt
-
-def intTodotQuad(ipint):
-    dotquad = socket.inet_ntoa(struct.pack('>L',ipint))
-    return  dotquad
-
-
-
-
-
-
     # store all answers in a dictinary and then use dictionry to create SQL
     # prompt for view name,   check for no spaces and make sure it's not already used.
     # prompt for ip address inside org to be populated into the zone file
@@ -300,7 +280,7 @@ def intTodotQuad(ipint):
     # prompt for view name,   check for no spaces and make sure it's not already used.
     # prompt for ip address inside org to be populated into the zone file
     # prompt for ip address view traffic will be coming from.  Make this a list which could be turned into an ACL.
-    return
+    #return
 
 
 def genRPZCname():
@@ -313,8 +293,8 @@ def genRPZCname():
 # --- main -----------------------------------
 
 #readConfigIni(dbcfg)  ( convert to function )
-dbconnect=ConfigParser.ConfigParser()
-dbconnect.read(dbcfg)
+#dbconnect=ConfigParser.ConfigParser()
+#dbconnect.read(dbcfg)
 
 # gather org input, outputs a boolean and if true and org_id
 loginresult=userLogin()
