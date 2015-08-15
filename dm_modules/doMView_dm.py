@@ -86,8 +86,7 @@ def doView(mwlist):
                     getviewip = False
                 # build IPs and cidr into a CSV string to be used with views
                 rcsvclients  = ",".join(map(str,viewClientIPList))
-            viewDict['view_src_acl_ips'] = rcsvclients  # build into an ACL data structure later on
-
+                viewDict['view_src_acl_ips'] = rcsvclients  # build into an ACL data structure later on
 
         print "\n please standby, generating a view specific domain for RPZ usage."
         dompart = genRandomString_dm(8)
