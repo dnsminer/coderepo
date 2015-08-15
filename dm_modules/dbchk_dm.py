@@ -7,26 +7,12 @@
 ##  rather than mysql root. The utils/databases/createDBnUserMysql.py script will create an
 ##  account suitable for the app with no other privs.
 
-import ConfigParser
 import sys
 import MySQLdb as mdb
 from dm_modules import cfgparse_dm, inputSani_dm, iptoint_dm, doMView_dm
 
 DNSMinerHome='/opt/dnsminer-alpha'
 dbcfg= DNSMinerHome + "/etc/dbConnections.cfg"
-
-#def ConfigSectionMap(section):
-#    cfgdict = {}
-#    cfgoptions = dbconnect.options(section)
-#    for cfgoption in cfgoptions:
-#        try:
-#            cfgdict[cfgoption] = dbconnect.get(section, cfgoption)
-#            if cfgdict[cfgoption] == -1:
-#                print "invalid parameter" + cfgoption
-#        except:
-#            print ('exception thrown, on %s' % cfgoption)
-#            cfgdict[cfgoption] = None
-#    return  cfgdict
 
 
 def dbRecordCheck(checkinput):

@@ -37,6 +37,7 @@ def doView(mwlist):
                 if not vresult[0]:
                     viewDict['view_name'] = vresult[1]
                     getviewname = False
+
             getmonip = True
             while getmonip:
                 uvlinput = raw_input("What is the internal IP for the monitoring application? ( dotted quad): ")
