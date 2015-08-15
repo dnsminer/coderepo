@@ -102,10 +102,4 @@ def doView(mwlist):
             viewmenuactive=False
 
 
-
-
-
-
-
-
         return
