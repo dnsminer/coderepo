@@ -14,7 +14,7 @@ def parsemenudict(vdict):
     return thisInsertStr
 
 def genSHsqlString(valuelist):
-    valstr ="','".join(valuelist)
+    valstr ="','".join(map(str,valuelist))
     sqlstr = "INSERT into view_sinkholes (org_id,sh_fqdn,sh_ip,sh_desc) VALUES ('" + valstr + "');"
     return  sqlstr
 
