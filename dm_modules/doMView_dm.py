@@ -1,6 +1,6 @@
 __author__ = 'dleece'
-
-from dm_modules import dbchk_dm, inputSani_dm, iptoint_dm
+#from dm_modules
+import dbchk_dm, inputSani_dm, iptoint_dm
 
 def inputView(vname):
     #check for no spaces and make sure it's not already used.

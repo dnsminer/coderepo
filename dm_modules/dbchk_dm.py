@@ -9,7 +9,8 @@
 
 import sys
 import MySQLdb as mdb
-from dm_modules import cfgparse_dm, inputSani_dm, iptoint_dm, doMView_dm
+#from dm_modules \
+import cfgparse_dm
 
 DNSMinerHome='/opt/dnsminer-alpha'
 dbcfg= DNSMinerHome + "/etc/dbConnections.cfg"
