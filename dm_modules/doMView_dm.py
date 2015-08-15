@@ -95,7 +95,7 @@ def doView(mwlist):
             print "\n created this virtually unguessable FQDN just for this view: " + shfqdn
             viewDict['sh_fqdn'] = shfqdn
             # generate the list to be fed to db-insert_sinkholedata
-            sinkholesql = insertsinkholedata_dm(viewDict)
+            sinkholesql = insertsinkholedata_dm.parsemenudict(viewDict)
             print viewDict
             print sinkholesql
 
