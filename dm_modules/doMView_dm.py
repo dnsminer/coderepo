@@ -2,7 +2,7 @@ __author__ = 'dleece'
 
 
 
-from dm_modules import cfgparse_dm, dbchk_dm, inputSani_dm, iptoint_dm, doMView_dm
+from dm_modules import cfgparse_dm, dbchk_dm, inputSani_dm, iptoint_dm
 
 def inputView(vname):
     #check for no spaces and make sure it's not already used.
