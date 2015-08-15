@@ -48,6 +48,7 @@ def doView(mwlist):
                 print"\nProvide a short description of this sink hole, EG, .net app running in Calgary office"
                 uvlinput = raw_input("Description: ")
                 uvlinput = inputSani_dm.inputSanitizer(uvlinput,'desc1')
+                print uvlinput
                 if uvlinput == 'invalid_format':
                     continue
                 else:

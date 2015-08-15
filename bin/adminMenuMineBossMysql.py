@@ -52,7 +52,7 @@ def inputMenu(inputstring):
             menurequest = []
         else:
             operrequest = inputstring
-            method = raw_input("creaste new or update existing (new|update)? :")
+            method = raw_input("create new or update existing (new|update)? :")
             menurequest = [operrequest,method]
     return menurequest
 
