@@ -87,6 +87,19 @@ def doView(mwlist):
                     # build IPs and cidr into a CSV string to be used with views
                     rcsvclients  = ",".join(map(str,viewClientIPList))
                     viewDict['view_src_acl_ips'] = rcsvclients  # build into an ACL data structure later on
+                        print"\nProvide a short description of this sink hole, EG, .net app running in Calgary office"
+
+            getviewdesc = True
+             print"\nProvide a short description of what's behind these IP addresses,  EG, Eastern office or Engineering dept"
+            while getviewdesc:
+                uvlinput = raw_input("Description: ")
+                uvlinput = inputSani_dm.inputSanitizer(uvlinput,'desc1')
+                print uvlinput
+                if uvlinput == 'invalid_format':
+                    continue
+                else:
+                    viewDict['sh_desc'] = uvlinput
+                    getviewdesc = False
 
             print "\n please standby, generating a view specific domain for RPZ usage."
             dompart = genRandomString_dm.genString(7)
