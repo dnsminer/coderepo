@@ -17,7 +17,7 @@ def inputSanitizer(inputstring,type):
         if len(inputstring) > 80:
             print "Description too long, please abbreviate"
         else:
-            charwl = string.ascii_letters + string.whitespace + string.digits + '-_'
+            charwl = string.ascii_letters + string.whitespace + string.digits + '-_.,'
             chkdstring = checkwhitelist(inputstring,charwl)
     if type == 'view':
         charwl = string.ascii_letters + string.digits + '-_'

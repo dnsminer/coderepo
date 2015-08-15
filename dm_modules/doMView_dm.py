@@ -15,9 +15,9 @@ def inputView(vname):
 
 
 def doView(mwlist):
-    print "do menu view"
-    for val in mwlist:
-        print val
+    #print "do menu view"
+    #for val in mwlist:
+    #    print val
     # create a dictionary to collect all the results to generate SQL inserts or update
     viewDict = dict()
     if mwlist[1] != 'update':
@@ -45,11 +45,14 @@ def doView(mwlist):
                     viewDict['sh_ip'] = uvlinput
                 else:
                     print "hmm, looks like that wasn't a dotted quad, EG 172.16.28.7, please enter again"
-                print"\n provide a short description of this sink hole, EG, .net app running in Calgary office"
+                print"\nProvide a short description of this sink hole, EG, .net app running in Calgary office"
                 uvlinput = raw_input("Description: ")
                 uvlinput = inputSani_dm.inputSanitizer(uvlinput,'desc1')
-                viewDict['sh_desc'] = uvlinput
-                getmonip = False
+                if uvlinput == 'invalid_format':
+                    continue
+                else:
+                    viewDict['sh_desc'] = uvlinput
+                    getmonip = False
             getviewip = True
             viewClientIPList=[]
             print "\nDefine the the source IP(s)/ subnets for the recursive clients using this view( dotted quad or cidr): "
@@ -75,7 +78,7 @@ def doView(mwlist):
                     getviewip = False
                 # build IPs and cidr into a CSV string to be used with views
                 rcsvclients  = ",".join(map(str,viewClientIPList))
-            viewDict['view_src_ip'] = rcsvclients  # build into an ACL data structure later on
+            viewDict['view_src_acl_ips'] = rcsvclients  # build into an ACL data structure later on
             viewmenuactive = False
         print viewDict
 
