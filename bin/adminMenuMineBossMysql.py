@@ -14,10 +14,7 @@ import struct
 from itertools import izip
 import random
 import bcrypt
-from dm_modules import cfgparse_dm, inputSani_dm, doMView_dm
-
-
-
+from dm_modules import cfgparse_dm, doMView_dm, inputSani_dm
 
 # noinspection PyUnresolvedReferences
 import MySQLdb as mdb
