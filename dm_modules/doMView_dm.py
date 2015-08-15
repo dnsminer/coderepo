@@ -89,8 +89,8 @@ def doView(mwlist):
                     viewDict['view_src_acl_ips'] = rcsvclients  # build into an ACL data structure later on
 
             print "\n please standby, generating a view specific domain for RPZ usage."
-            dompart = genRandomString_dm(8)
-            hostpart = genRandomString_dm(6)
+            dompart = genRandomString_dm.genString(8)
+            hostpart = genRandomString_dm.genString(6)
             shfqdn = hostpart + '.' + dompart + '.local'
             print "\n created this virtually unguessable FQDN just for this view: " + shfqdn
             viewDict['sh_fqdn'] = shfqdn
