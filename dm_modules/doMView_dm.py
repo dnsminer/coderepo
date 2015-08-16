@@ -97,7 +97,7 @@ def doView(mwlist):
                 if uvlinput == 'invalid_format':
                     continue
                 else:
-                    viewDict['sh_desc'] = uvlinput
+                    viewDict['view_desc'] = uvlinput
                     getviewdesc = False
 
             print "\n please standby, generating a view specific domain for RPZ usage."
