@@ -23,16 +23,37 @@ def gentsigsql(thisvid):
         tmpid=str(thisvid)
         tsigsqlstr = "SELECT tsig_keys.tsig_name FROM tsig_keys INNER JOIN  bind_views ON tsig_keys.tsig_id = bind_views.tsig_id "
         tsigsqlstr = tsigsqlstr + "WHERE bind_views.view_id = '" + tmpid  + "' ;"
-        print tsigsqlstr
-        thisresult=gettsigdata(tsigsqlstr)
-        for val in thisresult:
-            print val
+        thisresult=getdata(tsigsqlstr)
+        if thisresult[0] is not None:
+            gviewdict['tsig_name'] = thisresult[0]
+        else:
+            print "no tsig key name found, debug required"
+            exit()
     else:
         print "invalid input, I quit"
         exit()
     return
 
-def gettsigdata(thissqlstr):
+def genshsql(thisvname):
+    # This should be presanitized but if we need another check at some point put it here.
+    if type(thisvname) == type(str()):
+        tmpid=thisvname
+        shsqlstr = "SELECT view_sinkholes.sh_fqdn,view_sinkholes.sh_ip FROM view_sinkholes INNER JOIN  bind_views ON view_sinkholes.sinkhole_id = bind_views.def_sh_id "
+        shsqlstr = shsqlstr + "WHERE bind_views.view_name = '" + tmpid  + "' ;"
+        thisresult=getdata(shsqlstr)
+        if thisresult[0] is not None:
+            gviewdict['sh_fqdn'] = thisresult[0]
+            gviewdict['sh_ip'] = thisresult[1]
+        else:
+            print "no view name found, debug required"
+            exit()
+    else:
+        print "invalid input, I quit"
+        exit()
+    return
+
+
+def getdata(thissqlstr):
     qresult = dbselect1row_dm.dbRecordSelect(thissqlstr)
     return qresult
 
@@ -52,10 +73,10 @@ def doGenView(thisorgid):
                 if  vresult[0]:
                     print "congrats you are authorized for this view "
                     gviewdict['view_id'] = vresult[1]
+                    gviewdict['view_name'] = viewName
                     getviewid = False
 
                 # get tsig key data
-                print gviewdict['view_id']
                 gentsigsql(gviewdict['view_id'])
 
 
