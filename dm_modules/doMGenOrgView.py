@@ -13,7 +13,10 @@ def authView(authzlist):
     return  authzresults
 
 
+
 def doGenView(thisorgid):
+    gviewdict=dict()
+    gviewdict['org_id']=thisorgid
     genviewmenuactive = True
     while genviewmenuactive:
             getviewname = True
@@ -26,7 +29,10 @@ def doGenView(thisorgid):
                 authchk=[thisorgid,viewName]
                 vresult = authView(authchk) # needed to get the status, using length of list to avoid global vars
                 if  vresult[0]:
-                    print "congrats you are authorized for view ID " + vresult[1]
+                    print "congrats you are authorized for this view "
+                    gviewdict['view_id'] = vresult[1]
 
+            for key,val in gviewdict:
+                print key,"-->",val
 
             genviewmenuactive=False
