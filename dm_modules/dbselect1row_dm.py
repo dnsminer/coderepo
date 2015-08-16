@@ -8,6 +8,7 @@ DNSMinerHome='/opt/dnsminer-alpha'
 dbcfg= DNSMinerHome + "/etc/dbConnections.cfg"
 
 def dbRecordSelect(selectinput):
+    print selectinput
     thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionOne')
     adminVar = thisCfgDict['databaseuser']
     adminPwd= thisCfgDict['databasepwd']
