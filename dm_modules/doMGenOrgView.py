@@ -17,7 +17,8 @@ def authView(authzlist):
     return  authzresults
 
 def gettsigdata(thisvid):
-    print type(thisvid)
+    # debug
+    #print type(thisvid)
     if type(thisvid) == type(long()):
         tmpid=str(thisvid)
         tsigsqlstr = "SELECT tsig_keys.tsig_name FROM tsig_keys INNER JOIN  bind_views ON tsig_keys.tsig_id = bind_views.tsig_id "
