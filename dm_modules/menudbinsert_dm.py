@@ -16,7 +16,7 @@ def dbinsert(insertstr):
 
     try:
         dbcon = mdb.connect('localhost',adminVar,adminPwd,ivDBName)
-        print "connected in insert function"
+        #print "connected in insert function"
     except mdb.Error, e:
         print e.args[0]
         sys.exit(1)
