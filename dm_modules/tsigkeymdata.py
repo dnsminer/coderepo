@@ -3,7 +3,8 @@ __author__ = 'dleece'
 import menudbinsert_dm, menudbselect_dm
 def gentsigsql(orgid,viewname):
     keyname = "mineboss-" + viewname
-    sqlstr = "INSERT into tsig_keys (org_id,tsig_name) VALUES ('" + str(orgid) +"','" +viewname +"';"
+    sqlstr = "INSERT into tsig_keys (org_id,tsig_name) VALUES ('" + str(orgid) +"','" +keyname +"';"
+    print sqlstr
     tsigresult=menudbinsert_dm.dbinsert(sqlstr)
     print tsigresult
     qresult = gettsigid(keyname)
