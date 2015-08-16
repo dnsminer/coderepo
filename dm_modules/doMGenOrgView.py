@@ -25,8 +25,6 @@ def gettsigdata(thisvid):
         print "invalid input, I quit"
         exit()
 
-    #select tsig_keys.tsig_name,tsig_keys.org_id from tsig_keys inner join bind_views on tsig_keys.tsig_id = bind_views.tsig_id where bind_views.view_id = '1' ;
-
 
 def doGenView(thisorgid):
     gviewdict['org_id']=thisorgid
