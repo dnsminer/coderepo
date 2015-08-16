@@ -142,10 +142,7 @@ def doView(mwlist):
             thisviewid = insertviewdata_dm.genviewgsql(viewsqlinsert)
             newviewid = thisviewid[0]
             if len(thisviewid) == 1:
-                print "This is the view id " + str(newviewid) + " for view name " + viewDict['view_name']
-
-
-
+                print "Creation of view " + viewDict['view_name'] + " confirmed successful, please generate an view file for this organiztion now, menu/genorgview"
             # exit do view menu
             viewmenuactive=False
 
