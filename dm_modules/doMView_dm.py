@@ -1,6 +1,6 @@
 __author__ = 'dleece'
 #from dm_modules
-import dbchk_dm, inputSani_dm, iptoint_dm, genRandomString_dm, insertsinkholedata_dm, menudbinsert_dm, tsigkeymdata_dm,menudbselect_dm
+import dbchk_dm, inputSani_dm, iptoint_dm, genRandomString_dm, insertsinkholedata_dm, menudbinsert_dm, tsigkeymdata_dm,menudbselect_dm, insertviewdata_dm
 
 def inputView(vname):
     #check for no spaces and make sure it's not already used.
@@ -134,6 +134,15 @@ def doView(mwlist):
             # debug dictionary contents
             for key,val in viewDict.iteritems():
                 print key, '-->', viewDict[key]
+            # generate the list from dictinary values and push data
+            viewsqlinsert=[viewDict['org_id'],viewDict['view_name'],viewDict['def_sh_id'],viewDict['view_src_acl_ips'],viewDict['view_desc'],viewDict['tsig_id']]
+            # debug                 (org_id,view_name,def_sh_id,view_src_acl_ips,view_desc,tsig_id)
+            for val in viewsqlinsert:
+                print val
+            thisviewid = insertviewdata_dm.genviewgsql(viewsqlinsert)
+            newviewid = thisviewid[0]
+            print newviewid
+            # exit do view menu
             viewmenuactive=False
 
     return
