@@ -16,7 +16,7 @@ def authView(authzlist):
     authzresults= menuviewauthz_dm.dbRecordSelect(checkviewauth)
     return  authzresults
 
-def gettsigdata(thisvid):
+def gentsigsql(thisvid):
     # debug
     #print type(thisvid)
     if type(thisvid) == type(long()):
@@ -30,6 +30,7 @@ def gettsigdata(thisvid):
     else:
         print "invalid input, I quit"
         exit()
+    return
 
 def gettsigdata(thissqlstr):
     qresult = dbselect1row_dm.dbRecordSelect(thissqlstr)
@@ -55,7 +56,8 @@ def doGenView(thisorgid):
 
                 # get tsig key data
                 print gviewdict['view_id']
-                gettsigdata(gviewdict['view_id'])
+                gentsigsql(gviewdict['view_id'])
+
 
 
                 # debug
