@@ -7,7 +7,6 @@ dm_modules = DNSMinerHome + "/dm_modules"
 print dm_modules
 
 
-
 from itertools import izip
 import bcrypt
 from dm_modules import cfgparse_dm, doMView_dm, inputSani_dm, doMGenOrgView
@@ -105,40 +104,40 @@ def createSQLInsertDict(inputvals):
     return insertdict
 
 
-def dbTblInsert(insertdict,dbtable):
-    # by default config parser converts keys to lowercase , https://docs.python.org/2/library/configparser.html
-    thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionOne')
-    adminVar = thisCfgDict['databaseuser']
-    adminPwd= thisCfgDict['databasepwd']
-    ivDBName = thisCfgDict['databasename']
-    var = 'Record inserted successfully'
-
-    columnlist = []
-    valuelist = []
-    for key, value in insertdict.iteritems():
-        #print "Column: " + key
-        columnlist.append(key)
-        #print "Value: " + value
-        valuelist.append(value)
-    valstring ="','".join(valuelist)  # need the ticks for sql insert to work in mysql
-    colstring =",".join(columnlist)
-    sqlStrI = "INSERT INTO " + dbtable + "(" + colstring +") VALUES ('" + valstring +"');"
-    #print sqlStrI
-    try:
-        dbcon = mdb.connect('localhost',adminVar,adminPwd,ivDBName)
-        #print "connected"
-    except mdb.Error, e:
-        print e.args[0]
-        sys.exit(1)
-
-    with dbcon:
-        cur=dbcon.cursor()
-        sqlStr = "USE " + ivDBName
-        cur.execute(sqlStr)
-        cur.execute (sqlStrI)
-    dbcon.commit()
-    dbcon.close()
-    return var
+#def dbTblInsert(insertdict,dbtable):
+#    # by default config parser converts keys to lowercase , https://docs.python.org/2/library/configparser.html
+#    thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionOne')
+#    adminVar = thisCfgDict['databaseuser']
+#    adminPwd= thisCfgDict['databasepwd']
+#    ivDBName = thisCfgDict['databasename']
+#    var = 'Record inserted successfully'
+#
+#    columnlist = []
+#    valuelist = []
+#    for key, value in insertdict.iteritems():
+#        #print "Column: " + key
+#        columnlist.append(key)
+#        #print "Value: " + value
+#        valuelist.append(value)
+#    valstring ="','".join(valuelist)  # need the ticks for sql insert to work in mysql
+#    colstring =",".join(columnlist)
+#    sqlStrI = "INSERT INTO " + dbtable + "(" + colstring +") VALUES ('" + valstring +"');"
+#    #print sqlStrI
+#    try:
+#        dbcon = mdb.connect('localhost',adminVar,adminPwd,ivDBName)
+#        #print "connected"
+#    except mdb.Error, e:
+#        print e.args[0]
+#        sys.exit(1)
+#
+#    with dbcon:
+#        cur=dbcon.cursor()
+#        sqlStr = "USE " + ivDBName
+#        cur.execute(sqlStr)
+#        cur.execute (sqlStrI)
+#    dbcon.commit()
+#    dbcon.close()
+#    return var
 
 def checkPwd(storedpwd,clearpasswd):
     pwdtest = storedpwd==bcrypt.hashpw(clearpasswd,storedpwd)
