@@ -4,7 +4,7 @@
 import sys
 DNSMinerHome='/opt/dnsminer-alpha'
 dm_modules = DNSMinerHome + "/dm_modules"
-print dm_modules
+#print dm_modules
 
 
 from itertools import izip

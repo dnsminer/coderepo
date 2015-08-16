@@ -34,7 +34,7 @@ def dbRecordSelect(selectinput):
         cur=dbcon.cursor()
         sqlStr = "USE " + ivDBName
         cur.execute(sqlStr)
-        sqlStr = "SELECT " + selectvalue + " from " + selecttable + " WHERE " + selectcolumn0 + " = '" + selectwhere0 +"' AND " + selectcolumn1 + " = '" + selectwhere1 + "';"
+        sqlStr = "SELECT " + selectvalue + " from " + selecttable + " WHERE " + selectcolumn0 + " = '" + str(selectwhere0) +"' AND " + selectcolumn1 + " = '" + selectwhere1 + "';"
         print sqlStr
         cur.execute(sqlStr)
         if not cur.fetchone()[0]:
