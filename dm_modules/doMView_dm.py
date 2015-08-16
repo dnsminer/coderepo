@@ -108,27 +108,21 @@ def doView(mwlist):
             viewDict['sh_fqdn'] = shfqdn
             # generate the list to be fed to db-insert_sinkholedata
             sinkholesql = insertsinkholedata_dm.parsemenudict(viewDict)
-            print viewDict
-            print sinkholesql
+            #print viewDict
+            #print sinkholesql
             shresult=menudbinsert_dm.dbinsert(sinkholesql)
-            print shresult
+            #print shresult
             if shresult == 1:
                 print "sinkhole table entry created successfully"
             else:
                 print "You may need to manually check the view_sinkholes table"
             #generate tsig_key meta data, ( this is static even if the keys are updated
-
             oid = viewDict['org_id']
             vname = viewDict['view_name']
             tsigid = tsigkeymdata.gentsigsql(oid,vname)
-            if type(tsigid[0]).__name__ == 'str':
-                print "tsig id is a string" + tsigid
-                viewDict['tsig_id'] = tsigid
-            elif type(tsigid[0]).__name__ == 'int':
-                print "tsig is an int " + str(tsigid)
-                viewDict['tsig_id'] = tsigid
-            else:
-                print "no idea what type this query result is"
+            newtsigid = tsigid[0]
+            print newtsigid
+            viewDict['tsig_id'] = newtsigid
             # debug dictionary contents
             for key,val in viewDict.iteritems():
                 print key, '-->', viewDict[key]
