@@ -94,14 +94,14 @@ def checkauthn(checkinput):
     dbcon.close()
     return authzlist
 
-def createSQLInsertDict(inputvals):
-    # broke this out from the main org input collection to reduce clutter and allow debugging
-    iraw=iter(inputvals)
-    insertdict = dict(izip(iraw,iraw))
-    #for key, value in insertdict.iteritems():
-    #    print "Column: " + key
-    #    print "Value: " + value
-    return insertdict
+#def createSQLInsertDict(inputvals):
+#    # broke this out from the main org input collection to reduce clutter and allow debugging
+#    iraw=iter(inputvals)
+#    insertdict = dict(izip(iraw,iraw))
+#    #for key, value in insertdict.iteritems():
+#    #    print "Column: " + key
+#    #    print "Value: " + value
+#    return insertdict
 
 
 #def dbTblInsert(insertdict,dbtable):

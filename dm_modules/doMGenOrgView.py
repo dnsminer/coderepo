@@ -2,9 +2,12 @@ __author__ = 'dleece'
 
 # use the org id as a simple auth check,
 
-import menuviewauthz_dm, inputSani_dm, dbselect1row_dm
+import menuviewauthz_dm, inputSani_dm, dbselect1row_dm, cfgparse_dm
 
 #
+DNSMinerHome='/opt/dnsminer-alpha'
+nodecfg = DNSMinerHome + "/etc/nodes.cfg"
+
 gviewdict=dict()
 
 
@@ -57,6 +60,12 @@ def getdata(thissqlstr):
     qresult = dbselect1row_dm.dbRecordSelect(thissqlstr)
     return qresult
 
+def makezonename(fqdnstr):
+    zoneelems = fqdnstr.split('.')
+    if len(zoneelems) == 3:
+        internalzone = zoneelems[1] + "." + zoneelems[2]
+    return  internalzone
+
 def doGenView(thisorgid):
     gviewdict['org_id']=thisorgid
     genviewmenuactive = True
@@ -79,6 +88,12 @@ def doGenView(thisorgid):
                 # get tsig key data
                 gentsigsql(gviewdict['view_id'])
                 genshsql(gviewdict['view_name'])
+
+                # create composite content values
+                shzone = makezonename(gviewdict['sh_fqdn'])
+                gviewdict['sh_zone'] = shzone
+                gviewdict['rpz_zone'] = gviewdict['view_name'] + ".rpz"
+
 
                 # debug
                 for key,val in gviewdict.iteritems():
