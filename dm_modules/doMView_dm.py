@@ -120,6 +120,8 @@ def doView(mwlist):
 
             oid = viewDict['org_id']
             vname = viewDict['view_name']
+            for key,val in viewDict.iteritems():
+                print key, '-->', viewDict[key]
             tsigid = tsigkeymdata.gentsigsql(oid,vname)
             if type(tsigid).__name__ == 'str':
                 print "tsig id is a string" + tsigid
