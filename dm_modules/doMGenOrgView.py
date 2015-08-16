@@ -78,8 +78,7 @@ def doGenView(thisorgid):
 
                 # get tsig key data
                 gentsigsql(gviewdict['view_id'])
-
-
+                genshsql(gviewdict['view_name'])
 
                 # debug
                 for key,val in gviewdict.iteritems():
