@@ -29,11 +29,9 @@ def userLogin():
     credtest=False
     while not credtest:
         orgContact = raw_input("Enter your org contact email  : ")
-        #orgContact = inputSanitizer(orgContact,'emailstring')
         orgContact = inputSani_dm.inputSanitizer(orgContact,'emailstring')
         orgPasswd = raw_input("Enter org admin's password : ")
         orgPasswd = inputSani_dm.inputSanitizer(orgPasswd,'password')
-        #orgPasswd = inputSanitizer(orgPasswd,'password')
         credlist= [orgContact,orgPasswd]
         credauthz = checkauthn(credlist) # return boolean for authenticated and org number ( honey token this?)
         if not credauthz[0]:
@@ -62,12 +60,8 @@ def checkauthn(checkinput):
     print "checking credentials supplied"
     # by default config parser converts keys to lowercase , https://docs.python.org/2/library/configparser.html
     thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionOne')
-    #print thisCfgDict
-    #adminVar= ConfigSectionMap("SectionOne")['databaseuser']
     adminVar = thisCfgDict['databaseuser']
-    #adminPwd= ConfigSectionMap("SectionOne")['databasepwd']
     adminPwd= thisCfgDict['databasepwd']
-    #ivDBName= ConfigSectionMap("SectionOne")['databasename']
     ivDBName = thisCfgDict['databasename']
     contactEmail = checkinput[0]
     clearpasswd = checkinput[1]
@@ -162,7 +156,7 @@ def userMenu(azlist):
     if azlist[0]:
         menuactive=True
         while menuactive:
-            print "\nCustomize Mineboss application settings to suit your organization"
+            print "\nCustomize Mineboss application settings to suit your organization,"
             print "menu choices are: view, genorgview, blacklist, whitelist, exit\n"
             uinput = raw_input("Enter choice: ")
             uinput = uinput.strip().lower()
