@@ -40,7 +40,7 @@ def doView(mwlist):
 
             getmonip = True
             while getmonip:
-                print "\nIdeally you want to direct traffic to a server you control, AKA, sinkhole"
+                print "\nIdeally you want to direct suspicious traffic to a server you control, AKA, sinkhole"
                 uvlinput = raw_input("What is the internal IP for the monitoring application? ( dotted quad): ")
                 uvlinput = iptoint_dm.dotQuadtoInt(uvlinput)
                 if uvlinput > 10:
@@ -112,7 +112,7 @@ def doView(mwlist):
             print sinkholesql
             shresult=menudbinsert_dm.dbinsert(sinkholesql)
             print shresult
-            if shresult == '1':
+            if shresult == 1:
                 print "sinkhole table entry created successfully"
             else:
                 print "You may need to manually check the view_sinkholes table"
