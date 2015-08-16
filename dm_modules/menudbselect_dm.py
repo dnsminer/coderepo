@@ -35,6 +35,8 @@ def dbRecordSelect(selectinput):
         rows = cur.fetchall()
         for row in rows:
             print row
+            for val in row:
+                print val
             resultlist.append(row)
 
     dbcon.commit()
