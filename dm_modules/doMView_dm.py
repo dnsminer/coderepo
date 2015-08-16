@@ -115,7 +115,7 @@ def doView(mwlist):
             if shresult == 1:
                 print "sinkhole table entry created successfully"
                 # grab teh sinkhole id to dump into the view table
-                shselect = ['sinkhole_id','view_sinkholes','sh_fhdn',shfqdn]
+                shselect = ['sinkhole_id','view_sinkholes','sh_fqdn',shfqdn]
                 thisresultlist = menudbselect_dm.dbRecordSelect(shselect)
                 if len(thisresultlist) == 1:
                     viewDict['def_sh_id'] = thisresultlist[0]
