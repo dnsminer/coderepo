@@ -37,13 +37,14 @@ def dbRecordSelect(selectinput):
         sqlStr = "SELECT " + selectvalue + " from " + selecttable + " WHERE " + selectcolumn0 + " = '" + str(selectwhere0) +"' AND " + selectcolumn1 + " = '" + selectwhere1 + "';"
         print sqlStr
         cur.execute(sqlStr)
-        if not cur.fetchone()[0]:
+        row = cur.fetchone()
+        if row is None:
             print "Sorry, that view is not associated with your organization"
             var= False
             resultlist.append(var)
             resultlist.append('noauth')
         else:
-            vid = cur.fetchone()[0]
+            vid = row[0]
             var = True
             resultlist.append(var)
             resultlist.append(vid)
