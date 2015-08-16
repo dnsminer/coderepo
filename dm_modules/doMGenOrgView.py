@@ -33,7 +33,7 @@ def doGenView(thisorgid):
                     gviewdict['view_id'] = vresult[1]
                     getviewname = False
                 # debug
-                for key,val in gviewdict:
+                for key,val in gviewdict.iteritems():
                     print key,"-->",val
 
             genviewmenuactive=False

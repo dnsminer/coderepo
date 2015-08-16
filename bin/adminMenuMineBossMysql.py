@@ -178,7 +178,7 @@ def doMenuSelect(menulist,orgid):
         doMView_dm.doView(doMWList)
     elif menulist[0] == 'genorgview':
         # debug
-        print "\nGenerating a view file for org " + str(orgid)
+        #print "\nGenerating a view file for org " + str(orgid)
         doMGenOrgView.doGenView(orgid)
     elif menulist[0] == 'blacklist':
         if menulist[1] == 'update':
