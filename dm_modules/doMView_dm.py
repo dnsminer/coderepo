@@ -142,7 +142,7 @@ def doView(mwlist):
             thisviewid = insertviewdata_dm.genviewgsql(viewsqlinsert)
             newviewid = thisviewid[0]
             if len(thisviewid) == 1:
-                print "This is the view id " + newviewid + " for view name " + viewDict['view_name']
+                print "This is the view id " + str(newviewid) + " for view name " + viewDict['view_name']
 
 
 
