@@ -4,6 +4,10 @@ __author__ = 'dleece'
 
 import menuviewauthz_dm, inputSani_dm, dbchk_dm
 
+#
+gviewdict=dict()
+
+
 def authView(authzlist):
     #check for no spaces and make sure it's not already used.
     print "confirming authorization for view name"
@@ -12,17 +16,26 @@ def authView(authzlist):
     authzresults= menuviewauthz_dm.dbRecordSelect(checkviewauth)
     return  authzresults
 
+def gettsigdata(thisvid):
+    if type(thisvid) == type(int()):
+        tsigsqlstr = "SELECT tsig_keys.tsig_name FROM tsig_keys INNER JOIN ON tsig_keys.tsig_id = bind_views.tsig_id "
+        tsigsqlstr = tsigsqlstr + "WHERE bind_views.view_id = '" + thisvid  + "' ;"
+        print tsigsqlstr
+    else:
+        print "invalid input, I quit"
+        exit()
+
+    #select tsig_keys.tsig_name,tsig_keys.org_id from tsig_keys inner join bind_views on tsig_keys.tsig_id = bind_views.tsig_id where bind_views.view_id = '1' ;
 
 
 def doGenView(thisorgid):
-    gviewdict=dict()
     gviewdict['org_id']=thisorgid
     genviewmenuactive = True
     while genviewmenuactive:
-            getviewname = True
+            getviewid = True
             print "\nYou are about to generate/regenerate a new Bind View and related zone files."
-            while getviewname:
-                print "\nYou can only generate views assigned to your organization."
+            while getviewid:
+                print "You can only generate views assigned to your organization."
                 uvinput = raw_input("Enter view name: ")
                 uvinput = uvinput.strip().lower()
                 viewName = inputSani_dm.inputSanitizer(uvinput,'view')
@@ -31,7 +44,13 @@ def doGenView(thisorgid):
                 if  vresult[0]:
                     print "congrats you are authorized for this view "
                     gviewdict['view_id'] = vresult[1]
-                    getviewname = False
+                    getviewid = False
+
+                # get tsig key data
+                gettsigdata(gviewdict['view_id'])
+
+
+
                 # debug
                 for key,val in gviewdict.iteritems():
                     print key,"-->",val

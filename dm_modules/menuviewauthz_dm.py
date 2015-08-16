@@ -39,7 +39,7 @@ def dbRecordSelect(selectinput):
         cur.execute(sqlStr)
         row = cur.fetchone()
         if row is None:
-            print "Sorry, that view is not associated with your organization"
+            print "\nSorry, that view is not associated with your organization"
             var= False
             resultlist.append(var)
             resultlist.append('noauth')
