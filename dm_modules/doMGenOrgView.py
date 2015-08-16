@@ -13,7 +13,7 @@ def authView(authzlist):
     return  authzresults
 
 
-def doGenView(orgid):
+def doGenView(thisorgid):
     genviewmenuactive = True
     while genviewmenuactive:
             getviewname = True
@@ -23,7 +23,7 @@ def doGenView(orgid):
                 uvinput = raw_input("Enter view name: ")
                 uvinput = uvinput.strip().lower()
                 viewName = inputSani_dm.inputSanitizer(uvinput,'view')
-                authchk=[orgid,viewName]
+                authchk=[thisorgid,viewName]
                 vresult = authView(authchk) # needed to get the status, using length of list to avoid global vars
                 if  vresult[0]:
                     print "congrats you are authorized for view ID " + vresult[1]

@@ -14,7 +14,7 @@ import struct
 from itertools import izip
 import random
 import bcrypt
-from dm_modules import cfgparse_dm, doMView_dm, inputSani_dm
+from dm_modules import cfgparse_dm, doMView_dm, inputSani_dm, doMGenOrgView
 
 # noinspection PyUnresolvedReferences
 import MySQLdb as mdb
@@ -44,7 +44,7 @@ def userLogin():
     return credauthz
 
 def inputMenu(inputstring):
-    menuchoices = ['view','blacklist','whitelist','exit']
+    menuchoices = ['view','genorgview','blacklist','whitelist','exit']
     menurequest = []
     if inputstring not in menuchoices:
         print "Sorry, that is not a valid menu choice"
@@ -163,7 +163,7 @@ def userMenu(azlist):
         menuactive=True
         while menuactive:
             print "\nCustomize Mineboss application settings to suit your organization"
-            print "menu choices are: view, blacklist, whitelist, exit\n"
+            print "menu choices are: view, genorgview, blacklist, whitelist, exit\n"
             uinput = raw_input("Enter choice: ")
             uinput = uinput.strip().lower()
             mresult = inputMenu(uinput) # needed to get the status, using length of list to avoid global vars
@@ -187,7 +187,10 @@ def doMenuSelect(menulist,orgid):
         doMWList = [menulist[0],menulist[1],orgid]
         doMView_dm.doView(doMWList)
     elif menulist[0] == 'genorgview':
+        # debug
         print "\nGenerating a view file for org " + str(orgid)
+        doMGenOrgView.doGenView(orgid)
+
 
     elif menulist[0] == 'blacklist':
         if menulist[1] == 'update':
