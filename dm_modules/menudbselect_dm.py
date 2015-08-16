@@ -32,13 +32,9 @@ def dbRecordSelect(selectinput):
         cur.execute(sqlStr)
         sqlStr = "SELECT " + selectvalue + " from " + selecttable + " WHERE " + selectcolumn + " = '" + selectwhere +"';"
         cur.execute(sqlStr)
-        rows = cur.fetchall()
-        for row in rows:
-            print row
-            for val in row:
-                print val
-            resultlist.append(row)
-
+        row = cur.fetchone()
+        if row is not None:
+            resultlist.append(row[0])
     dbcon.commit()
     dbcon.close()
     return resultlist

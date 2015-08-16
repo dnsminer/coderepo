@@ -120,8 +120,6 @@ def doView(mwlist):
 
             oid = viewDict['org_id']
             vname = viewDict['view_name']
-            for key,val in viewDict.iteritems():
-                print key, '-->', viewDict[key]
             tsigid = tsigkeymdata.gentsigsql(oid,vname)
             if type(tsigid).__name__ == 'str':
                 print "tsig id is a string" + tsigid
@@ -131,9 +129,9 @@ def doView(mwlist):
                 viewDict['tsig_id'] = tsigid
             else:
                 print "no idea what type this query result is"
-
-            viewDict['tsig_id'] = tsigid
-
+            # debug dictionary contents
+            for key,val in viewDict.iteritems():
+                print key, '-->', viewDict[key]
             viewmenuactive=False
 
     return
