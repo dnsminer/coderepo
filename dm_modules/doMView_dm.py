@@ -121,10 +121,10 @@ def doView(mwlist):
             oid = viewDict['org_id']
             vname = viewDict['view_name']
             tsigid = tsigkeymdata.gentsigsql(oid,vname)
-            if type(tsigid).__name__ == 'str':
+            if type(tsigid[0]).__name__ == 'str':
                 print "tsig id is a string" + tsigid
                 viewDict['tsig_id'] = tsigid
-            elif type(tsigid).__name__ == 'int':
+            elif type(tsigid[0]).__name__ == 'int':
                 print "tsig is an int " + str(tsigid)
                 viewDict['tsig_id'] = tsigid
             else:
