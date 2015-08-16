@@ -49,7 +49,6 @@ def doGenView(thisorgid):
                 gettsigdata(gviewdict['view_id'])
 
 
-
                 # debug
                 for key,val in gviewdict.iteritems():
                     print key,"-->",val
