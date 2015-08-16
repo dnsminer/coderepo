@@ -24,19 +24,6 @@ dbUtilsHome = DNSMinerHome + '/utils/databases/'
 dbcfg= DNSMinerHome + "/etc/dbConnections.cfg"
 nodecfg = DNSMinerHome + "/etc/nodes.cfg"
 
-#def ConfigSectionMap(section):
-#    dbcfgdict = {}
-#    cfgoptions = dbconnect.options(section)
-#    for cfgoption in cfgoptions:
-#        try:
-#            dbcfgdict[cfgoption] = dbconnect.get(section, cfgoption)
-#            if dbcfgdict[cfgoption] == -1:
-#                print "invalid parameter" + cfgoption
-#        except:
-#            print ('exception thrown, on %s' % cfgoption)
-#            dbcfgdict[cfgoption] = None
-#    return  dbcfgdict
-
 
 def userLogin():
     credtest=False
@@ -70,59 +57,6 @@ def inputMenu(inputstring):
             method = raw_input("creaste new or update existing (new|update)? :")
             menurequest = [operrequest,method]
     return menurequest
-
-
-#def inputSanitizer(inputstring,type):
-#    # sanitize based on whitelist and what type of input we're expecting
-#    charwl = string.ascii_letters + string.whitespace + string.digits
-#    if type == 'emailstring':
-#        charwl = charwl + '@._-'
-#    if type ==  'password':
-#        charwl = string.printable
-#    if type == 'view':
-#        charwl = string.ascii_letters + string.digits + '-_'
-#
-#    outstring = inputstring.strip()
-#    tmpchar=''
-#    for tchar in outstring:
-#        if tchar not in charwl:
-#            print "replacing invalid character " + tchar + " with an underscore _ "
-#            tchar = '_'
-#        tmpchar = tmpchar + tchar
-#    outstring = tmpchar
-#    return outstring
-
-#def dbRecordCheck(checkinput):
-#    print "checking existing database records"
-#    # by default config parser converts keys to lowercase , https://docs.python.org/2/library/configparser.html
-#    adminVar= ConfigSectionMap("SectionOne")['databaseuser']
-#    adminPwd= ConfigSectionMap("SectionOne")['databasepwd']
-#    ivDBName= ConfigSectionMap("SectionOne")['databasename']
-#    checkcolumn = checkinput[0]
-#    checktable = checkinput[1]
-#    checkvalue = checkinput[2]
-#    var = False
-#    try:
-#        dbcon = mdb.connect('localhost',adminVar,adminPwd,ivDBName)
-#        #print "connected"
-#    except mdb.Error, e:
-#        print e.args[0]
-#        sys.exit(1)
-#
-#    with dbcon:
-#        cur=dbcon.cursor()
-#        sqlStr = "USE " + ivDBName
-#        cur.execute(sqlStr)
-#        sqlStr = "SELECT count(1) from " + checktable + " WHERE " + checkcolumn + " = '" + checkvalue +"';"
-#        cur.execute(sqlStr)
-#        if cur.fetchone()[0]:
-#            print "Sorry, that record appears to be in use, please provide a different value"
-#            var= True
-#    dbcon.commit()
-#    dbcon.close()
-#    return var
-
-
 
 def checkauthn(checkinput):
     print "checking credentials supplied"
@@ -182,10 +116,6 @@ def createSQLInsertDict(inputvals):
 
 def dbTblInsert(insertdict,dbtable):
     # by default config parser converts keys to lowercase , https://docs.python.org/2/library/configparser.html
-    #print thisCfgDict
-    #adminVar= ConfigSectionMap("SectionOne")['databaseuser']
-    #adminPwd= ConfigSectionMap("SectionOne")['databasepwd']
-    #ivDBName= ConfigSectionMap("SectionOne")['databasename']
     thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionOne')
     adminVar = thisCfgDict['databaseuser']
     adminPwd= thisCfgDict['databasepwd']
@@ -256,6 +186,9 @@ def doMenuSelect(menulist,orgid):
         #if menulist[1] == 'update':
         doMWList = [menulist[0],menulist[1],orgid]
         doMView_dm.doView(doMWList)
+    elif menulist[0] == 'genorgview':
+        print "\nGenerating a view file for org " + str(orgid)
+
     elif menulist[0] == 'blacklist':
         if menulist[1] == 'update':
             print "\nsend blacklist,update to blacklist function for org " + str(orgid)
@@ -267,7 +200,6 @@ def doMenuSelect(menulist,orgid):
         else:
             print "\nsend whitelist,new to whitelist function for org " + str(orgid)
     return
-
 
     # store all answers in a dictinary and then use dictionry to create SQL
     # prompt for view name,   check for no spaces and make sure it's not already used.
@@ -282,19 +214,7 @@ def doMenuSelect(menulist,orgid):
     # prompt for ip address view traffic will be coming from.  Make this a list which could be turned into an ACL.
     #return
 
-
-def genRPZCname():
-    # Each view needs an authoritiative zone to resolve the cname. Although the view could be reused per view
-    # generating random makes it very difficult for anyone to guess the name and potentially probe for zone contents.
-    dom = ''.join(random.choice(string.ascii_lowercase) for _ in range(8))
-    dom = dom + '.local'
-    return  dom
-
 # --- main -----------------------------------
-
-#readConfigIni(dbcfg)  ( convert to function )
-#dbconnect=ConfigParser.ConfigParser()
-#dbconnect.read(dbcfg)
 
 # gather org input, outputs a boolean and if true and org_id
 loginresult=userLogin()

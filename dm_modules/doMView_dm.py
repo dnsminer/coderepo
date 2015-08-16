@@ -28,7 +28,7 @@ def doView(mwlist):
         while viewmenuactive:
             getviewname = True
             while getviewname:
-                print "\nYou are about to create a new Bind View and related zone files."
+                print "\nYou are about to provide the data needed for a new Bind View and related zone files."
                 print "\nThe view must be a unique name within the system,"
                 print "it must also be a single word with no spaces, letters, dashes, underscores and digits ok"
                 uvinput = raw_input("Enter view name: ")
@@ -132,16 +132,20 @@ def doView(mwlist):
             print newtsigid
             viewDict['tsig_id'] = newtsigid
             # debug dictionary contents
-            for key,val in viewDict.iteritems():
-                print key, '-->', viewDict[key]
+            #for key,val in viewDict.iteritems():
+            #    print key, '-->', viewDict[key]
             # generate the list from dictinary values and push data
             viewsqlinsert=[viewDict['org_id'],viewDict['view_name'],viewDict['def_sh_id'],viewDict['view_src_acl_ips'],viewDict['view_desc'],viewDict['tsig_id']]
             # debug                 (org_id,view_name,def_sh_id,view_src_acl_ips,view_desc,tsig_id)
-            for val in viewsqlinsert:
-                print val
+            #for val in viewsqlinsert:
+            #    print val
             thisviewid = insertviewdata_dm.genviewgsql(viewsqlinsert)
             newviewid = thisviewid[0]
-            print newviewid
+            if len(thisviewid) == 1:
+                print "This is the view id " + newviewid + " for view name " + viewDict['view_name']
+
+
+
             # exit do view menu
             viewmenuactive=False
 
