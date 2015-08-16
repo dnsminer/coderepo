@@ -20,8 +20,8 @@ def doGenView(thisorgid):
     genviewmenuactive = True
     while genviewmenuactive:
             getviewname = True
+            print "\nYou are about to generate/regenerate a new Bind View and related zone files."
             while getviewname:
-                print "\nYou are about to generate/regenerate a new Bind View and related zone files."
                 print "\nYou can only generate views assigned to your organization."
                 uvinput = raw_input("Enter view name: ")
                 uvinput = uvinput.strip().lower()
@@ -31,8 +31,9 @@ def doGenView(thisorgid):
                 if  vresult[0]:
                     print "congrats you are authorized for this view "
                     gviewdict['view_id'] = vresult[1]
-
-            for key,val in gviewdict:
-                print key,"-->",val
+                    getviewname = False
+                # debug
+                for key,val in gviewdict:
+                    print key,"-->",val
 
             genviewmenuactive=False

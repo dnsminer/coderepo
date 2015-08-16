@@ -35,7 +35,7 @@ def dbRecordSelect(selectinput):
         sqlStr = "USE " + ivDBName
         cur.execute(sqlStr)
         sqlStr = "SELECT " + selectvalue + " from " + selecttable + " WHERE " + selectcolumn0 + " = '" + str(selectwhere0) +"' AND " + selectcolumn1 + " = '" + selectwhere1 + "';"
-        print sqlStr
+        #print sqlStr
         cur.execute(sqlStr)
         row = cur.fetchone()
         if row is None:
