@@ -2,7 +2,7 @@ __author__ = 'dleece'
 
 # use the org id as a simple auth check,
 
-import menuviewauthz_dm, inputSani_dm, dbchk_dm
+import menuviewauthz_dm, inputSani_dm, dbselect1row_dm
 
 #
 gviewdict=dict()
@@ -20,13 +20,19 @@ def gettsigdata(thisvid):
     print type(thisvid)
     if type(thisvid) == type(long()):
         tmpid=str(thisvid)
-        tsigsqlstr = "SELECT tsig_keys.tsig_name FROM tsig_keys INNER JOIN ON tsig_keys.tsig_id = bind_views.tsig_id "
+        tsigsqlstr = "SELECT tsig_keys.tsig_name FROM tsig_keys INNER JOIN  bind_views ON tsig_keys.tsig_id = bind_views.tsig_id "
         tsigsqlstr = tsigsqlstr + "WHERE bind_views.view_id = '" + tmpid  + "' ;"
         print tsigsqlstr
+        thisresult=gettsigdata(tsigsqlstr)
+        for val in thisresult:
+            print val
     else:
         print "invalid input, I quit"
         exit()
 
+def gettsigdata(thissqlstr):
+    qresult = dbselect1row_dm.dbRecordSelect(thissqlstr)
+    return qresult
 
 def doGenView(thisorgid):
     gviewdict['org_id']=thisorgid
