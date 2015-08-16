@@ -1,6 +1,6 @@
 __author__ = 'dleece'
 #from dm_modules
-import dbchk_dm, inputSani_dm, iptoint_dm, genRandomString_dm, insertsinkholedata_dm, menudbinsert_dm
+import dbchk_dm, inputSani_dm, iptoint_dm, genRandomString_dm, insertsinkholedata_dm, menudbinsert_dm, tsigkeymdata
 
 def inputView(vname):
     #check for no spaces and make sure it's not already used.
@@ -87,10 +87,9 @@ def doView(mwlist):
                     # build IPs and cidr into a CSV string to be used with views
                     rcsvclients  = ",".join(map(str,viewClientIPList))
                     viewDict['view_src_acl_ips'] = rcsvclients  # build into an ACL data structure later on
-                        print"\nProvide a short description of this sink hole, EG, .net app running in Calgary office"
 
             getviewdesc = True
-             print"\nProvide a short description of what's behind these IP addresses,  EG, Eastern office or Engineering dept"
+            print"\nProvide a short description of what's behind these IP addresses,  EG, Eastern office or Engineering dept"
             while getviewdesc:
                 uvlinput = raw_input("Description: ")
                 uvlinput = inputSani_dm.inputSanitizer(uvlinput,'desc1')
@@ -117,8 +116,23 @@ def doView(mwlist):
                 print "sinkhole table entry created successfully"
             else:
                 print "You may need to manually check the view_sinkholes table"
+            #generate tsig_key meta data, ( this is static even if the keys are updated
+
+            oid = viewDict['org_id']
+            vname = viewDict['view_name']
+            tsigid = tsigkeymdata.gentsigsql(oid,vname)
+            if type(tsigid).__name__ == 'str':
+                print "tsig id is a string" + tsigid
+                viewDict['tsig_id'] = tsigid
+            elif:
+                type(tsigid).__name__ == 'int'
+                print "tsig is an int " + str(tsigid)
+                viewDict['tsig_id'] = tsigid
+            else:
+                print "no idea what type this query result is"
+
+            viewDict['tsig_id'] = tsigid
 
             viewmenuactive=False
 
-
-        return
+    return
