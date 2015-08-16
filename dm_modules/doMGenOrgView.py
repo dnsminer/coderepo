@@ -85,18 +85,16 @@ def doGenView(thisorgid):
                     gviewdict['view_name'] = viewName
                     getviewid = False
 
-                # get tsig key data
-                gentsigsql(gviewdict['view_id'])
-                genshsql(gviewdict['view_name'])
+                    # get tsig key data, this all needs to stay within the authorized section
+                    gentsigsql(gviewdict['view_id'])
+                    genshsql(gviewdict['view_name'])
 
-                # create composite content values
-                shzone = makezonename(gviewdict['sh_fqdn'])
-                gviewdict['sh_zone'] = shzone
-                gviewdict['rpz_zone'] = gviewdict['view_name'] + ".rpz"
-
-
-                # debug
-                for key,val in gviewdict.iteritems():
-                    print key,"-->",val
+                    # create composite content values
+                    shzone = makezonename(gviewdict['sh_fqdn'])
+                    gviewdict['sh_zone'] = shzone
+                    gviewdict['rpz_zone'] = gviewdict['view_name'] + ".rpz"
+                    # debug
+                    for key,val in gviewdict.iteritems():
+                        print key,"-->",val
 
             genviewmenuactive=False
