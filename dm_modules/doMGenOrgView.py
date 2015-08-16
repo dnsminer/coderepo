@@ -17,7 +17,7 @@ def authView(authzlist):
     return  authzresults
 
 def gettsigdata(thisvid):
-    if type(thisvid) == type(int()):
+    if type(thisvid) == type(str()):
         tsigsqlstr = "SELECT tsig_keys.tsig_name FROM tsig_keys INNER JOIN ON tsig_keys.tsig_id = bind_views.tsig_id "
         tsigsqlstr = tsigsqlstr + "WHERE bind_views.view_id = '" + thisvid  + "' ;"
         print tsigsqlstr
@@ -45,6 +45,7 @@ def doGenView(thisorgid):
                     getviewid = False
 
                 # get tsig key data
+                print gviewdict['view_id']
                 gettsigdata(gviewdict['view_id'])
 
 
