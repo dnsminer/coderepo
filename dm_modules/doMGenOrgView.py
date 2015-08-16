@@ -18,13 +18,14 @@ def authView(authzlist):
 
 def gettsigdata(thisvid):
     print type(thisvid)
-    #if type(thisvid) == type(str()):
-    tsigsqlstr = "SELECT tsig_keys.tsig_name FROM tsig_keys INNER JOIN ON tsig_keys.tsig_id = bind_views.tsig_id "
-    tsigsqlstr = tsigsqlstr + "WHERE bind_views.view_id = '" + thisvid  + "' ;"
-    print tsigsqlstr
-    #else:
-    #    print "invalid input, I quit"
-    #    exit()
+    if type(thisvid) == type(long()):
+        tmpid=str(thisvid)
+        tsigsqlstr = "SELECT tsig_keys.tsig_name FROM tsig_keys INNER JOIN ON tsig_keys.tsig_id = bind_views.tsig_id "
+        tsigsqlstr = tsigsqlstr + "WHERE bind_views.view_id = '" + tmpid  + "' ;"
+        print tsigsqlstr
+    else:
+        print "invalid input, I quit"
+        exit()
 
 
 def doGenView(thisorgid):
