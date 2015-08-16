@@ -124,8 +124,7 @@ def doView(mwlist):
             if type(tsigid).__name__ == 'str':
                 print "tsig id is a string" + tsigid
                 viewDict['tsig_id'] = tsigid
-            elif:
-                type(tsigid).__name__ == 'int'
+            elif type(tsigid).__name__ == 'int':
                 print "tsig is an int " + str(tsigid)
                 viewDict['tsig_id'] = tsigid
             else:
