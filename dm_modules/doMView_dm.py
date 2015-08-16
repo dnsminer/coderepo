@@ -1,6 +1,6 @@
 __author__ = 'dleece'
 #from dm_modules
-import dbchk_dm, inputSani_dm, iptoint_dm, genRandomString_dm, insertsinkholedata_dm, menudbinsert_dm, tsigkeymdata
+import dbchk_dm, inputSani_dm, iptoint_dm, genRandomString_dm, insertsinkholedata_dm, menudbinsert_dm, tsigkeymdata_dm,menudbselect_dm
 
 def inputView(vname):
     #check for no spaces and make sure it's not already used.
@@ -114,12 +114,20 @@ def doView(mwlist):
             #print shresult
             if shresult == 1:
                 print "sinkhole table entry created successfully"
+                # grab teh sinkhole id to dump into the view table
+                shselect = ['sinkhole_id','view_sinkholes','sh_fhdn',shfqdn]
+                thisresultlist = menudbselect_dm.dbRecordSelect(shselect)
+                if len(thisresultlist) == 1:
+                    viewDict['def_sh_id'] = thisresultlist[0]
+                else:
+                    print "failed to retrieve sinkhole ID, you should probably exit and debug this"
             else:
                 print "You may need to manually check the view_sinkholes table"
+
             #generate tsig_key meta data, ( this is static even if the keys are updated
             oid = viewDict['org_id']
             vname = viewDict['view_name']
-            tsigid = tsigkeymdata.gentsigsql(oid,vname)
+            tsigid = tsigkeymdata_dm.gentsigsql(oid,vname)
             newtsigid = tsigid[0]
             print newtsigid
             viewDict['tsig_id'] = newtsigid
