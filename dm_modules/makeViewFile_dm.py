@@ -15,7 +15,7 @@ def readDict(thisorgdict):
         fh = open(thisfile,'w')
         #thisfh= getfilehandle(vfile)
         for key,val in thisorgdict.iteritems():
-            line = " ( or { or // " + key + " more stuff \n" + val + "} } \n"
+            line = " ( or { or // " + key + "\n more stuff \n" + str(val) + "} } \n"
             fh.write(line)
     except Exception as e:
         print "Unable to create view file in temp directory, please debug"
