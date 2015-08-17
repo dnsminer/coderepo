@@ -71,7 +71,6 @@ def getnodeinfo():
     gviewdict['xfr_port']=xferport
     nodelist = thisCfgDict['recursivenameservers'].split(',')
     rnodestr=''
-    print len(nodelist)
     for i in range(len(nodelist)):
         rnodestr = rnodestr +nodelist[i] + "; "
     gviewdict['rec_nodes'] = rnodestr
