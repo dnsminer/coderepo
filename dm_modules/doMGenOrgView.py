@@ -2,7 +2,7 @@ __author__ = 'dleece'
 
 # use the org id as a simple auth check,
 
-import menuviewauthz_dm, inputSani_dm, dbselect1row_dm, cfgparse_dm
+import menuviewauthz_dm, inputSani_dm, dbselect1row_dm, cfgparse_dm, makeViewFile_dm
 
 #
 DNSMinerHome='/opt/dnsminer-alpha'
@@ -70,11 +70,13 @@ def getnodeinfo():
     xferport = thisCfgDict['zonetransferport']
     gviewdict['xfr_port']=xferport
     nodelist = thisCfgDict['recursivenameservers'].split(',')
+    # clean up any spaces between the nodes
     rnodestr=''
     for i in range(len(nodelist)):
-        rnodestr = rnodestr +nodelist[i] + "; "
+        rnodestr = rnodestr + nodelist[i].strip() + ","
     gviewdict['rec_nodes'] = rnodestr
     return
+
 
 def doGenView(thisorgid):
     gviewdict['org_id']=thisorgid
@@ -103,10 +105,13 @@ def doGenView(thisorgid):
                     gviewdict['sh_zone'] = shzone
                     gviewdict['rpz_zone'] = gviewdict['view_name'] + ".rpz"
                     getnodeinfo()
+                    gviewdict['acl_name'] = gviewdict['view_name'] + "ACL"
+
                     # debug
-                    for key,val in gviewdict.iteritems():
-                        print key,"-->",val
-                #else:
-                #    continue
+                    #for key,val in gviewdict.iteritems():
+                    #    print key,"-->",val
+                    # write to file
+                    makeViewFile_dm.readDict(gviewdict)
+
 
             genviewmenuactive=False
