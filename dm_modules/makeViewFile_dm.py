@@ -17,8 +17,10 @@ def readDict(thisorgdict):
         for key,val in thisorgdict.iteritems():
             line = " ( or { or // " + key + " more stuff \n" + val + "} } \n"
             fh.write(line)
-    except:
+    except Exception as e:
         print "Unable to create view file in temp directory, please debug"
+        print type(e)
+        print str(e)
         return
 
 
