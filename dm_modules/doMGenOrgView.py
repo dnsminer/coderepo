@@ -79,7 +79,7 @@ def doGenView(thisorgid):
                 viewName = inputSani_dm.inputSanitizer(uvinput,'view')
                 authchk=[thisorgid,viewName]
                 vresult = authView(authchk) # needed to get the status, using length of list to avoid global vars
-                print vresult[0]
+                #print vresult[0]
                 if  vresult[0]:
                     print "congrats you are authorized for this view "
                     gviewdict['view_id'] = vresult[1]
@@ -95,7 +95,7 @@ def doGenView(thisorgid):
                     # debug
                     for key,val in gviewdict.iteritems():
                         print key,"-->",val
-                else:
-                    continue
+                #else:
+                #    continue
 
             genviewmenuactive=False
