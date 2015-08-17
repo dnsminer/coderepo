@@ -6,10 +6,9 @@ import menuviewauthz_dm, inputSani_dm, dbselect1row_dm, cfgparse_dm
 
 #
 DNSMinerHome='/opt/dnsminer-alpha'
-nodecfg = DNSMinerHome + "/etc/nodes.cfg"
+sitecfg = DNSMinerHome + "/etc/siteSpecific.cfg"
 
 gviewdict=dict()
-
 
 def authView(authzlist):
     #check for no spaces and make sure it's not already used.
@@ -66,6 +65,17 @@ def makezonename(fqdnstr):
         internalzone = zoneelems[1] + "." + zoneelems[2]
     return  internalzone
 
+def getnodeinfo():
+    thisCfgDict = cfgparse_dm.opencfg(sitecfg,'SectionTwo')
+    xferport = thisCfgDict['zonetransferport']
+    gviewdict['xfr_port']=xferport
+    nodelist = thisCfgDict['recursivenameservers']
+    rnodestr=''
+    for i in range(len(nodelist)):
+        rnodestr = rnodestr +nodelist[i] + "; "
+    gviewdict['rec_nodes'] = rnodestr
+    return
+
 def doGenView(thisorgid):
     gviewdict['org_id']=thisorgid
     genviewmenuactive = True
@@ -92,6 +102,7 @@ def doGenView(thisorgid):
                     shzone = makezonename(gviewdict['sh_fqdn'])
                     gviewdict['sh_zone'] = shzone
                     gviewdict['rpz_zone'] = gviewdict['view_name'] + ".rpz"
+                    getnodeinfo()
                     # debug
                     for key,val in gviewdict.iteritems():
                         print key,"-->",val
