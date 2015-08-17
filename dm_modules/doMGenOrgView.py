@@ -79,16 +79,15 @@ def doGenView(thisorgid):
                 viewName = inputSani_dm.inputSanitizer(uvinput,'view')
                 authchk=[thisorgid,viewName]
                 vresult = authView(authchk) # needed to get the status, using length of list to avoid global vars
+                print vresult[0]
                 if  vresult[0]:
                     print "congrats you are authorized for this view "
                     gviewdict['view_id'] = vresult[1]
                     gviewdict['view_name'] = viewName
                     getviewid = False
-
                     # get tsig key data, this all needs to stay within the authorized section
                     gentsigsql(gviewdict['view_id'])
                     genshsql(gviewdict['view_name'])
-
                     # create composite content values
                     shzone = makezonename(gviewdict['sh_fqdn'])
                     gviewdict['sh_zone'] = shzone
@@ -96,5 +95,7 @@ def doGenView(thisorgid):
                     # debug
                     for key,val in gviewdict.iteritems():
                         print key,"-->",val
+                else:
+                    continue
 
             genviewmenuactive=False
