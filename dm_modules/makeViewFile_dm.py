@@ -16,7 +16,6 @@ def readDict(thisorgdict):
     thisfh.close()
     return
 
-
 def getfilehandle(fname):
     thisfile = tempdir + fname
     try:
