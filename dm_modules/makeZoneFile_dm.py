@@ -5,7 +5,7 @@ __author__ = 'dleece'
 DNSMinerHome='/opt/dnsminer-alpha'
 tempdir = DNSMinerHome + "/tmp/"
 
-import datetime
+import datetime, inttoip_dm
 
 def readDict(thisorgdict):
     #debug
@@ -36,7 +36,7 @@ def readDict(thisorgdict):
     thislist.append(vfileline)
     vfileline="\t\t\tIN\tA\t10.42.42.42"
     thislist.append(vfileline)
-    vfileline = getlzonehost(thisorgdict['sh_fqdn']) +"\t\tIN\tA\t" + thisorgdict['sh_ip']
+    vfileline = getlzonehost(thisorgdict['sh_fqdn']) +"\t\tIN\tA\t" + inttoip_dm.intTodotQuad(thisorgdict['sh_ip'])
     thislist.append(vfileline)
     # close the zone file
     vfileline="; End " + thisorgdict['sh_zone'] + " zone file"
