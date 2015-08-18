@@ -2,7 +2,7 @@ __author__ = 'dleece'
 
 # use the org id as a simple auth check,
 import sys, time,os, shutil
-import menuviewauthz_dm, inputSani_dm, dbselect1row_dm, cfgparse_dm, makeViewFile_dm
+import menuviewauthz_dm, inputSani_dm, dbselect1row_dm, cfgparse_dm, makeViewFile_dm, makeZoneFile_dm
 
 #
 DNSMinerHome='/opt/dnsminer-alpha'
@@ -83,7 +83,18 @@ def doGenView(thisorgid):
     genviewmenuactive = True
     while genviewmenuactive:
             getviewid = True
+            makeview = False
+            makezone = False
             print "\nYou are about to generate/regenerate a new Bind View and related zone files."
+            filechoice = raw_input("View File or zone file (view|zone)?")
+            filechoice = filechoice.strip().lower()
+            if filechoice =='view':
+                makeview = True
+            elif filechoice == 'zone':
+                makezone = True
+            else:
+                print "not a valid choice"
+
             while getviewid:
                 print "You can only generate views assigned to your organization."
                 uvinput = raw_input("Enter view name: ")
@@ -106,12 +117,17 @@ def doGenView(thisorgid):
                     gviewdict['rpz_zone'] = gviewdict['view_name'] + ".rpz"
                     getnodeinfo()
                     gviewdict['acl_name'] = gviewdict['view_name'] + "ACL"
-
                     # debug
                     #for key,val in gviewdict.iteritems():
                     #    print key,"-->",val
                     # write to file
-                    makeViewFile_dm.readDict(gviewdict)
+                    if makeview:
+                        makeViewFile_dm.readDict(gviewdict)
+                        makeview = False
+                    if makezone:
+                        makeZoneFile_dm.readDict(gviewdict)
+                        makezone = False
+
 
 
             genviewmenuactive=False
