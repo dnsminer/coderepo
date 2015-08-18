@@ -49,9 +49,7 @@ def readDict(thisorgdict):
     thislist.append(vfileline)
     vfileline=mklzonepath(thisorgdict['org_id'],thisorgdict['rpz_zone'])
     thislist.append(vfileline)
-    #notifyline = mkanotify(thisorgdict['rec_nodes'],thisorgdict['xfr_port'],thisorgdict['tsig_name'])
     thislist.append(notifyline)
-    #xferline = mktransfer(thisorgdict['rec_nodes'],thisorgdict['tsig_name'])
     thislist.append(xferline)
     # close the zone
     vfileline="\t};"
@@ -101,6 +99,7 @@ def writeviewfile(filename,linelist):
         fh = open(filename,'w')
         #thisfh= getfilehandle(vfile)
         for line in linelist:
+            line = line + "\n"
             fh.write(line)
     except Exception as e:
         print "Unable to create view file in temp directory or problem with the file content, please debug"
