@@ -49,9 +49,9 @@ def readDict(thisorgdict):
     thislist.append(vfileline)
     vfileline=mklzonepath(thisorgdict['org_id'],thisorgdict['rpz_zone'])
     thislist.append(vfileline)
-    notifyline = mkanotify(thisorgdict['rec_nodes'],thisorgdict['xfr_port'],thisorgdict['tsig_name'])
+    #notifyline = mkanotify(thisorgdict['rec_nodes'],thisorgdict['xfr_port'],thisorgdict['tsig_name'])
     thislist.append(notifyline)
-    xferline = mktransfer(thisorgdict['rec_nodes'],thisorgdict['tsig_name'])
+    #xferline = mktransfer(thisorgdict['rec_nodes'],thisorgdict['tsig_name'])
     thislist.append(xferline)
     # close the zone
     vfileline="\t};"
