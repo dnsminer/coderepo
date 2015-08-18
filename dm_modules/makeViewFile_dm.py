@@ -85,7 +85,8 @@ def mkanotify(rnodestr,xport,tsig):
     antfystr="\talso-notify { "
     rnlist=rnodestr.split(',')
     for i in range(len(rnlist)):
-        antfystr = antfystr + rnlist[i].strip() + " port " + xport + " key " + tsig +"; "
+        if rnlist[i]:
+            antfystr = antfystr + rnlist[i].strip() + " port " + xport + " key " + tsig +"; "
     antfystr = antfystr + " };"
     return antfystr
 
@@ -93,7 +94,8 @@ def mktransfer(rnodestr,tsig):
     axferstr="\tallow-transfer { " + tsig + "; "
     rnlist=rnodestr.split(',')
     for i in range(len(rnlist)):
-        axferstr = axferstr + rnlist[i].strip() + "; "
+        if rnlist[i]:
+            axferstr = axferstr + rnlist[i].strip() + "; "
     axferstr = axferstr + " };"
     return axferstr
 
