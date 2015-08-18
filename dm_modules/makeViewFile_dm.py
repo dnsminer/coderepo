@@ -77,7 +77,7 @@ def mkallowquery(rnodestr):
 
 def mklzonepath(oid,shz):
     fpath = "\tfile \"/etc/bind/clients/"
-    fpath = fpath + oid + "/" + shz + "\";"
+    fpath = fpath + str(oid) + "/" + shz + "\";"
     return fpath
 
 def mkanotify(rnodestr,xport,tsig):
