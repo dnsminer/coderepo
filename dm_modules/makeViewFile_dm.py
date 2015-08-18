@@ -14,6 +14,8 @@ def readDict(thisorgdict):
     thislist.append(vfileline)
     vfileline = "\tmatch-clients { " + thisorgdict['acl_name'] + "; };"
     thislist.append(vfileline)
+    vfileline="\trecursion yes;"
+    thislist.append(vfileline)
     vfileline=mkallowquery(thisorgdict['rec_nodes'])
     thislist.append(vfileline)
     vfileline="\tadditional-from-auth yes;\n\tadditional-from-cache yes;"
@@ -69,7 +71,8 @@ def mkallowquery(rnodestr):
     rnlist=rnodestr.split(',')
     aqrystr = '\tallow-query {'
     for i in range(len(rnlist)):
-        aqrystr = aqrystr + rnlist[i].strip() + "; "
+        if rnlist[i]:
+            aqrystr = aqrystr + rnlist[i].strip() + "; "
     aqrystr = aqrystr + "};"
     return aqrystr
 
