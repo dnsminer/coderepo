@@ -102,7 +102,6 @@ def mktransfer(rnodestr,tsig):
 def writeviewfile(filename,linelist):
     try:
         fh = open(filename,'w')
-        #thisfh= getfilehandle(vfile)
         for line in linelist:
             line = line + "\n"
             fh.write(line)
