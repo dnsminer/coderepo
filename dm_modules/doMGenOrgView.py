@@ -157,7 +157,7 @@ def doGenView(thisorgid):
                         makeZoneFile_dm.readDict(gviewdict)
                         makezone = False
                     if makerecview:
-                        makeViewFile_dm.readDict(gviewdict)
+                        makeRecViewFile_dm.readDict(gviewdict)
                         makeview = False
 
 
