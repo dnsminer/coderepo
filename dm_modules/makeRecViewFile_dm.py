@@ -7,8 +7,8 @@ tempdir = DNSMinerHome + "/tmp/"
 
 def readDict(thisorgdict):
     #debug
-    for key,val in thisorgdict.iteritems():
-        print key,"-->",val
+    #for key,val in thisorgdict.iteritems():
+    #    print key,"-->",val
     thislist=[]
     vfileline = "view \"" + thisorgdict['view_name'] + "\" in {"
     thislist.append(vfileline)
