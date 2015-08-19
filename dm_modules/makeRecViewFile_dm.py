@@ -64,7 +64,7 @@ def readDict(thisorgdict):
     vfileline="}; // End " + thisorgdict['view_name'] + " view"
     thislist.append(vfileline)
     # prep for file creation
-    vfile = thisorgdict['view_name'] + ".view"
+    vfile = thisorgdict['view_name'] + ".recursionview"
     thisfile = tempdir + vfile
     # debug
     print thisfile
