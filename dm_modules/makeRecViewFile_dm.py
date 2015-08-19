@@ -17,7 +17,7 @@ def readDict(thisorgdict):
     thislist.append(vfileline)
     vfileline="\trecursion yes;"
     thislist.append(vfileline)
-    vfileline= "\t allow-query { " + recclientstr + " };"
+    vfileline= "\tallow-query { " + recclientstr + " };"
     thislist.append(vfileline)
     vfileline="\tadditional-from-auth yes;\n\tadditional-from-cache yes;"
     thislist.append(vfileline)
@@ -31,7 +31,7 @@ def readDict(thisorgdict):
     thislist.append(vfileline)
     vfileline = "\ttype slave;"
     thislist.append(vfileline)
-    masterline = "\t masters { " + thisorgdict['bind_zone_master'] + " port " + thisorgdict['xfr_port'] + " key " + thisorgdict['tsig_name'] + "; };"
+    masterline = "\tmasters { " + thisorgdict['bind_zone_master'] + " port " + thisorgdict['xfr_port'] + " key " + thisorgdict['tsig_name'] + "; };"
     thislist.append(masterline)
     vfileline=mklzonepath(thisorgdict['org_id'],thisorgdict['sh_zone'])
     thislist.append(vfileline)
@@ -61,7 +61,7 @@ def readDict(thisorgdict):
     vfileline="\t};"
     thislist.append(vfileline)
     # close the view
-    vfileline="}; // End " + thisorgdict['view_name'] + " view"
+    vfileline="}; // End " + thisorgdict['view_name'] + " recursion view"
     thislist.append(vfileline)
     # prep for file creation
     vfile = thisorgdict['view_name'] + ".recursionview"

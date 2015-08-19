@@ -57,7 +57,7 @@ def readDict(thisorgdict):
     vfileline="\t};"
     thislist.append(vfileline)
     # close the view
-    vfileline="}; // End " + thisorgdict['view_name'] + " view"
+    vfileline="}; // End " + thisorgdict['view_name'] + " primary view"
     thislist.append(vfileline)
     # prep for file creation
     vfile = thisorgdict['view_name'] + ".primaryview"
