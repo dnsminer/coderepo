@@ -12,11 +12,12 @@ def readDict(thisorgdict):
     thislist=[]
     vfileline = "view \"" + thisorgdict['view_name'] + "\" in {"
     thislist.append(vfileline)
-    vfileline = "\tmatch-clients { " + thisorgdict['acl_name'] + "; };"
+    recclientstr = mkmatchclients(thisorgdict['view_src_acl_ips'])
+    vfileline = "\tmatch-clients { " + recclientstr + " };"
     thislist.append(vfileline)
     vfileline="\trecursion yes;"
     thislist.append(vfileline)
-    vfileline=mkallowquery(thisorgdict['rec_nodes'])
+    vfileline= "\t allow-query { " + recclientstr + " };"
     thislist.append(vfileline)
     vfileline="\tadditional-from-auth yes;\n\tadditional-from-cache yes;"
     thislist.append(vfileline)
@@ -28,15 +29,17 @@ def readDict(thisorgdict):
     thislist.append(vfileline)
     vfileline="\tzone \"" + thisorgdict['sh_zone'] + "\" {"
     thislist.append(vfileline)
-    vfileline = "\ttype master;"
+    vfileline = "\ttype slave;"
     thislist.append(vfileline)
+    masterline = "\t masters { " + thisorgdict['bind_zone_master'] + " port " + thisorgdict['xfr_port'] + " key " + thisorgdict['tsig_name'] + "; };"
+    thislist.append(masterline)
     vfileline=mklzonepath(thisorgdict['org_id'],thisorgdict['sh_zone'])
     thislist.append(vfileline)
     # new these next two more than once so changing the variable name
-    notifyline = mkanotify(thisorgdict['rec_nodes'],thisorgdict['xfr_port'],thisorgdict['tsig_name'])
-    thislist.append(notifyline)
-    xferline = mktransfer(thisorgdict['rec_nodes'],thisorgdict['tsig_name'])
-    thislist.append(xferline)
+    #notifyline = mkanotify(thisorgdict['rec_nodes'],thisorgdict['xfr_port'],thisorgdict['tsig_name'])
+    #thislist.append(notifyline)
+    #xferline = mktransfer(thisorgdict['rec_nodes'],thisorgdict['tsig_name'])
+    #thislist.append(xferline)
     # close the zone
     vfileline="\t};"
     thislist.append(vfileline)
@@ -47,12 +50,13 @@ def readDict(thisorgdict):
     thislist.append(vfileline)
     vfileline="\tzone \"" + thisorgdict['rpz_zone'] + "\" {"
     thislist.append(vfileline)
-    vfileline = "\ttype master;"
+    vfileline = "\ttype slave;"
     thislist.append(vfileline)
+    thislist.append(masterline)
     vfileline=mklzonepath(thisorgdict['org_id'],thisorgdict['rpz_zone'])
     thislist.append(vfileline)
-    thislist.append(notifyline)
-    thislist.append(xferline)
+    #thislist.append(notifyline)
+    #thislist.append(xferline)
     # close the zone
     vfileline="\t};"
     thislist.append(vfileline)
@@ -75,6 +79,14 @@ def mkallowquery(rnodestr):
             aqrystr = aqrystr + rnlist[i].strip() + "; "
     aqrystr = aqrystr + "};"
     return aqrystr
+
+def mkmatchclients(aclips):
+    clipstr=''
+    clientlist=aclips.split(',')
+    for i in range(len(clientlist)):
+        if clientlist[i]:
+            clipstr = clipstr + clientlist[1] + "; "
+    return  clipstr
 
 def mklzonepath(oid,shz):
     fpath = "\tfile \"/etc/bind/clients/"

@@ -85,6 +85,8 @@ def getnodeinfo():
     thisCfgDict = cfgparse_dm.opencfg(sitecfg,'SectionTwo')
     xferport = thisCfgDict['zonetransferport']
     gviewdict['xfr_port']=xferport
+    zonemstr = thisCfgDict['bindzonemaster']
+    gviewdict['bind_zone_master'] = zonemstr
     nodelist = thisCfgDict['recursivenameservers'].split(',')
     # clean up any spaces between the nodes
     rnodestr=''
@@ -97,6 +99,7 @@ def getnodeinfo():
     for i in range(len(fwdnodes)):
         rfwdstr = rfwdstr + fwdnodes[i].strip() + ","
     gviewdict['rec_forwarders'] = rfwdstr
+
     return
 
 
