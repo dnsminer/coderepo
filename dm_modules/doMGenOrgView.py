@@ -92,7 +92,7 @@ def getnodeinfo():
         rnodestr = rnodestr + nodelist[i].strip() + ","
     gviewdict['rec_nodes'] = rnodestr
     # Get the forwarders from the config file
-    fwdnodes = thisCfgDict['RecursiveForwarders'].split(',')
+    fwdnodes = thisCfgDict['recursiveforwarders'].split(',')
     rfwdstr=''
     for i in range(len(fwdnodes)):
         rfwdstr = rfwdstr + fwdnodes[i].strip() + ","
