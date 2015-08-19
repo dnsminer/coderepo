@@ -2,7 +2,7 @@ __author__ = 'dleece'
 
 # use the org id as a simple auth check,
 import sys, time,os, shutil
-import menuviewauthz_dm, inputSani_dm, dbselect1row_dm, cfgparse_dm, makeViewFile_dm, makeZoneFile_dm
+import menuviewauthz_dm, inputSani_dm, dbselect1row_dm, cfgparse_dm, makeViewFile_dm, makeZoneFile_dm, makeRecViewFile_dm
 
 #
 DNSMinerHome='/opt/dnsminer-alpha'
@@ -54,6 +54,22 @@ def genshsql(thisvname):
         exit()
     return
 
+def genviewsql(thisvid):
+    if type(thisvid) == type(long()):
+        tmpid=str(thisvid)
+        viewsqlstr = "SELECT view_src_acl_ips FROM bind_views WHERE view_id ='" + tmpid + "';"
+        thisresult=getdata(viewsqlstr)
+        if thisresult[0] is not None:
+            gviewdict['view_src_acl_ips'] = thisresult[0]
+        else:
+            print "no recursion ACL found, debug required"
+            exit()
+    else:
+        print "invalid input, I quit"
+        exit()
+
+    return
+
 
 def getdata(thissqlstr):
     qresult = dbselect1row_dm.dbRecordSelect(thissqlstr)
@@ -75,6 +91,12 @@ def getnodeinfo():
     for i in range(len(nodelist)):
         rnodestr = rnodestr + nodelist[i].strip() + ","
     gviewdict['rec_nodes'] = rnodestr
+    # Get the forwarders from the config file
+    fwdnodes = thisCfgDict['RecursiveForwarders'].split(',')
+    rfwdstr=''
+    for i in range(len(fwdnodes)):
+        rfwdstr = rfwdstr + fwdnodes[i].strip() + ","
+    gviewdict['rec_forwarders'] = rfwdstr
     return
 
 
@@ -85,13 +107,16 @@ def doGenView(thisorgid):
             getviewid = True
             makeview = False
             makezone = False
+            makerecview = False
             print "\nYou are about to generate/regenerate a new Bind View and related zone files."
-            filechoice = raw_input("View File or zone file (view|zone)?")
+            filechoice = raw_input("View File or zone file (primaryview|zone|recursionview)?")
             filechoice = filechoice.strip().lower()
-            if filechoice =='view':
+            if filechoice =='primaryview':
                 makeview = True
             elif filechoice == 'zone':
                 makezone = True
+            elif filechoice == 'recursionview':
+                makerecview = True
             else:
                 print "not a valid choice"
 
@@ -117,6 +142,7 @@ def doGenView(thisorgid):
                     gviewdict['rpz_zone'] = gviewdict['view_name'] + ".rpz"
                     getnodeinfo()
                     gviewdict['acl_name'] = gviewdict['view_name'] + "ACL"
+                    genviewsql(gviewdict['view_id'])
                     # debug
                     #for key,val in gviewdict.iteritems():
                     #    print key,"-->",val
@@ -127,6 +153,9 @@ def doGenView(thisorgid):
                     if makezone:
                         makeZoneFile_dm.readDict(gviewdict)
                         makezone = False
+                    if makerecview:
+                        makeViewFile_dm.readDict(gviewdict)
+                        makeview = False
 
 
 
