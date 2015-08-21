@@ -28,9 +28,8 @@ def gentsigcontents(thisorgdict):
 
 def gensharedsecret(intlen):
     trand = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(intlen))
-    thissharedsec = base64.b64decode(trand)
+    thissharedsec = base64.b64encode(trand)
     return thissharedsec
-
 
 
 def writetsigfile(filename,linelist):
