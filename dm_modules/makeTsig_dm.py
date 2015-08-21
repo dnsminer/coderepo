@@ -18,6 +18,7 @@ def gentsigcontents(thisorgdict):
     vfileline= "\tsecret \"" + gensharedsecret(27) + "\";"
     thislist.append(vfileline)
     vfileline="};"
+    thislist.append(vfileline)
     # prep for file creation
     vfile = thisorgdict['tsig_name'] + ".tsig"
     thisfile = tempdir + vfile
