@@ -2,7 +2,8 @@ __author__ = 'dleece'
 
 # use the org id as a simple auth check,
 import sys, time,os, shutil
-import menuviewauthz_dm, inputSani_dm, dbselect1row_dm, cfgparse_dm, makeViewFile_dm, makeZoneFile_dm, makeRecViewFile_dm
+import menuviewauthz_dm, inputSani_dm, dbselect1row_dm, cfgparse_dm, makeViewFile_dm, makeZoneFile_dm
+import makeRecViewFile_dm, makeTsig_dm
 
 #
 DNSMinerHome='/opt/dnsminer-alpha'
@@ -152,6 +153,7 @@ def doGenView(thisorgid):
                     # write to file
                     if makeview:
                         makeViewFile_dm.readDict(gviewdict)
+                        makeTsig_dm.gentsigcontents(gviewdict)
                         makeview = False
                     if makezone:
                         makeZoneFile_dm.readDict(gviewdict)
