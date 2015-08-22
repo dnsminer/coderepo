@@ -3,8 +3,6 @@
 # Set the path to include the dns miner modules directory
 import sys
 DNSMinerHome='/opt/dnsminer-alpha'
-dm_modules = DNSMinerHome + "/dm_modules"
-#print dm_modules
 
 
 from itertools import izip

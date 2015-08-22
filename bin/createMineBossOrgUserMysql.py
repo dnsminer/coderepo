@@ -145,9 +145,6 @@ def dbTblInsert(insertdict,dbtable):
         cur=dbcon.cursor()
         sqlStr = "USE " + ivDBName
         cur.execute(sqlStr)
-        #for sqlStr in fh:
-        #    if sqlStr.strip():
-        #        #print sqlStr
         cur.execute (sqlStrI)
     dbcon.commit()
     dbcon.close()

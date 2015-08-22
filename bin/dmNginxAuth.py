@@ -31,10 +31,7 @@ def doHTPASSWD(udata):
         #cmdArgStr = "[\"" + htppwbin + "\", \"-b\", \"" + uauthfile + "\", \"" +  udata[0] + "\", \"" + udata[1] + "\"]"
     else:
         cmdStr = htppwbin + " -b -c " + uauthfile + " " + udata[0] + " " + udata[1]
-        #cmdArgStr = "[\"" + htppwbin + "\", \"-b\", \"-c\", \"" + uauthfile + "\", \"" +  udata[0] + "\", \"" + udata[1] + "\"]"
-    #print cmdStr
     cmdArgs = shlex.split(cmdStr)
-    #htpaswdresult=subprocess.Popen(cmdArgStr,stdout=subprocess.PIPE)
     p=subprocess.Popen(cmdArgs,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     htpasswdResult = p.communicate()
     return htpasswdResult

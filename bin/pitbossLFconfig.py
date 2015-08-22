@@ -81,7 +81,6 @@ def confPDNSPath():
     if PDNSLogs:
         confList.append(PDNSPath)
 
-
 def isPathValid(pathStr):
     TBool = os.path.isfile(pathStr)
     return TBool

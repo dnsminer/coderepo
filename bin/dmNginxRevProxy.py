@@ -62,7 +62,6 @@ def genConfig(valList):
     CFGfh.write(wline)
     CFGfh.close()
 
-
     if isFileValid(CFG):
         try:
             os.symlink(CFG,CFGLn)

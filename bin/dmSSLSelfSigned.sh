@@ -38,3 +38,5 @@ mv dnsminer.crt /etc/nginx/local
 
 # Clean up the creation directory
 rm -rf /var/tmp/$TDIR
+
+# end

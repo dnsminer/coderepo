@@ -7,7 +7,6 @@
 #  http basic authentication.
 #  This wrapper is Debian/Ubuntu specific if you have a different OS and there
 #  is no wrapper script then simply run each script manually.
-#
 
 # Edit the DNSMINERHOME path to the local git repo location
 #

@@ -2,7 +2,8 @@
 #__author__ = 'dleece'
 #  The main purpose of this program is to integrate white lie, black list and the de-duped domains from auto sources.
 #
-# white and black lists will be pulled from database after POC developed using flat files.
+# white and black lists will be pulled from database along with public list
+# do it all in SQL and then dump those results into teh org specific RPZ file
 
 import sys, os, glob, time, datetime, shutil, pwd, grp
 
