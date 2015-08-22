@@ -24,7 +24,7 @@ def loadtable(sortedlist):
 
     try:
         dbcon = mdb.connect('localhost',adminVar,adminPwd,ivDBName)
-        print "connected"
+        print "connected " + time.ctime()
     except mdb.Error, e:
         print e.args[0]
         sys.exit(1)
@@ -35,11 +35,11 @@ def loadtable(sortedlist):
         cur.execute(sqlStr)
         for line in sortedlist:
             #print line
-            sqlStr = "INSERT INTO tlist_domains (domain) VALUES (" + line + ");"
+            sqlStr = "INSERT INTO tlist_domains (domain) VALUES ('" + line + "');"
             cur.execute(sqlStr)
     dbcon.commit()
     dbcon.close()
-    print "completed"
+    print "completed " + time.ctime()
     return
 
 def genlistname(filebase):
@@ -58,6 +58,7 @@ def filetolist(filepath):
     print filepath
     thislist=[]
     try:
+        print "reading file " + time.ctime()
         thislist =[line.strip() for line in open(filepath,'r')]
     except Exception as e:
         print "Unable to open public list file "
