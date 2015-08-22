@@ -129,8 +129,16 @@ def doView(mwlist):
             vname = viewDict['view_name']
             tsigid = genTsigData_dm.gentsigsql(oid,vname)
             newtsigid = tsigid[0]
-            print newtsigid
+            #print newtsigid
             viewDict['tsig_id'] = newtsigid
+            # generate black and white list entries
+            #oid = viewDict['org_id']
+            shid = viewDict['def_sh_id']
+            #vname = viewDict['view_name']
+            print str(oid) + "-" + str(shid) + "-" + vname
+            wlcreate = genDefListData_dm.genbworgsql(oid,shid,vname)
+            print wlcreate[0]
+
             # debug dictionary contents
             #for key,val in viewDict.iteritems():
             #    print key, '-->', viewDict[key]
@@ -143,13 +151,7 @@ def doView(mwlist):
             newviewid = thisviewid[0]
             if len(thisviewid) == 1:
                 print "Creation of view " + viewDict['view_name'] + " confirmed successful, please generate an view file for this organiztion now, menu/genorgview"
-            # generate black and white list entries
-            oid = viewDict['org_id']
-            shid = viewDict['def_sh_id']
-            vname = viewDict['view_name']
-            print str(oid) + "-" + str(shid) + "-" + vname
-            wlcreate = genDefListData_dm.genbworgsql(oid,shid,vname)
-            print wlcreate[0]
+
             # exit do view menu
             viewmenuactive=False
 
