@@ -58,7 +58,7 @@ try:
 except:
     print "unable to change ownership of this file: " + FIBPKG1
 
-# clen up old list file because shutil.move was locking up
+# clean up old list file because shutil.move was locking up
 #try:
 #    #os.remove(RPZPATH)
 #except:
