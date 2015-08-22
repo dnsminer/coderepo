@@ -30,7 +30,7 @@ def inputSanitizer(inputstring,type):
         else:
             print "Invalid IP address, please redo"
     if type == 'cidr':
-        print "testing cidr"
+        #print "testing cidr"
         ipipmask = inputstring.split('/')
         testres = checkIPsock(ipipmask[0])
         testmask = int(ipipmask[1])
