@@ -19,4 +19,6 @@ CREATE TABLE blacklist_domain ( bld_id INT NOT NULL AUTO_INCREMENT, org_id INT N
 
 CREATE TABLE tlist_domains (domain VARCHAR(300), PRIMARY KEY(domain)) ENGINE=INNODB;
 
+CREATE TABLE tlist_domain_history (domain VARCHAR(300), firstseen DATE, currentseen DATE, PRIMARY KEY(domain)) ENGINE=INNODB;
+
 CREATE TABLE tlist_ips (ip BIGINT, PRIMARY KEY(ip)) ENGINE=INNODB;
