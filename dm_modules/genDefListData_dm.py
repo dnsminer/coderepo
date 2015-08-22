@@ -24,7 +24,7 @@ def genbworgsql(orgid,viewname,shid):
     else:
         print "You may need to manually check the whitelist_domain table"
     # Whitelist host
-    sqlstr = "INSERT into whitelist_host (org_id,wlh_type,wlh_host,wlh_ip,wlh_desc,wlh_date) VALUES ('"\
+    sqlstr = "INSERT into whitelist_host (org_id,wlh_type,wl_host,wlh_ip,wlh_desc,wlh_date) VALUES ('"\
              + str(orgid) + "','" + deftype + "','" + defwhitehost + "','" + defip + "','" + defdesc +"','" + dstamp +"');"
     print sqlstr
     wldresult=menudbinsert_dm.dbinsert(sqlstr)
@@ -42,7 +42,7 @@ def genbworgsql(orgid,viewname,shid):
     else:
         print "You may need to manually check the blacklist_domain table"
     # Blacklist host
-    sqlstr = "INSERT into whitelist_host (org_id,blh_type,bl_host,blh_ip,blh_sinkhole,blh_desc,blh_date) VALUES ('"\
+    sqlstr = "INSERT into blacklist_host (org_id,blh_type,bl_host,blh_ip,blh_sinkhole,blh_desc,blh_date) VALUES ('"\
              + str(orgid) + "','" + deftype + "','" + defblackhost + "','" + defip + "','" + shid + "','" + defdesc +"','" + dstamp +"');"
     print sqlstr
     wldresult=menudbinsert_dm.dbinsert(sqlstr)
