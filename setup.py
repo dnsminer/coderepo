@@ -8,5 +8,5 @@ setup(
     license='Apache License 2.0',
     author='Doug Leece',
     author_email='dleece@firstfiretech.ca',
-    description='Modules needed for the various DNS Miner programs'
+    description='Modules needed for the various DNS Miner programs and utilities'
 )
