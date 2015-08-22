@@ -24,7 +24,7 @@ def loadtable(sortedlist):
 
     try:
         dbcon = mdb.connect('localhost',adminVar,adminPwd,ivDBName)
-        #print "connected"
+        print "connected"
     except mdb.Error, e:
         print e.args[0]
         sys.exit(1)
@@ -34,10 +34,12 @@ def loadtable(sortedlist):
         sqlStr = "USE " + ivDBName
         cur.execute(sqlStr)
         for line in sortedlist:
-            print line
-            #sqlStr = "INSERT INTO tlist_domains (domain) VALUES (" + line + ");"
+            #print line
+            sqlStr = "INSERT INTO tlist_domains (domain) VALUES (" + line + ");"
+            cur.execute(sqlStr)
     dbcon.commit()
     dbcon.close()
+    print "completed"
     return
 
 def genlistname(filebase):
