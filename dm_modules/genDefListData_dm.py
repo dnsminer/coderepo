@@ -3,6 +3,8 @@ __author__ = 'dleece'
 import menudbinsert_dm, menudbselect_dm
 from datetime import datetime, date
 def genbworgsql(orgid,viewname,shid):
+    # debug
+    print "executing white list domainsql"
     # values for SQL statements
     defwhitedom =  viewname + "-white.local"
     defwhitehost = "ignore." + defwhitedom
@@ -21,7 +23,7 @@ def genbworgsql(orgid,viewname,shid):
         print "You may need to manually check the whitelist_domain table"
     #qresult = gettsigid(keyname)
     #qresult is a list, need to know number of columns if this is going to be a generic module
-    return
+    return wldresult
 
 #def gettsigid(thiskeyname):
 #    thisresultlist=[]

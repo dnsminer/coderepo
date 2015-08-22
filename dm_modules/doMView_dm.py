@@ -147,7 +147,7 @@ def doView(mwlist):
             oid = viewDict['org_id']
             shid = viewDict['def_sh_id']
             vname = viewDict['view_name']
-            genDefListData_dm.genbworgsql(oid,shid,vname)
+            wlcreate = genDefListData_dm.genbworgsql(oid,shid,vname)
             # exit do view menu
             viewmenuactive=False
 
