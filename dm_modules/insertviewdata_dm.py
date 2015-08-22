@@ -5,7 +5,7 @@ def genviewgsql(viewsqllist):
 
     valstr ="','".join(map(str,viewsqllist))
     sqlstr = "INSERT into bind_views (org_id,view_name,def_sh_id,view_src_acl_ips,view_desc,tsig_id) VALUES ('" + valstr +"');"
-    print sqlstr
+    #print sqlstr
     viewresult=menudbinsert_dm.dbinsert(sqlstr)
     #print tsigresult
     if viewresult == 1:
