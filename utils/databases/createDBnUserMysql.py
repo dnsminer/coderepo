@@ -73,8 +73,6 @@ def dbUserGrant(inputvals):
         SQLstring = "GRANT ALL ON  " + ivDBName +".* TO '" + ivMinionUser +"'@'localhost'"
         #print SQLstring
         cur.execute (SQLstring)
-        #cur.execute("CREATE TABLE IF NOT EXISTS ccircip(Id INT PRIMARY KEY auto_increment,\
-        #IPINT INT UNSIGNED, LASTUPDATE DATE)")
     dbcon.commit()
     dbcon.close()
     var = 'The dnsMinion application user account permissions done'

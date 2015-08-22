@@ -16,7 +16,6 @@ CREATE TABLE blacklist_host ( blh_id INT NOT NULL AUTO_INCREMENT, org_id INT NOT
 
 CREATE TABLE blacklist_domain ( bld_id INT NOT NULL AUTO_INCREMENT, org_id INT NOT NULL,bl_domain VARCHAR(300) NOT NULL, blh_sinkhole INT NOT NULL, description VARCHAR(80), blh_date DATE,  PRIMARY KEY (bld_id), FOREIGN KEY (org_id) REFERENCES org_info(org_id) ON UPDATE CASCADE ON DELETE NO ACTION, FOREIGN KEY (blh_sinkhole) REFERENCES view_sinkholes(sinkhole_id) ON UPDATE CASCADE ON DELETE NO ACTION ) ENGINE=INNODB;
 
-
 CREATE TABLE tlist_domains (domain VARCHAR(300), PRIMARY KEY(domain)) ENGINE=INNODB;
 
 CREATE TABLE tlist_domain_history (domain VARCHAR(300), firstseen DATE, currentseen DATE, PRIMARY KEY(domain)) ENGINE=INNODB;
