@@ -34,7 +34,7 @@ def genbworgsql(orgid,viewname,shid):
         print "You may need to manually check the whitelist_host table"
         # Blacklist domain
     sqlstr = "INSERT into blacklist_domain (org_id,bl_domain,bld_sinkhole,bld_desc,bld_date) VALUES ('" \
-             + str(orgid) +"','" + defblackdom + "','" + shid + "','" + defdesc +"','" + dstamp +"');"
+             + str(orgid) +"','" + defblackdom + "','" + str(shid) + "','" + defdesc +"','" + dstamp +"');"
     print sqlstr
     wldresult=menudbinsert_dm.dbinsert(sqlstr)
     if wldresult == 1:
@@ -43,7 +43,7 @@ def genbworgsql(orgid,viewname,shid):
         print "You may need to manually check the blacklist_domain table"
     # Blacklist host
     sqlstr = "INSERT into blacklist_host (org_id,blh_type,bl_host,blh_ip,blh_sinkhole,blh_desc,blh_date) VALUES ('"\
-             + str(orgid) + "','" + deftype + "','" + defblackhost + "','" + defip + "','" + shid + "','" + defdesc +"','" + dstamp +"');"
+             + str(orgid) + "','" + deftype + "','" + defblackhost + "','" + defip + "','" + str(shid) + "','" + defdesc +"','" + dstamp +"');"
     print sqlstr
     wldresult=menudbinsert_dm.dbinsert(sqlstr)
     if wldresult == 1:
