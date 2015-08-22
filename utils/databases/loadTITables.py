@@ -33,6 +33,10 @@ def loadtable(sortedlist):
         cur=dbcon.cursor()
         sqlStr = "USE " + ivDBName
         cur.execute(sqlStr)
+        sqlStr = "DROP TABLE IF EXISTS tlist_domains;"
+        cur.execute(sqlStr)
+        sqlStr = "CREATE TABLE tlist_domains (domain VARCHAR(300), PRIMARY KEY(domain)) ENGINE=INNODB;"
+        cur.execute(sqlStr)
         for line in sortedlist:
             #print line
             sqlStr = "INSERT INTO tlist_domains (domain) VALUES ('" + line + "');"
