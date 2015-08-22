@@ -19,7 +19,6 @@ def genbworgsql(orgid,viewname,shid):
     sqlstr = "INSERT into whitelist_domain (org_id,wl_domain,wld_desc,wld_date) VALUES ('" + str(orgid) +"','" + defwhitedom +"','" + defdesc +"','" + dstamp +"');"
     print sqlstr
     wldresult=menudbinsert_dm.dbinsert(sqlstr)
-
     if wldresult == 1:
         print "Default white list domain table entry for this organization created successfully"
     else:
