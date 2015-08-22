@@ -147,7 +147,7 @@ def doView(mwlist):
             shid = viewDict['def_sh_id']
             print str(oid) + "-" + str(shid) + "-" + vname
             wlcreate = genDefListData_dm.genbworgsql(oid,vname,shid)
-            print wlcreate[0]
+            print wlcreate
             # exit do view menu
             viewmenuactive=False
 
