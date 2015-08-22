@@ -42,9 +42,12 @@ def loadtable(sortedlist):
 
 def genlistname(filebase):
     todate=datetime.date.today()
-    datestr=str(todate.year) + str(todate.month) + str(todate.day)
+    #datestr=str(todate.year) + str(todate.month) + str(todate.day)
+    month2d = '%02d' % todate.month
+    day2d = '%02d' %todate.day
+    datestr = str(todate.year) + month2d + day2d
     listname = datestr + "-public-list.rpz"
-    listpath = filebase + "/" + listname
+    listpath = filebase  + listname
     return listpath
 
 
