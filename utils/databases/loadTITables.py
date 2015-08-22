@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 #__author__ = 'dleece'
+# Currently a standalone script to be used in nightly cron. If a user updates their blck of white list they
+# will pull the list contents from the daily TI database table rather than each user opening the file each time
 
 import sys, time,os, shutil, datetime
 import MySQLdb as mdb

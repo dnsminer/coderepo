@@ -34,7 +34,7 @@ def readDict(thisorgdict):
     thislist.append(vfileline)
     vfileline="\t\t\tIN\tNS\tmineboss.dnsminer.net."
     thislist.append(vfileline)
-    vfileline="\t\t\tIN\tA\t10.42.42.42"
+    vfileline="\t\t\tIN\tA\t198.51.100.42"
     thislist.append(vfileline)
     vfileline = getlzonehost(thisorgdict['sh_fqdn']) +"\t\tIN\tA\t" + inttoip_dm.intTodotQuad(thisorgdict['sh_ip'])
     thislist.append(vfileline)

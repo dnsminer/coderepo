@@ -1,6 +1,6 @@
 __author__ = 'dleece'
 #from dm_modules
-import dbchk_dm, inputSani_dm, iptoint_dm, genRandomString_dm, insertsinkholedata_dm, menudbinsert_dm, tsigkeymdata_dm,menudbselect_dm, insertviewdata_dm
+import dbchk_dm, inputSani_dm, iptoint_dm, genRandomString_dm, insertsinkholedata_dm, menudbinsert_dm, genTsigData_dm,menudbselect_dm, insertviewdata_dm, genDefListData_dm
 
 def inputView(vname):
     #check for no spaces and make sure it's not already used.
@@ -127,7 +127,7 @@ def doView(mwlist):
             #generate tsig_key meta data, ( this is static even if the keys are updated
             oid = viewDict['org_id']
             vname = viewDict['view_name']
-            tsigid = tsigkeymdata_dm.gentsigsql(oid,vname)
+            tsigid = genTsigData_dm.gentsigsql(oid,vname)
             newtsigid = tsigid[0]
             print newtsigid
             viewDict['tsig_id'] = newtsigid
@@ -143,6 +143,11 @@ def doView(mwlist):
             newviewid = thisviewid[0]
             if len(thisviewid) == 1:
                 print "Creation of view " + viewDict['view_name'] + " confirmed successful, please generate an view file for this organiztion now, menu/genorgview"
+            # generate black and white list entries
+            oid = viewDict['org_id']
+            shid = viewDict['def_sh_id']
+            vname = viewDict['view_name']
+            genDefListData_dm.genbworgsql(oid,shid,vname)
             # exit do view menu
             viewmenuactive=False
 
