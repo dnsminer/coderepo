@@ -19,7 +19,6 @@ def genRPZFiles(oidlist):
             orgid=item[0]
             # get org wide, dom list,
             # remove white list entries from public list
-
             # add black list entries, store as a temp list pubwhiteblackdomlist
             makeorgpwblist(orgid)
             # Get view metadata
