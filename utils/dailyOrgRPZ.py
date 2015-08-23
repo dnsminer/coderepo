@@ -24,10 +24,10 @@ def genRPZFiles(oidlist):
             # Get view metadata
             viewmdata = getViewRPZdata(orgid)
             # Debug
-            #for rows in viewmdata:
-            #    print "--> Org ID " + str(orgid) + " view name, view ID, sh fqdn"
-            #    for i in range(len(rows)):
-            #        print rows[i]
+            for rows in viewmdata:
+                print "--> Org ID " + str(orgid) + " view name, view ID, sh fqdn"
+                for i in range(len(rows)):
+                    print rows[i]
             #
             #--> Org ID 1 view name, view ID, sh fqdn
             #1
@@ -36,7 +36,8 @@ def genRPZFiles(oidlist):
             #mzfdfo.dsqugzj.local
             #
             # Generate view specific header
-            print "this is the view name: " + viewmdata[1]
+            print "this is the view name: "
+            print viewmdata[1]
             rpzhead = genrpzheader(viewmdata[1])
             print  rpzhead
 
