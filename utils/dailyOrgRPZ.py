@@ -150,10 +150,8 @@ def writerpzfile(oid,vname,shfqdn,hdr,tilist):
         fh = open(fname,'w')
         fh.write(hdr)
         for val in tilist:
-            print len(val)
             if val:
                 valstr = val.strip()
-                print valstr
                 line = valstr + " CNAME " + shfqdn + ".\n"
                 fh.write(line)
                 line = "*." + val + " CNAME " + shfqdn + ".\n"
