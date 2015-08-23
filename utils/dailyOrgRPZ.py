@@ -7,7 +7,10 @@ from dm_modules import cfgparse_dm, bulkdbselect1w_dm,bulkdbselectJoin1w_dm, dbs
 
 DNSMinerHome='/opt/dnsminer-alpha'
 dbcfg= DNSMinerHome + "/etc/siteSpecific.cfg"
-rpzbase = getrpzbase()
+
+
+
+
 
 
 def genRPZFiles(oidlist):
@@ -116,13 +119,14 @@ def getOrgID():
     dbcon.close()
     return oidrows
 
-
 def getrpzbase():
     thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionThree')
     dirbase = thisCfgDict['rpzbase']
     return dirbase
 
 def main():
+    rpzbase = getrpzbase()
+    print rpzbase
     thisoidlist=getOrgID()
 
     genRPZFiles(thisoidlist)
