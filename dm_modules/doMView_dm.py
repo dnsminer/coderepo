@@ -11,7 +11,7 @@ def inputView(vname):
     #boolVar= dbRecordCheck(checkviewname)
     boolVar= dbchk_dm.dbRecordCheck(checkviewname)
     checkviewlist = [boolVar,viewName]   # return result of uniqueness test and view name value if it's usable.
-    if not checkviewlist[0]:
+    if checkviewlist[0]:
         print "Sorry, that record appears to be in use, please provide a different value"
     return  checkviewlist
 
