@@ -13,10 +13,10 @@ def dbRecordSelect(selectinput):
     adminPwd= thisCfgDict['databasepwd']
     ivDBName = thisCfgDict['databasename']
     print " retriving data"
-    selectvalue = selectinput[0]
-    selecttable = selectinput[1]
-    selectcolumn = selectinput[2]
-    selectwhere = selectinput[3]
+    selectvalue = str(selectinput[0])
+    selecttable = str(selectinput[1])
+    selectcolumn = str(selectinput[2])
+    selectwhere = str(selectinput[3])
 
     resultlist = []
     try:
