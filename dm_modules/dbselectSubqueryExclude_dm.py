@@ -28,8 +28,9 @@ def dbRecordSelect(selectinput):
     wherecol = inputSani_dm.inputSanitizer(wherecol,'sqlval')
     whereval = str(selectinput[6])
     whereval = inputSani_dm.inputSanitizer(whereval,'sqlval')
-    for val in selectinput:
-        print val
+    # debug
+    #for val in selectinput:
+    #    print val
 
     #debug
     print "retrieving data"
@@ -46,7 +47,7 @@ def dbRecordSelect(selectinput):
         sqlStr = "USE " + ivDBName
         cur.execute(sqlStr)
         sqlStr = "SELECT " + selectvalue1 + " from " + selecttable + " where " + firsttable + " NOT in ( SELECT "\
-                 + subval + " FROM " + subtable + " WHERE " + wherecol + " = '" + whereval +"';"
+                 + subval + " FROM " + subtable + " WHERE " + wherecol + " = '" + whereval +"');"
         print sqlStr
         cur.execute(sqlStr)
         rows = cur.fetchall()
