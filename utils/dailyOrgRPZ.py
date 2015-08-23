@@ -144,9 +144,23 @@ def writerpzfile(oid,vname,shfqdn,hdr,tilist):
     base = getrpzbase()
     fname = base + "/" + str(oid) + "/" + vname + ".rpz"
     print fname
-    print shfqdn
-    print hdr
-
+    #print shfqdn
+    #print hdr
+    try:
+        fh = open(fname,'w')
+        fh.write(hdr)
+        for val in tilist:
+            val = val.strip()
+            line = val + " CNAME " + shfqdn + ".\n"
+            fh.write(line)
+            line = "*." + val + " CNAME " + shfqdn + ".\n"
+            fh.write(line)
+    except Exception as e:
+        print "Unable to create RPZ file in client directory or problem with the file content, please debug"
+        print type(e)
+        print str(e)
+        return
+    fh.close()
     return
 
 def mkserial(sint):
