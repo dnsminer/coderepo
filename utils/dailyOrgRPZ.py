@@ -134,7 +134,7 @@ def genrpzheader(vname):
     line2 = "$ORIGIN " + rpzname + ".\n"
     line3 = "@\tSOA " + rpzns + ".\t" + zadmin + " (" + zserial + " 1h 15m 30d 2h)\n"
     line4 = "\tNS " + rpzns + ".\n"
-    line5 = "; divert entire domains to an internal host running the user warning/monitoring app "
+    line5 = "; divert entire domains to an internal host running the user warning/monitoring app\n"
     headerstring = line0 + line1 + line2 + line3 + line4 + line5
     return headerstring
 
@@ -143,9 +143,6 @@ def writerpzfile(oid,vname,shfqdn,hdr,tilist):
     # assumes TI is all domains for now and all matched got to cname
     base = getrpzbase()
     fname = base + "/" + str(oid) + "/" + vname + ".rpz"
-    print fname
-    #print shfqdn
-    #print hdr
     try:
         fh = open(fname,'w')
         fh.write(hdr)
