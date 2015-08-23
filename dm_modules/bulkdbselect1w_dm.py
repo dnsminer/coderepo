@@ -31,10 +31,10 @@ def dbRecordSelect(selectinput):
         sqlStr = "USE " + ivDBName
         cur.execute(sqlStr)
         sqlStr = sqlStr = "SELECT " + selectvalue + " from " + selecttable + " WHERE " + selectcolumn + " = '" + selectwhere +"';"
-        print  sqlStr
+        #print  sqlStr
         cur.execute(sqlStr)
         rows = cur.fetchall()
-        print len(rows)
+        #print len(rows)
         # Make use we got at least one record
         if len(rows) > 0:
             for row in rows:
