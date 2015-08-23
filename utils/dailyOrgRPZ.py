@@ -9,10 +9,16 @@ DNSMinerHome='/opt/dnsminer-alpha'
 dbcfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 
 def getViewIDOrg(oidlist):
+
     for item in oidlist:
         if item:
-            print len(item)
-            print item[0]
+            orgid=item[0]
+            slctlist=['view_id','bind_views','org_id',orgid]
+            allorgViews = bulkdbselect_dm.dbRecordSelect(slctlist)
+            for rows in allorgViews:
+                for i in range(len(rows)):
+                    print rows[i]
+
 
 
 
