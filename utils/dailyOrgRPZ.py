@@ -36,10 +36,11 @@ def genRPZFiles(oidlist):
             #mzfdfo.dsqugzj.local
             #
             # Generate view specific header
-            print "this is the view name: "
-            print viewmdata[1]
-            rpzhead = genrpzheader(viewmdata[1])
-            print  rpzhead
+
+            for row in viewmdata:
+                print "this is the view name: " + row[1]
+                rpzheader = genrpzheader(row[1])
+                print rpzheader
 
 
             # Open file handle, use rpzbase/orgid/view.rpz as path,
@@ -149,7 +150,7 @@ def genrpzheader(vname):
     return headerstring
 
 def mkserial(sint):
-    todate=datetime.date.today()
+    todate=date.today()
     # need to deal with leading 0s to avoid zone transfer issues due to bad serial numbers
     day = '%02d' % todate.day
     mth = '%02d' % todate.month
