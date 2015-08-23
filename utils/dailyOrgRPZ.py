@@ -4,7 +4,7 @@ __author__ = 'dleece'
 import sys
 import MySQLdb as mdb
 from dm_modules import cfgparse_dm, bulkdbselect1w_dm,bulkdbselectJoin1w_dm, dbselectSubqueryExclude_dm
-
+from datetime import date, datetime
 DNSMinerHome='/opt/dnsminer-alpha'
 dbcfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 rpzbase = '/etc/bind/clients'
@@ -24,12 +24,22 @@ def genRPZFiles(oidlist):
             # Get view metadata
             viewmdata = getViewRPZdata(orgid)
             # Debug
-            for rows in viewmdata:
-                print "--> Org ID " + str(orgid) + " view name, view ID, sh fqdn"
-                for i in range(len(rows)):
-                    print rows[i]
-
+            #for rows in viewmdata:
+            #    print "--> Org ID " + str(orgid) + " view name, view ID, sh fqdn"
+            #    for i in range(len(rows)):
+            #        print rows[i]
+            #
+            #--> Org ID 1 view name, view ID, sh fqdn
+            #1
+            #moonrise
+            #5
+            #mzfdfo.dsqugzj.local
+            #
             # Generate view specific header
+            print "this is the view name: " + viewmdata[1]
+            rpzhead = genrpzheader(viewmdata[1])
+            print  rpzhead
+
 
             # Open file handle, use rpzbase/orgid/view.rpz as path,
             # write header
@@ -103,7 +113,6 @@ def getOrgID():
     except mdb.Error, e:
         print e.args[0]
         sys.exit(1)
-
     with dbcon:
         cur=dbcon.cursor()
         sqlStr = "USE " + ivDBName
@@ -120,10 +129,40 @@ def getOrgID():
     return oidrows
 
 
+def genrpzheader(vname):
+    # get view name for comment and origin line
+    # get name server, pull from cfg
+    thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionThree')
+    rpzns = thisCfgDict['minebossnameserver']
+    zadmin = thisCfgDict['rpzadmin']
+    # get serial number, gen using todays date ( these will be new every 24 hours)
+    zserial = mkserial(0) # make a function to gen this
+    rpzname = vname + ".rpz"
+    line0 = "; zone file " + rpzname + "\n"
+    line1 = "$TTL 10m; keep TTL short to get some time stamping which can be helpful scoping incidents\n"
+    line2 = "$ORIGIN " + rpzname + ".\n"
+    line3 = "@\tSOA " + rpzns + ".\t" + zadmin + " (" + zserial + " 1h 15m 30d 2h)"
+    line4 = "\tNS " + rpzns + ".\n"
+    line5 = "; divert entire domains to an internal host running the user warning/monitoring app "
+    headerstring = line0 + line1 + line2 + line3 + line4 + line5
+    return headerstring
+
+def mkserial(sint):
+    todate=datetime.date.today()
+    # need to deal with leading 0s to avoid zone transfer issues due to bad serial numbers
+    day = '%02d' % todate.day
+    mth = '%02d' % todate.month
+    serialstr=str(todate.year) + mth + day
+    # add 10 to avoid dealing with leading 0 being lost
+    zoneversion = 10 + sint
+    serialstr = serialstr + str(zoneversion)
+    return serialstr
+
 def getrpzbase():
     thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionThree')
     dirbase = thisCfgDict['rpzbase']
     return dirbase
+
 
 def main():
 
