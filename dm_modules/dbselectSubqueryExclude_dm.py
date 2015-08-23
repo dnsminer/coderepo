@@ -28,6 +28,8 @@ def dbRecordSelect(selectinput):
     wherecol = inputSani_dm.inputSanitizer(wherecol,'sqlval')
     whereval = str(selectinput[6])
     whereval = inputSani_dm.inputSanitizer(whereval,'sqlval')
+    for val in selectinput:
+        print val
 
     #debug
     print "retrieving data"
