@@ -145,7 +145,6 @@ def doView(mwlist):
                 print "Creation of view " + viewDict['view_name'] + " confirmed successful, please generate an view file for this organiztion now, menu/genorgview"
             # generate black and white list entries since there is a now a view for the org
             shid = viewDict['def_sh_id']
-            print str(oid) + "-" + str(shid) + "-" + vname
             wlcreate = genDefListData_dm.genbworgsql(oid,vname,shid)
             if wlcreate == 1:
                 print "All black list and white list default records were successfully initialized"
