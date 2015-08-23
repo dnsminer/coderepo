@@ -85,7 +85,7 @@ def mkmatchclients(aclips):
     clientlist=aclips.split(',')
     for i in range(len(clientlist)):
         if clientlist[i]:
-            clipstr = clipstr + clientlist[1] + "; "
+            clipstr = clipstr + clientlist[0] + "; "
     return  clipstr
 
 def mklzonepath(oid,shz):
