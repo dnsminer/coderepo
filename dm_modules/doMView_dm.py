@@ -1,6 +1,6 @@
 __author__ = 'dleece'
 #from dm_modules
-import dbchk_dm, inputSani_dm, iptoint_dm, genRandomString_dm, insertsinkholedata_dm, menudbinsert_dm, genTsigData_dm,menudbselect_dm, insertviewdata_dm, genDefListData_dm
+import dbchk_dm, inputSani_dm, iptoint_dm, genRandomString_dm, insertsinkholedata_dm, menudbinsert_dm, genTsigData_dm,menudbselect_dm, insertviewdata_dm, genDefListData_dm, genViewACL_dm
 
 def inputView(vname):
     #check for no spaces and make sure it's not already used.
@@ -148,6 +148,8 @@ def doView(mwlist):
             wlcreate = genDefListData_dm.genbworgsql(oid,vname,shid)
             if wlcreate == 1:
                 print "All black list and white list default records were successfully initialized"
+            # create ACLs for this view
+            genViewACL_dm.genACL(viewDict)
             # exit do view menu
             viewmenuactive=False
 
