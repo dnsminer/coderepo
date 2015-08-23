@@ -14,12 +14,9 @@ def dbRecordSelect(selectinput):
     ivDBName = thisCfgDict['databasename']
     print " retriving data"
     selectvalue = str(selectinput[0])
-
     selecttable = str(selectinput[1])
     selectcolumn = str(selectinput[2])
     selectwhere = str(selectinput[3])
-
-
 
     resultlist = []
     try:

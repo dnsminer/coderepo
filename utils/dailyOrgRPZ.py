@@ -63,7 +63,8 @@ def makeorgpwblist(oid):
     # select black list doms and append to list
     selstr = "bl_domain"
     stbl = "blacklist_domains"
-    slctlist = [selstr,stbl,oid]
+    swh = "blacklist_domain.org_id"
+    slctlist = [selstr,stbl,swh,oid]
     tmpblk = bulkdbselect1w_dm.dbRecordSelect(slctlist)
     if tmpblk[0]:
         for val in tmpblk:
