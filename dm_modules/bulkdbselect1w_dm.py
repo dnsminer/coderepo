@@ -36,9 +36,11 @@ def dbRecordSelect(selectinput):
         rows = cur.fetchall()
         print len(rows)
         # Make use we got at least one record
-        if rows[0] is not None:
+        if len(rows) > 0:
             for row in rows:
                 resultlist.append(row)
+        else:
+            print " empty records, please debug"
     dbcon.commit()
     dbcon.close()
     return resultlist

@@ -66,9 +66,11 @@ def makeorgpwblist(oid):
     swh = "blacklist_domain.org_id"
     slctlist = [selstr,stbl,swh,oid]
     tmpblk = bulkdbselect1w_dm.dbRecordSelect(slctlist)
-    if tmpblk[0]:
+    if len(tmpblk) > 0:
         for val in tmpblk:
             pubwhtblk.append(val[0])
+    else:
+        print "empty black list records, please debug"
     print "public minus white list  plust black:" + str(len(pubwhtblk))
 
 
