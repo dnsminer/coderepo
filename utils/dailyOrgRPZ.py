@@ -154,6 +154,7 @@ def writerpzfile(oid,vname,shfqdn,hdr,tilist):
                 print val[0]
                 print val
                 valstr = str(val[0])
+                print valstr
                 line = valstr + " CNAME " + shfqdn + ".\n"
                 fh.write(line)
                 line = "*." + val + " CNAME " + shfqdn + ".\n"
