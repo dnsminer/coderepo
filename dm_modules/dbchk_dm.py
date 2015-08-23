@@ -9,11 +9,11 @@
 
 import sys
 import MySQLdb as mdb
-#from dm_modules \
+#from dm_modules
 import cfgparse_dm
 
 DNSMinerHome='/opt/dnsminer-alpha'
-dbcfg= DNSMinerHome + "/etc/dbConnections.cfg"
+dbcfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 
 
 def dbRecordCheck(checkinput):

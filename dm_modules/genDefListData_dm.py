@@ -1,10 +1,17 @@
 __author__ = 'dleece'
 
-import menudbinsert_dm, menudbselect_dm, iptoint_dm
+import menudbinsert_dm, menudbselect_dm, iptoint_dm, dbchk_dm
 from datetime import datetime, date
 def genbworgsql(orgid,viewname,shid):
     # debug
-    print "executing white list domainsql"
+    #print "executing white list domainsql"
+    # Make sure there is no existing lists before going to the trouble of creating the SQL, additional views
+    # will use the same white and black lists. This could change in a later release
+    bwresult = inputOrgId(orgid) # needed to get the status, using length of list to avoid global vars
+    if bwresult[0]:
+        print "\nWarning\nThat org id appears to have white and black lists already,"
+        print "if this is an additional view for the same organiation this message can be ignored"
+        return
     # values for SQL statements
     defwhitedom =  viewname + "-white.local"
     defwhitehost = "ignore." + defwhitedom
@@ -51,3 +58,17 @@ def genbworgsql(orgid,viewname,shid):
     else:
         print "You may need to manually check the blacklist_host table"
     return wldresult
+
+
+def inputOrgId(orgid):
+    #make sure there is not already a list set for this org and bail if the org ID is not a valid long/int
+    if type(orgid) == type(long()):
+        oid=str(orgid)
+    else:
+        print "there may be a problem with the org id provided, please debug"
+        exit()
+    print "confirming there is no existing black or white list for this organization"
+    checkorgbw=['org_id','whitelist_domain',oid]  # Column, table, value
+    boolVar= dbchk_dm.dbRecordCheck(checkorgbw)
+    checkviewlist = [boolVar,orgid]   # return result of uniqueness test and view name value if it's usable.
+    return  checkviewlist
