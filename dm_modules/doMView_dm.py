@@ -11,6 +11,8 @@ def inputView(vname):
     #boolVar= dbRecordCheck(checkviewname)
     boolVar= dbchk_dm.dbRecordCheck(checkviewname)
     checkviewlist = [boolVar,viewName]   # return result of uniqueness test and view name value if it's usable.
+    if not checkviewlist[0]:
+        print "Sorry, that record appears to be in use, please provide a different value"
     return  checkviewlist
 
 
@@ -54,7 +56,7 @@ def doView(mwlist):
             while getmondesc:
                 uvlinput = raw_input("Description: ")
                 uvlinput = inputSani_dm.inputSanitizer(uvlinput,'desc1')
-                print uvlinput
+                #print uvlinput
                 if uvlinput == 'invalid_format':
                     continue
                 else:
@@ -93,7 +95,7 @@ def doView(mwlist):
             while getviewdesc:
                 uvlinput = raw_input("Description: ")
                 uvlinput = inputSani_dm.inputSanitizer(uvlinput,'desc1')
-                print uvlinput
+                #print uvlinput
                 if uvlinput == 'invalid_format':
                     continue
                 else:
@@ -108,7 +110,6 @@ def doView(mwlist):
             viewDict['sh_fqdn'] = shfqdn
             # generate the list to be fed to db-insert_sinkholedata
             sinkholesql = insertsinkholedata_dm.parsemenudict(viewDict)
-            #print viewDict
             #print sinkholesql
             shresult=menudbinsert_dm.dbinsert(sinkholesql)
             #print shresult
@@ -147,7 +148,8 @@ def doView(mwlist):
             shid = viewDict['def_sh_id']
             print str(oid) + "-" + str(shid) + "-" + vname
             wlcreate = genDefListData_dm.genbworgsql(oid,vname,shid)
-            print wlcreate
+            if wlcreate == 1:
+                print "All black list and white list default records were successfully initialized"
             # exit do view menu
             viewmenuactive=False
 

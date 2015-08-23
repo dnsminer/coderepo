@@ -41,7 +41,7 @@ def dbRecordCheck(checkinput):
         sqlStr = "SELECT count(1) from " + checktable + " WHERE " + checkcolumn + " = '" + checkvalue +"';"
         cur.execute(sqlStr)
         if cur.fetchone()[0]:
-            print "Sorry, that record appears to be in use, please provide a different value"
+            #print "Sorry, that record appears to be in use, please provide a different value"
             var= True
     dbcon.commit()
     dbcon.close()
