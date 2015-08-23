@@ -15,21 +15,26 @@ def getViewIDOrg(oidlist):
     for item in oidlist:
         if item:
             orgid=item[0]
-            selstr = "bind_views.org_id,bind_views.view_name,bind_views.view_id,view_sinkholes.sh_fqdn"
-            stbl = "bind_views"
-            jtbl = "view_sinkholes"
-            jv1 = "bind_views.def_sh_id"
-            jv2 = "view_sinkholes.sinkhole_id"
-            wval = "bind_views.org_id"
-            slctlist=[selstr,stbl,jtbl,jv1,jv2,wval,orgid]
-            allorgViews = bulkdbselectJoin1w_dm.dbRecordSelect(slctlist)
-            for rows in allorgViews:
-                print "--> Org ID " + str(orgid) + " view name, sinkhole ID"
+            viewmdata = getViewRPZdata(orgid)
+            #
+            for rows in viewmdata:
+                print "--> Org ID " + str(orgid) + " view name, view ID, sh fqdn"
                 for i in range(len(rows)):
                     print rows[i]
+    return
 
+def getViewRPZdata(oid):
+    # use Org ID in sql join with where to get data for rpz needed by each view
+    selstr = "bind_views.org_id,bind_views.view_name,bind_views.view_id,view_sinkholes.sh_fqdn"
+    stbl = "bind_views"
+    jtbl = "view_sinkholes"
+    jv1 = "bind_views.def_sh_id"
+    jv2 = "view_sinkholes.sinkhole_id"
+    wval = "bind_views.org_id"
+    slctlist=[selstr,stbl,jtbl,jv1,jv2,wval,orgid]
+    allorgViews = bulkdbselectJoin1w_dm.dbRecordSelect(slctlist)
 
-
+    return allorgViews
 
 
 def getOrgID():
