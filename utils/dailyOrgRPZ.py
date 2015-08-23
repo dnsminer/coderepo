@@ -31,7 +31,7 @@ def genRPZFiles(oidlist):
             #
             # Need to do the file creation within this loop to deal with multirow results
             for row in viewmdata:
-                print "this is the view name: " + row[1]
+                #print "this is the view name: " + row[1]
                 rpzheader = genrpzheader(row[1])
                 #print rpzheader
                 writerpzfile(row[0],row[1],row[3],rpzheader,orgtilist)
@@ -150,11 +150,12 @@ def writerpzfile(oid,vname,shfqdn,hdr,tilist):
         fh = open(fname,'w')
         fh.write(hdr)
         for val in tilist:
-            val = str(val).strip()
-            line = val + " CNAME " + shfqdn + ".\n"
-            fh.write(line)
-            line = "*." + val + " CNAME " + shfqdn + ".\n"
-            fh.write(line)
+            if val:
+                valstr = val[0].strip()
+                line = valstr + " CNAME " + shfqdn + ".\n"
+                fh.write(line)
+                line = "*." + val + " CNAME " + shfqdn + ".\n"
+                fh.write(line)
     except Exception as e:
         print "Unable to create RPZ file in client directory or problem with the file content, please debug"
         print type(e)
@@ -181,8 +182,7 @@ def getrpzbase():
 
 
 def main():
-
-    print rpzbase
+    #print rpzbase
     thisoidlist=getOrgID()
     genRPZFiles(thisoidlist)
 
