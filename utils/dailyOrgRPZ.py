@@ -5,8 +5,7 @@ import sys
 import MySQLdb as mdb
 from dm_modules import cfgparse_dm, bulkdbselect1w_dm,bulkdbselectJoin1w_dm, dbselectSubqueryExclude_dm
 
-DNSMinerHome='/opt/dnsminer-alpha'
-dbcfg= DNSMinerHome + "/etc/siteSpecific.cfg"
+
 
 
 
@@ -125,6 +124,8 @@ def getrpzbase():
     return dirbase
 
 def main():
+    DNSMinerHome='/opt/dnsminer-alpha'
+    dbcfg= DNSMinerHome + "/etc/siteSpecific.cfg"
     rpzbase = getrpzbase()
     print rpzbase
     thisoidlist=getOrgID()
