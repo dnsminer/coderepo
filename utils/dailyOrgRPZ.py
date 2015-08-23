@@ -19,6 +19,7 @@ def getViewIDOrg(oidlist):
             for rows in allorgViews:
                 for i in range(len(rows)):
                     print rows[i]
+                    print "\n"
 
 
 
