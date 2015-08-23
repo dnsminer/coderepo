@@ -29,10 +29,10 @@ def doView(mwlist):
         viewmenuactive=True
         while viewmenuactive:
             getviewname = True
+            print "\nYou are about to provide the data needed for a new Bind View and related zone files."
+            print "\nThe view must be a unique name within the system,"
+            print "it must also be a single word with no spaces, letters, dashes, underscores and digits ok"
             while getviewname:
-                print "\nYou are about to provide the data needed for a new Bind View and related zone files."
-                print "\nThe view must be a unique name within the system,"
-                print "it must also be a single word with no spaces, letters, dashes, underscores and digits ok"
                 uvinput = raw_input("Enter view name: ")
                 uvinput = uvinput.strip().lower()
                 vresult = inputView(uvinput) # needed to get the status, using length of list to avoid global vars
@@ -130,7 +130,6 @@ def doView(mwlist):
             vname = viewDict['view_name']
             tsigid = genTsigData_dm.gentsigsql(oid,vname)
             newtsigid = tsigid[0]
-            #print newtsigid
             viewDict['tsig_id'] = newtsigid
             # debug dictionary contents
             #for key,val in viewDict.iteritems():
