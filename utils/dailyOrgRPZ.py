@@ -20,27 +20,21 @@ def genRPZFiles(oidlist):
             # get org wide, dom list,
             # remove white list entries from public list
             # add black list entries, store as a temp list pubwhiteblackdomlist
-            makeorgpwblist(orgid)
+            orgtilist = makeorgpwblist(orgid)
             # Get view metadata
             viewmdata = getViewRPZdata(orgid)
             # Debug
-            for rows in viewmdata:
-                print "--> Org ID " + str(orgid) + " view name, view ID, sh fqdn"
-                for i in range(len(rows)):
-                    print rows[i]
+            #for rows in viewmdata:
+            #    print "--> Org ID " + str(orgid) + " view name, view ID, sh fqdn"
+            #    for i in range(len(rows)):
+            #        print rows[i]
             #
-            #--> Org ID 1 view name, view ID, sh fqdn
-            #1
-            #moonrise
-            #5
-            #mzfdfo.dsqugzj.local
-            #
-            # Generate view specific header
-
+            # Need to do the file creation within this loop to deal with multirow results
             for row in viewmdata:
                 print "this is the view name: " + row[1]
                 rpzheader = genrpzheader(row[1])
-                print rpzheader
+                #print rpzheader
+                writerpzfile(row[0],row[1],row[3],rpzheader,orgtilist)
 
 
             # Open file handle, use rpzbase/orgid/view.rpz as path,
@@ -67,11 +61,11 @@ def makeorgpwblist(oid):
     sval2 = "wl_domain"
     stbl2 = "whitelist_domain"
     wval = "whitelist_domain.org_id"
-
+    #
     slctlist=[selstr,stbl,sval,sval2,stbl2,wval,oid]
     pubwhtblk = dbselectSubqueryExclude_dm.dbRecordSelect(slctlist)
     # debug
-    print "public minus white list :" + str(len(pubwhtblk))
+    #print "public minus white list :" + str(len(pubwhtblk))
     # select black list doms and append to list
     selstr = "bl_domain"
     stbl = "blacklist_domain"
@@ -83,9 +77,7 @@ def makeorgpwblist(oid):
             pubwhtblk.append(val[0])
     else:
         print "empty black list records, please debug"
-    print "public minus white list  plust black:" + str(len(pubwhtblk))
-
-
+    #print "public minus white list  plust black:" + str(len(pubwhtblk))
     return pubwhtblk
 
 
@@ -132,22 +124,30 @@ def getOrgID():
 
 
 def genrpzheader(vname):
-    # get view name for comment and origin line
-    # get name server, pull from cfg
     thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionThree')
     rpzns = thisCfgDict['minebossnameserver']
     zadmin = thisCfgDict['rpzadmin']
-    # get serial number, gen using todays date ( these will be new every 24 hours)
-    zserial = mkserial(0) # make a function to gen this
+    zserial = mkserial(0) # these will be new every 24 hours
     rpzname = vname + ".rpz"
     line0 = "; zone file " + rpzname + "\n"
     line1 = "$TTL 10m; keep TTL short to get some time stamping which can be helpful scoping incidents\n"
     line2 = "$ORIGIN " + rpzname + ".\n"
-    line3 = "@\tSOA " + rpzns + ".\t" + zadmin + " (" + zserial + " 1h 15m 30d 2h)"
+    line3 = "@\tSOA " + rpzns + ".\t" + zadmin + " (" + zserial + " 1h 15m 30d 2h)\n"
     line4 = "\tNS " + rpzns + ".\n"
     line5 = "; divert entire domains to an internal host running the user warning/monitoring app "
     headerstring = line0 + line1 + line2 + line3 + line4 + line5
     return headerstring
+
+
+def writerpzfile(oid,vname,shfqdn,hdr,tilist):
+    # assumes TI is all domains for now and all matched got to cname
+    base = getrpzbase()
+    fname = base + "/" + str(oid) + "/" + vname + ".rpz"
+    print fname
+    print shfqdn
+    print hdr
+
+    return
 
 def mkserial(sint):
     todate=date.today()
@@ -170,7 +170,6 @@ def main():
 
     print rpzbase
     thisoidlist=getOrgID()
-
     genRPZFiles(thisoidlist)
 
 if __name__ == "__main__": main()

@@ -5,7 +5,8 @@ __author__ = 'dleece'
 DNSMinerHome='/opt/dnsminer-alpha'
 tempdir = DNSMinerHome + "/tmp/"
 
-import datetime, inttoip_dm
+import inttoip_dm
+from datetime import date,datetime
 
 def readDict(thisorgdict):
     #debug
@@ -50,8 +51,11 @@ def readDict(thisorgdict):
     return
 
 def mkserial(sint):
-    todate=datetime.date.today()
-    serialstr=str(todate.year) + str(todate.month) + str(todate.day)
+    todate=date.today()
+    # need to deal with leading 0s to avoid zone transfer issues due to bad serial numbers
+    day = '%02d' % todate.day
+    mth = '%02d' % todate.month
+    serialstr=str(todate.year) + mth + day
     # add 10 to avoid dealing with leading 0 being lost
     zoneversion = 10 + sint
     serialstr = serialstr + str(zoneversion)
