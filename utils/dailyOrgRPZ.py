@@ -33,9 +33,7 @@ def getViewRPZdata(oid):
     wval = "bind_views.org_id"
     slctlist=[selstr,stbl,jtbl,jv1,jv2,wval,oid]
     allorgViews = bulkdbselectJoin1w_dm.dbRecordSelect(slctlist)
-
     return allorgViews
-
 
 def getOrgID():
     thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionOne')
