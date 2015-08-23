@@ -49,12 +49,13 @@ def genRPZFiles(oidlist):
 def makeorgpwblist(oid):
     pubwhtblk = []
     # Remove any white list domains from public list and write to temp list
-    selstr = "tlist_domains.domain"
-    stbl = "tlist_domains"
-    sval = "tlist_domains.domain"
-    sval2 = "wl_domain"
-    stbl2 = "whitelist_domain"
-    wval = "whitelist_domain.org_id"
+    selstr = 'tlist_domains.domain'
+    stbl = 'tlist_domains'
+    sval = 'tlist_domains.domain'
+    sval2 = 'wl_domain'
+    stbl2 = 'whitelist_domain'
+    wval = 'whitelist_domain.org_id'
+
     slctlist=[selstr,stbl,sval,sval2,stbl2,wval,oid]
     pubwhtblk = dbselectSubqueryExclude_dm.dbRecordSelect(selstr)
     # debug
