@@ -5,11 +5,9 @@ import sys
 import MySQLdb as mdb
 from dm_modules import cfgparse_dm, bulkdbselect1w_dm,bulkdbselectJoin1w_dm, dbselectSubqueryExclude_dm
 
-
-
-
-
-
+DNSMinerHome='/opt/dnsminer-alpha'
+dbcfg= DNSMinerHome + "/etc/siteSpecific.cfg"
+rpzbase = '/etc/bind/clients'
 
 
 def genRPZFiles(oidlist):
@@ -118,15 +116,14 @@ def getOrgID():
     dbcon.close()
     return oidrows
 
+
 def getrpzbase():
     thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionThree')
     dirbase = thisCfgDict['rpzbase']
     return dirbase
 
 def main():
-    DNSMinerHome='/opt/dnsminer-alpha'
-    dbcfg= DNSMinerHome + "/etc/siteSpecific.cfg"
-    rpzbase = getrpzbase()
+
     print rpzbase
     thisoidlist=getOrgID()
 
