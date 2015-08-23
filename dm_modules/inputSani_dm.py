@@ -20,7 +20,7 @@ def inputSanitizer(inputstring,type):
             charwl = string.ascii_letters + string.whitespace + string.digits + '-_.,'
             chkdstring = checkwhitelist(inputstring,charwl)
     if type == 'sqlval':
-        charwl = string.ascii_letters + string.whitespace + string.digits + '-_,'
+        charwl = string.ascii_letters + string.whitespace + string.digits + '-_,.'
         chkdstring = checkwhitelist(inputstring,charwl)
     if type == 'view':
         charwl = string.ascii_letters + string.digits + '-_'
