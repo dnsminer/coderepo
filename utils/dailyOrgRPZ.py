@@ -22,7 +22,7 @@ def getViewIDOrg(oidlist):
             jv2 = "view_sinkholes.sinkhole_id"
             wval = "bind_views.org_id"
             slctlist=[selstr,stbl,jtbl,jv1,jv2,wval,orgid]
-            allorgViews = bulkdbselectJoin1w_dm.dbRecordSelect()
+            allorgViews = bulkdbselectJoin1w_dm.dbRecordSelect(slctlist)
             for rows in allorgViews:
                 print "--> Org ID " + str(orgid) + " view name, sinkhole ID"
                 for i in range(len(rows)):
