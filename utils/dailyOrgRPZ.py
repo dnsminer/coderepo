@@ -3,7 +3,7 @@ __author__ = 'dleece'
 # Set the path to include the dns miner modules directory
 import sys
 import MySQLdb as mdb
-from dm_modules import cfgparse_dm, bulkdbselect_dm
+from dm_modules import cfgparse_dm, bulkdbselect1w_dm,bulkdbselectJoin1w_dm
 
 DNSMinerHome='/opt/dnsminer-alpha'
 dbcfg= DNSMinerHome + "/etc/siteSpecific.cfg"
@@ -15,9 +15,14 @@ def getViewIDOrg(oidlist):
     for item in oidlist:
         if item:
             orgid=item[0]
-            selstr = "view_name,def_sh_id"
-            slctlist=[selstr,'bind_views','org_id',orgid]
-            allorgViews = bulkdbselect_dm.dbRecordSelect(slctlist)
+            selstr = "bind_views.org_id,bind_views.view_name,bind_views.view_id,view_sinkholes.sh_fqdn"
+            stbl = "bind_views"
+            jtbl = "view_sinkholes"
+            jv1 = "bind_views.def_sh_id"
+            jv2 = "view_sinkholes.sinkhole_id"
+            wval = "bind_views.org_id"
+            slctlist=[selstr,stbl,jtbl,jv1,jv2,wval,orgid]
+            allorgViews = bulkdbselectJoin1w_dm.dbRecordSelect()
             for rows in allorgViews:
                 print "--> Org ID " + str(orgid) + " view name, sinkhole ID"
                 for i in range(len(rows)):
