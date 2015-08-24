@@ -12,7 +12,7 @@ def getpathinfo():
     clientdir = thisCfgDict['rpzbase']
     acldir = thisCfgDict['aclbase']
     tmpdir = thisCfgDict['dmtemp']
-    pathlist = [keydir,clientdir,acldir]
+    pathlist = [keydir,clientdir,acldir,tmpdir]
 
     return  pathlist
 
