@@ -51,7 +51,7 @@ def dbRecordSelect(selectinput):
         # Make use we got at least one record
         if rows[0] is not None:
             for row in rows:
-                resultlist.append(row[0])
+                resultlist.append(row)
     dbcon.commit()
     dbcon.close()
     return resultlist
