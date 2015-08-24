@@ -16,16 +16,16 @@ def genACL(viewdict):
     exkeylist=getexcludekeys(thisvid)
     if exkeylist[0]:
         for val in exkeylist:
-            print val[0]
+            #print val[0]
             aclstr = aclstr + "!key " + val[0] + "; "
     # add the valid key
-    aclstr = aclstr + " key " + thiskey + "; "
+    aclstr = aclstr + "key " + thiskey + "; "
     rnlist=thisrnode.split(',')
     for i in range(len(rnlist)):
         if rnlist[i]:
             aclstr = aclstr + rnlist[i] + "; "
-    aclstr = aclstr + " };"
-    print aclstr
+    aclstr = aclstr + "};"
+    #print aclstr
     writeACL(thisvname,aclstr)
 
     return

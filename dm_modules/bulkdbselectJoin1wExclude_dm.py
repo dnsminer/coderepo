@@ -45,7 +45,7 @@ def dbRecordSelect(selectinput):
         cur.execute(sqlStr)
         sqlStr = "SELECT " + selectvalue1 + " from " + selecttable + " INNER JOIN " + jointable + " ON "\
                  + joinv1 + " = " + joinv2 + " WHERE " + wherecol + " != '" + whereval +"';"
-        print sqlStr
+        #print sqlStr
         cur.execute(sqlStr)
         rows = cur.fetchall()
         # Make use we got at least one record
