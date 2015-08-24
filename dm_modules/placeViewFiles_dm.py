@@ -27,7 +27,7 @@ def getAppOwnerInfo():
 
 def mkclientdir(oid):
     dirlist=getpathinfo()
-    dirname = dirlist['1'] + "/" + str(oid)
+    dirname = dirlist[1] + "/" + str(oid)
     ulist= getAppOwnerInfo()
     uid = ulist[0]
     gid = ulist[1]
