@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 __author__ = 'dleece'
 # Set the path to include the dns miner modules directory
-import sys
+import sys, os
 import MySQLdb as mdb
 from dm_modules import cfgparse_dm, bulkdbselect1w_dm,bulkdbselectJoin1w_dm, dbselectSubqueryExclude_dm
 from datetime import date, datetime
@@ -50,6 +50,14 @@ def genRPZFiles(oidlist):
 
 
     return
+
+def getAppOwnerInfo():
+    thisCfgDict = cfgparse_dm.opencfg(sitecfg,'SectionFour')
+    dnsmgid = thisCfgDict['dmgid']
+    mbuid = thisCfgDict['aouid']
+    uinfo=[mbuid,dnsmgid]
+    return uinfo
+
 
 
 def makeorgpwblist(oid):
@@ -140,6 +148,10 @@ def genrpzheader(vname):
 
 
 def writerpzfile(oid,vname,shfqdn,hdr,tilist):
+    # get file perms data
+    ulist= getAppOwnerInfo()
+    uid = int(ulist[0])
+    gid = int(ulist[1])
     # assumes TI is all domains for now and all matched got to cname
     base = getrpzbase()
     fname = base + "/" + str(oid) + "/" + vname + ".rpz"
@@ -158,7 +170,15 @@ def writerpzfile(oid,vname,shfqdn,hdr,tilist):
         print type(e)
         print str(e)
         return
+
     fh.close()
+    try:
+        os.chown(fname,uid,gid)
+        os.chmod(fname,0775)
+    except Exception as e:
+        print "Unable to change permissions on RPZ file in client directory, please debug"
+        print type(e)
+        print str(e)
     return
 
 def mkserial(sint):
