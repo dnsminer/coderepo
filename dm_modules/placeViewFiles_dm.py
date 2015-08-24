@@ -27,7 +27,7 @@ def getAppOwnerInfo():
 
 def mkclientdir(oid):
     dirlist=getpathinfo()
-    dirname = dirlist['1'] + "/" + oid
+    dirname = dirlist['1'] + "/" + str(oid)
     ulist= getAppOwnerInfo()
     uid = ulist[0]
     gid = ulist[1]
@@ -43,6 +43,7 @@ def mkclientdir(oid):
 
 
 def copyfile(fname,ftype,oid):
+    print "copying file"
     dirlist=getpathinfo()
     movefile = dirlist[3] + "/" + fname
     clntdir = dirlist[1] + "/" + oid
