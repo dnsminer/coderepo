@@ -46,7 +46,7 @@ def copyfile(fname,ftype,oid):
     print "copying file"
     dirlist=getpathinfo()
     movefile = dirlist[3] + "/" + fname
-    clntdir = dirlist[1] + "/" + oid
+    clntdir = dirlist[1] + "/" + str(oid)
     ulist= getAppOwnerInfo()
     uid = ulist[0]
     gid = ulist[1]
