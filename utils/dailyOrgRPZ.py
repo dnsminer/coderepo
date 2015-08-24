@@ -52,7 +52,7 @@ def genRPZFiles(oidlist):
     return
 
 def getAppOwnerInfo():
-    thisCfgDict = cfgparse_dm.opencfg(sitecfg,'SectionFour')
+    thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionFour')
     dnsmgid = thisCfgDict['dmgid']
     mbuid = thisCfgDict['aouid']
     uinfo=[mbuid,dnsmgid]
