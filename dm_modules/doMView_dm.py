@@ -142,8 +142,10 @@ def doView(mwlist):
             thisviewid = insertviewdata_dm.genviewgsql(viewsqlinsert)
             newviewid = thisviewid[0]
             if len(thisviewid) == 1:
-                print "Creation of view " + viewDict['view_name'] + " confirmed successful, please generate an view file for this organiztion now, menu/genorgview"
+                print "\nProgress report: \nCreation of view " + viewDict['view_name'] + " confirmed successful, please generate an view file for this organiztion now, menu/genorgview\n"
+
             # generate black and white list entries since there is a now a view for the org
+            print "\nStand by, just making a few internal database updates"
             shid = viewDict['def_sh_id']
             wlcreate = genDefListData_dm.genbworgsql(oid,vname,shid)
             if wlcreate == 1:
