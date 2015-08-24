@@ -168,6 +168,7 @@ def doGenView(thisorgid):
                         placeViewFiles_dm.mkclientdir(thisoid)
                         makeview = False
                     if makezone:
+                        thisoid=gviewdict['org_id']
                         makeZoneFile_dm.readDict(gviewdict)
                         zonefile = gviewdict['sh_zone']
                         placeViewFiles_dm.copyfile(zonefile,'zone',thisoid)
