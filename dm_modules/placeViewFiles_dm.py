@@ -48,8 +48,8 @@ def copyfile(fname,ftype,oid):
     movefile = dirlist[3] + "/" + fname
     clntdir = dirlist[1] + "/" + str(oid)
     ulist= getAppOwnerInfo()
-    uid = ulist[0]
-    gid = ulist[1]
+    uid = int(ulist[0])
+    gid = int(ulist[1])
 
     if ftype == 'key':
         try:
