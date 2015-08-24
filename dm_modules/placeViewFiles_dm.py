@@ -69,8 +69,10 @@ def copyfile(fname,ftype,oid):
             newfile = clntdir + "/" + fname
             os.chown(newfile,uid,gid)
             os.chmod(newfile,0775)
-        except:
-            print "shu-mv unable to copy file " + fname
+        except Exception as e:
+            print "warning, problems with processing file " + fname
+            print type(e)
+            print str(e)
     else:
         print "no valid file type provided for " + fname
 
