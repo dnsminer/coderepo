@@ -148,8 +148,7 @@ def doView(mwlist):
             wlcreate = genDefListData_dm.genbworgsql(oid,vname,shid)
             if wlcreate == 1:
                 print "All black list and white list default records were successfully initialized"
-            # create ACLs for this view
-            genViewACL_dm.genACL(viewDict)
+
             # exit do view menu
             viewmenuactive=False
 

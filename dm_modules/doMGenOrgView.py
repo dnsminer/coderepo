@@ -3,7 +3,7 @@ __author__ = 'dleece'
 # use the org id as a simple auth check,
 import sys, time,os, shutil
 import menuviewauthz_dm, inputSani_dm, dbselect1row_dm, cfgparse_dm, makeViewFile_dm, makeZoneFile_dm, genDefListData_dm
-import makeRecViewFile_dm, makeTsig_dm
+import makeRecViewFile_dm, makeTsig_dm, genViewACL_dm
 
 #
 DNSMinerHome='/opt/dnsminer-alpha'
@@ -148,8 +148,11 @@ def doGenView(thisorgid):
                     gviewdict['acl_name'] = gviewdict['view_name'] + "ACL"
                     genviewsql(gviewdict['view_id'])
                     # debug
-                    #for key,val in gviewdict.iteritems():
-                    #    print key,"-->",val
+                    for key,val in gviewdict.iteritems():
+                        print key,"-->",val
+
+                    # create ACLs for this view
+                    genViewACL_dm.genACL(gviewdict)
                     # write to file
                     if makeview:
                         makeViewFile_dm.readDict(gviewdict)
