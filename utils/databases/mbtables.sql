@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS blacklist_domain,blacklist_host,whitelist_host,whitelist_domain,tlist_domains,tlist_ips,tsig_keys,view_sinkholes,bind_views,org_info;
+DROP TABLE IF EXISTS blacklist_domain,blacklist_host,whitelist_host,whitelist_domain,tlist_domains,tlist_ips,tlist_domain_history,tsig_keys,view_sinkholes,bind_views,org_info;
 
 CREATE TABLE org_info ( org_id INT NOT NULL AUTO_INCREMENT, org_name VARCHAR(60) NOT NULL, org_contact VARCHAR(80) NOT NULL, alert_contact VARCHAR(80) NOT NULL, pwd VARCHAR(60) NOT NULL, PRIMARY KEY (org_id) ) ENGINE=InnoDB;
 
