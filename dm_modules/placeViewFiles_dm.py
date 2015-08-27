@@ -29,8 +29,8 @@ def mkclientdir(oid):
     dirlist=getpathinfo()
     dirname = dirlist[1] + "/" + str(oid)
     ulist= getAppOwnerInfo()
-    uid = ulist[0]
-    gid = ulist[1]
+    uid = int(ulist[0])
+    gid = int(ulist[1])
     if not os.path.exists(dirname):
         try:
             os.mkdir(dirname,0775)
