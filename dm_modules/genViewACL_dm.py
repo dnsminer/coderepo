@@ -12,7 +12,7 @@ def genACL(viewdict):
     thiskey = viewdict['tsig_name']
     thisrnode = viewdict['rec_nodes']
     thisvname = viewdict['view_name']
-    aclstr = "acl " + thisacl + " ( "
+    aclstr = "acl " + thisacl + " { "
     exkeylist=getexcludekeys(thisvid)
     if exkeylist[0]:
         for val in exkeylist:
