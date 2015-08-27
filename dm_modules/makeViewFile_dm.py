@@ -91,7 +91,7 @@ def mkanotify(rnodestr,xport,tsig):
     return antfystr
 
 def mktransfer(rnodestr,tsig):
-    axferstr="\tallow-transfer { " + tsig + "; "
+    axferstr="\tallow-transfer { key " + tsig + "; "
     rnlist=rnodestr.split(',')
     for i in range(len(rnlist)):
         if rnlist[i]:
