@@ -1,2 +1,7 @@
 EVTDSTAMP %{MONTHDAY}-%{MONTH}-%{YEAR}
 QSETTINGS ([+-EDSC]{1,6})
+PBOSS (?:192\.99\.246\.121|67\.231\.28\.40)
+TTLZ (?:\d+\.\d+|\d\d\d|-)
+ANSWERS (?:\S+|.*?)
+REMCODES ((?:(F|T)\s*(F|T)\s*)|(?:(F|T)\s*(F|T)\s*(F|T)\s*))
+AATYPE (?:F|T)
