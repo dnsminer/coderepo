@@ -75,3 +75,6 @@ def reindexmenu():
             # the index is ready waiting and properly configured.
             doreindex(ilist,uidxinput)
             doindexing = False
+
+
+reindexmenu()
