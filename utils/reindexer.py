@@ -31,14 +31,13 @@ def unicodelinesplitter(uline):
 #response = client.scroll(scroll_id=scrollId, scroll="10m")
 
 
-def getsourceindexs(srcprefix):
+def getsourceindices(srcprefix):
 # get list of non-empty source indexs to be passed to reindexer function
 # assuming we are using prefix-date stamp since this tends to be the autocreate default
     indexlist = []
     srxidx = srcprefix + "*"
     client = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
     indexcat = client.cat.indices( index=srxidx, h=['index','docs.count'])
-
 # The result comes out as a unicode string, needed to do a little slicing and dicing to create a list to return
     icatlist = indexcat.splitlines()
     for line in icatlist:
@@ -47,10 +46,16 @@ def getsourceindexs(srcprefix):
             indexlist.append(resultlist[0])
     return indexlist
 
+
 def doreindex(srcidxlist,dstidx):
     print "reindexing to " + dstidx
+    client = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
     for row in srcidxlist:
-        print row
+        print "Reindexing index " + row + " to " + dstidx + " please stand by and watch for errors"
+        reindex(client,row,dstidx,scroll='5m')
+    print "Confirm the documents were all reindexed\nrun curl -GET http://localhost:9200/_cat/indices?v | grep " + dstidx
+    return
+
 
 def reindexmenu():
     doindexing=True
@@ -60,12 +65,12 @@ def reindexmenu():
         while doindexing:
             uidxinput = raw_input("Enter source index prefix: ")
             uidxinput = uidxinput.strip().lower()
-            ilist = getsourceindexs(uidxinput)
+            ilist = getsourceindices(uidxinput)
             if len(ilist) > 0:
                 print "great, looks like we have " + str(len(ilist)) + " indices to reindex"
             else:
                 print "sorry, that doesn't look like a valid index prefix"
-                print "try running a command like this curl -GET http://localhost:9200/_cat/indices?v from the FE server command prompt to display the index names"
+                print "try running a command like this \" curl -GET http://localhost:9200/_cat/indices?v from the FE server command prompt to display the index names\"\n"
                 continue
 
             uidxinput = raw_input("Enter destination index name: ")
