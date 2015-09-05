@@ -12,6 +12,8 @@ from elasticsearch import Elasticsearch
 from elasticsearch_dsl import Search, Q
 from elasticsearch import helpers
 from elasticsearch.helpers import reindex
+from elasticsearch.helpers import BulkIndexError
+
 
 ## site specific settings
 DNSMinerHome='/opt/dnsminer-alpha'
@@ -54,7 +56,7 @@ def doreindex(srcidxlist,dstidx):
         print "Reindexing index " + row + " to " + dstidx + " please stand by and watch for errors"
         try:
             reindex(client,row,dstidx,scroll='5m')
-        except elasticsearch.helpers.BulkIndexError:
+        except BulkIndexError:
             print "Problems with a document, it will not be included in the destination index"
             sys.exc_clear()
 
