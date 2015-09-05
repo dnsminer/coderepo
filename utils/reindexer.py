@@ -26,7 +26,6 @@ client = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, 
 
 response = client.search(index="logstash-2015.08.19", doc_type="DNSQRY", body={"query":{"match": {"View:"FirstFire"}}})
 print ("%d documents found" % response['hits']['total'])
-for hit in response["hits"]["hits"]:
-    print hit
-    print "next doc"
+for doc in response['hits']['hits']:
+    print ("%s") %s" % (doc['_id'], doc['_source']['content']))
 
