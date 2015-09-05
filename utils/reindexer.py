@@ -5,6 +5,7 @@ import sys, os
 import MySQLdb as mdb
 import sys
 import json
+import string
 from dm_modules import cfgparse_dm, bulkdbselect1w_dm,bulkdbselectJoin1w_dm, dbselectSubqueryExclude_dm
 from datetime import date, datetime
 from elasticsearch import Elasticsearch
@@ -28,5 +29,6 @@ response = client.cat.indices( index='logstash-*', h=['index','docs.count'])
 
 print "this is the response"
 
-for i in range(len(response)):
-    print response[i][i]
+responselist = response.splitlines()
+for line in responselist:
+    print line
