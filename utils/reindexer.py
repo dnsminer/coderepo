@@ -28,6 +28,5 @@ response = client.cat.indices( index='logstash-*', h=['index','docs.count'])
 
 print "this is the response"
 
-for line in response:
-    print line
-
+for i in range(len(response)):
+    print response[i]
