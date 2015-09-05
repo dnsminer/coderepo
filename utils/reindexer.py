@@ -9,6 +9,7 @@ from dm_modules import cfgparse_dm, bulkdbselect1w_dm,bulkdbselectJoin1w_dm, dbs
 from datetime import date, datetime
 from elasticsearch import Elasticsearch
 from elasticsearch_dsl import Search, Q
+from elasticsearch import helpers
 
 ## site specific settings
 DNSMinerHome='/opt/dnsminer-alpha'
