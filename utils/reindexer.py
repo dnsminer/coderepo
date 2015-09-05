@@ -29,4 +29,3 @@ response = client.cat.indicies( index='logstash-*')
 print "this is the response"
 type(response)
 
-
