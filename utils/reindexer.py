@@ -50,7 +50,7 @@ def getsourceindexs(srcprefix):
 def doreindex(srcidxlist,dstidx):
     print "reindexing to " + dstidx
     for row in srcidxlist:
-        print row[0]
+        print row
 
 def reindexmenu():
     doindexing=True
@@ -62,7 +62,7 @@ def reindexmenu():
             uidxinput = uidxinput.strip().lower()
             ilist = getsourceindexs(uidxinput)
             if len(ilist) > 0:
-                print "great, looks like we have " + str(len(ilist)) + "indices to reindex"
+                print "great, looks like we have " + str(len(ilist)) + " indices to reindex"
             else:
                 print "sorry, that doesn't look like a valid index prefix"
                 print "try running a command like this curl -GET http://localhost:9200/_cat/indices?v from the FE server command prompt to display the index names"
@@ -76,5 +76,6 @@ def reindexmenu():
             doreindex(ilist,uidxinput)
             doindexing = False
 
-
-reindexmenu()
+# Main for running interactively
+if __name__ == "__main__":
+    reindexmenu()
