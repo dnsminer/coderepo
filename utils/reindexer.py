@@ -14,7 +14,7 @@ from elasticsearch_dsl import Search, Q
 DNSMinerHome='/opt/dnsminer-alpha'
 dbcfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 
-client = Elasticsearch([{'host':'localhost','port':9200}])
+client = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
 query={"query": {"match_all" : {}}}
 scanResp = client.search(index="logstash-2015.08.11", doc_type=["DNSQRY","PDNS"], body=query, search_type="scan", scroll="10m", size=10000)
 
