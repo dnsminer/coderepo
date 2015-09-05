@@ -24,7 +24,7 @@ client = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, 
 #scrollId=scanResp['_scroll_id']
 #response = client.scroll(scroll_id=scrollId, scroll="10m")
 
-response = client.cat.indicies( index='logstash-*')
+response = client.cat.indices( index='logstash-*')
 
 print "this is the response"
 type(response)
