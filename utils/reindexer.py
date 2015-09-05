@@ -26,5 +26,5 @@ response = client.scroll(scroll_id=scrollId, scroll="10m")
 
 for hit in response["hits"]["hits"]:
     print hit
-    print "next doc
+    print "next doc"
 
