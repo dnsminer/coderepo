@@ -27,5 +27,7 @@ client = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, 
 response = client.cat.indices( index='logstash-*')
 
 print "this is the response"
-type(response)
+
+for line in response:
+    print line
 
