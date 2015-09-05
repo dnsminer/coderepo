@@ -52,7 +52,12 @@ def doreindex(srcidxlist,dstidx):
     client = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
     for row in srcidxlist:
         print "Reindexing index " + row + " to " + dstidx + " please stand by and watch for errors"
-        reindex(client,row,dstidx,scroll='5m')
+        try:
+            reindex(client,row,dstidx,scroll='5m')
+        except elasticsearch.helpers.BulkIndexError:
+            print "Problems with a document, it will not be included in the destination index"
+            sys.exc_clear()
+
     print "Confirm the documents were all reindexed\nrun curl -GET http://localhost:9200/_cat/indices?v | grep " + dstidx
     return
 
