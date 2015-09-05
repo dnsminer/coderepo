@@ -17,6 +17,17 @@ from elasticsearch.helpers import reindex
 DNSMinerHome='/opt/dnsminer-alpha'
 dbcfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 
+def unicodelinesplitter(uline):
+    retlist = []
+    aline = str(uline)
+    rowlist = aline.split()
+    for i in range(len(rowlist)):
+        retlist.append(rowlist[i])
+
+    return retlist
+
+
+
 client = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
 #query={"query": {"match_all" : {}}}
 #scanResp = client.search(index="logstash-2015.08.11", doc_type=["DNSQRY","PDNS"], body=query, search_type="scan", scroll="10m", size=10000)
@@ -27,8 +38,11 @@ client = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, 
 
 response = client.cat.indices( index='logstash-*', h=['index','docs.count'])
 
-print "this is the response"
+
 
 responselist = response.splitlines()
 for line in responselist:
-    print line
+    printlist = unicodelinesplitter(line)
+    for i in range(len(printlist)):
+        print str(i) + str(printlist[i])
+
