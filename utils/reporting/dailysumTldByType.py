@@ -15,10 +15,18 @@ DNSMinerHome='/opt/dnsminer-alpha'
 sitecfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 
 
-# third party library for bootstrapping command line  http://click.pocoo.org/
 @click.command()
 @click.option('--vname',prompt='Viewname for report',help='Valid View name within elasticsearch, check Kibana discovery type:DNSQRY')
 @click.option('--lookback',default=10,help='Number of days, previous to today to include in report scope')
+
+def runreport(vname,lookback):
+    print "running the report for " + vname + ", looking backwards " + str(lookback) + " days. "
+    thisidxlist = getindexlist(lookback)
+    for name in thisidxlist:
+        print name
+
+    return
+
 
 def getindexlist(lbdays):
     thisCfgDict = cfgparse_dm.opencfg(sitecfg,'SectionThree')
@@ -53,14 +61,10 @@ def mkserial():
 
 
 
-def runreport(vname,lookback):
-    print "running the report for " + vname + ", looking backwards " + str(lookback) + " days. "
-    thisidxlist = getindexlist(lookback)
-    for name in thisidxlist:
-        print name
 
-    return
 
 
 if __name__ == '__main__':
+    # third party library for bootstrapping command line  http://click.pocoo.org/
+
     runreport()
