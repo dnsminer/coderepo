@@ -21,4 +21,4 @@ def runreport(vname,lookback):
 
 
 if __name__ == '__main__':
-    runreport
+    runreport()
