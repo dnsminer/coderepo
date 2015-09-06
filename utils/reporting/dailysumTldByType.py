@@ -20,7 +20,7 @@ sitecfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 @click.option('--lookback',default=10,help='Number of days, previous to today to include in report scope')
 
 def runreport(vname,lookback):
-    print "running the report for " + vname + ", looking backwards " + str(lookback) + " days. "
+    print "running the report for " + vname + ", completing a backwards look for the previous " + str(lookback) + " days. "
     thisidxlist = getindexlist(lookback)
     for name in thisidxlist:
         print name
@@ -38,6 +38,7 @@ def getindexlist(lbdays):
         idxsfx = str(d).translate(chrtrans)
         idxname = idxpre + "-" + idxsfx
         idxlist.append(idxname)
+        lbdays = lbdays - 1
     return idxlist
 
 
