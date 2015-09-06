@@ -57,7 +57,7 @@ def doreindex(srcidxlist,dstidx):
         try:
             reindex(client,row,dstidx,scroll='5m')
         except BulkIndexError:
-            print "Problems with a document, it will not be included in the destination index"
+            print "Problems with one or more documents from the source index above due to incompatable data types. They will not be included in the destination index"
             sys.exc_clear()
 
     print "Confirm the documents were all reindexed\nrun curl -GET http://localhost:9200/_cat/indices?v | grep " + dstidx
