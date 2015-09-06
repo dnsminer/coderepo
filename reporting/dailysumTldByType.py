@@ -6,7 +6,6 @@ import MySQLdb as mdb
 import string
 import click
 from dm_modules import cfgparse_dm, bulkdbselect1w_dm,bulkdbselectJoin1w_dm, dbselectSubqueryExclude_dm
-
 from elasticsearch import Elasticsearch
 from elasticsearch_dsl import Search, Q
 
