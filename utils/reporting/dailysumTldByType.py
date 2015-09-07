@@ -134,7 +134,9 @@ def writereport(resultdict,thisview):
     for domKey,domVal in resultdict.items():
         #print(domKey)
         #print(domVal)
-        tmpLine = domKey[0] +"," +domKey[1] +"," + str(domVal)
+        keylist= domKey.split(",")
+        tmpLine = keylist[0] +"," +keylist[1] +"," + str(domVal)
+        print tmpLine
         sortList.append(tmpLine)
     reportList = sorted(sortList)
     fpath = getrptbase(thisview)
@@ -142,7 +144,7 @@ def writereport(resultdict,thisview):
     file2write=open(fname,'w')
 
     for sortLine in reportList:
-        print str(sortLine[0]) +',' + sortLine[1] + ',' + sortLine[2]  + '\n'
+        #print str(sortLine[0]) +',' + sortLine[1] + ',' + sortLine[2]  + '\n'
         file2write.write(str(sortLine[0]) +',' + sortLine[1] + ',' + sortLine[2]  + '\n')
     file2write.close()
     return
