@@ -153,7 +153,7 @@ def datedetails(datedict,dqstr):
     resultlist=["99","1970-01-01"]
     d,q = dqstr
     teststr = str(d) +"," + str(q)
-    print len(datedict) + " "  + teststr
+    print str(len(datedict)) + " "  + teststr
     #for evtkey,dateval in datedict.items():
     #    print(evtkey)
     #    print(dateval)
