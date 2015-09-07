@@ -87,14 +87,20 @@ def searchindexes(ilist,wname,wval,lb,dtype):
                 # strip out day, add to tuple, once you get the final listloop through each dom_tld
                 # and count the occurances, add as 4th field
                 # Using tuple so it can be a key but easily split into a list if needed.
-                dom_qtype = (dom_tld,qtype,tsint)
-                # debug
-                #print str(dom_qtype[0]) +"," + str(dom_qtype[1])
+                dom_qtype = (dom_tld,qtype)
+                dom_qtype_ts = (dom_tld,qtype,tsint)
+
                 # write data to dictionary
                 if dom_qtype not in dnsHisto:
                     dnsHisto[dom_qtype] = 1
+                    # write tuple and time stamp to datehistory dictionary
+                    dateHisto[dom_qtype_ts] = tsint
                 else:
                     dnsHisto[dom_qtype] += 1
+                    # test if dom_type time stamp exits, if not add value,
+                    # select occurances and lowest value at print time.
+                    if dom_qtype_ts not in dateHisto:
+                        dateHisto[dom_qtype_ts] = tsint
 
         except NotFoundError:
             print "Warning, no index found, report may not cover all days scoped"
@@ -144,12 +150,12 @@ def mkserial():
     datestr=str(todate.year) + mth + day
     return datestr
 
-def writereport(resultdict,thisview):
+def writereport(querydict,thisview,evtdict):
     sortList = list()
     # confirm we have data
-    for domKey,domVal in resultdict.items():
-        dom, qt, ts = domKey
-        tmpLine = str(domVal) + "," + str(dom).strip() +"," + str(qt).strip() + "," + ts
+    for domKey,domVal in querydict.items():
+        dom, qt = domKey
+        tmpLine = str(domVal) + "," + str(dom).strip() +"," + str(qt).strip()
         #print tmpLine
         sortList.append(tmpLine)
     reportList = sorted(sortList)
@@ -162,6 +168,10 @@ def writereport(resultdict,thisview):
         #print sortLine
         file2write.write(sortLine + '\n')
     file2write.close()
+    for evtkey,dateval in evtdict.items():
+        print(evtkey)
+        print(dateval)
+
     return
 
 def getrptbase(vname):
