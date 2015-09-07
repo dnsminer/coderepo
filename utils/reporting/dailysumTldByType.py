@@ -2,12 +2,12 @@
 __author__ = 'dleece'
 # Set the path to include the dns miner modules directory
 import sys, os
-import MySQLdb as mdb
+#import MySQLdb as mdb
 import string
 import click
 from dm_modules import cfgparse_dm, bulkdbselect1w_dm,bulkdbselectJoin1w_dm, dbselectSubqueryExclude_dm
 from elasticsearch import Elasticsearch
-from elasticsearch_dsl import Search, Q
+#from elasticsearch_dsl import Search, Q
 from datetime import date, datetime, timedelta
 from string import maketrans
 from elasticsearch import helpers
