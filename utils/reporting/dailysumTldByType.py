@@ -161,7 +161,7 @@ def datedetails(datedict,dqstr):
     daysoccured = 0
     for evtkey,dateval in datedict.items():
         print(evtkey)
-        print teststr
+        print dqstr
         if teststr in evtkey:
             print "matched"
             print(dateval)
