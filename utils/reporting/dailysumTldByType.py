@@ -155,7 +155,8 @@ def datedetails(datedict):
     #for evtkey,dateval in datedict.items():
     #    print(evtkey)
     #    print(dateval)
-    resultlist.append(str(42),"2015-09-03")
+    resultlist[0]=str(42)
+    resultlist[1] = "2015-09-03"
     return resultlist
 
 
