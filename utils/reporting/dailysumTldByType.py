@@ -13,7 +13,6 @@ from string import maketrans
 from elasticsearch import helpers
 from elasticsearch.exceptions import NotFoundError
 from elasticsearch.helpers import scan
-from elasticsearch.helpers import NotFoundError
 
 DNSMinerHome='/opt/dnsminer-alpha'
 sitecfg= DNSMinerHome + "/etc/siteSpecific.cfg"
