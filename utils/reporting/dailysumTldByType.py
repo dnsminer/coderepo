@@ -50,6 +50,10 @@ def getindexlist(lbdays):
 def searchindexes(ilist,wname,wval,lb,dtype):
     daysback = "now-"+str(lb)+"d"
     esclient = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
+    histoList = list()
+    dnsHisto = dict()
+    requests = 1
+
     # Left big & open for troubleshooting syntax isses
     qry = "{\"fields\": [\"@timestamp\",\"RQuery\",\"RQType\"],\
             \"query\" : {\
@@ -77,7 +81,14 @@ def searchindexes(ilist,wname,wval,lb,dtype):
                 dom_tld = fqdnstrip(docdict['RQuery'][0])
                 qtype = docdict['RQType'][0]
                 dom_qtype = [dom_tld,qtype]
+                # debug
                 print str(dom_qtype[0]) +"," + str(dom_qtype[1])
+                # write data to dictionary
+                if dom_qtype not in dnsHisto:
+                    dnsHisto[dom_qtype] = 1
+                else:
+                    dnsHisto[dom_qtype] += 1
+
         except NotFoundError:
             print "Warning, no index found, report may not cover all days scoped"
             sys.exc_clear()
