@@ -83,11 +83,10 @@ def searchindexes(ilist,wname,wval,lb,dtype):
                 qtype = docdict['RQType'][0]
                 tstamp = docdict['@timestamp'][0]
                 tstamp = str(tstamp[0:10])
-                print tstamp
                 # strip out day, add to tuple, once you get the final listloop through each dom_tld
                 # and count the occurances, add as 4th field
                 # Using tuple so it can be a key but easily split into a list if needed.
-                dom_qtype = (dom_tld,qtype)
+                dom_qtype = (dom_tld,qtype,tstamp)
                 # debug
                 #print str(dom_qtype[0]) +"," + str(dom_qtype[1])
                 # write data to dictionary
@@ -138,8 +137,8 @@ def writereport(resultdict,thisview):
     sortList = list()
     # confirm we have data
     for domKey,domVal in resultdict.items():
-        dom, qt = domKey
-        tmpLine = str(domVal) + "," + str(dom).strip() +"," + str(qt).strip()
+        dom, qt,ts = domKey
+        tmpLine = str(domVal) + "," + str(dom).strip() +"," + str(qt).strip() + "," + ts
         #print tmpLine
         sortList.append(tmpLine)
     reportList = sorted(sortList)
