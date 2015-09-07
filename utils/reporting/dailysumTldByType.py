@@ -160,7 +160,7 @@ def datedetails(datedict,dqstr):
     matched = False
     daysoccured = 0
     for evtkey,dateval in datedict.items():
-        if evtkey == teststr:
+        if teststr in evtkey:
             print "matched"
             print(dateval)
             print(evtkey)
