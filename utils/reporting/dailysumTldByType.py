@@ -118,7 +118,6 @@ def getepoch(datestr):
     epochday = int(tsdelta.total_seconds())
     return epochday
 
-    return epochint
 
 def fqdnstrip(fqdn):
     fqdn=fqdn.strip()
@@ -150,12 +149,24 @@ def mkserial():
     datestr=str(todate.year) + mth + day
     return datestr
 
+def datedetails(datedict):
+    resultlist=[]
+    print len(datedict)
+    #for evtkey,dateval in datedict.items():
+    #    print(evtkey)
+    #    print(dateval)
+    resultlist.append(str(42),"2015-09-03")
+    return resultlist
+
+
 def writereport(querydict,thisview,evtdict):
     sortList = list()
     # confirm we have data
     for domKey,domVal in querydict.items():
+        # get the date details
+        evtsum = datedetails(evtdict)
         dom, qt = domKey
-        tmpLine = str(domVal) + "," + str(dom).strip() +"," + str(qt).strip()
+        tmpLine = str(domVal) + "," + str(dom).strip() +"," + str(qt).strip() + "," + evtsum[0] + "," + evtsum[1]
         #print tmpLine
         sortList.append(tmpLine)
     reportList = sorted(sortList)
@@ -168,9 +179,7 @@ def writereport(querydict,thisview,evtdict):
         #print sortLine
         file2write.write(sortLine + '\n')
     file2write.close()
-    for evtkey,dateval in evtdict.items():
-        print(evtkey)
-        print(dateval)
+
 
     return
 
