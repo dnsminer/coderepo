@@ -139,12 +139,12 @@ def writereport(resultdict,thisview):
     reportList = sorted(sortList)
     fpath = getrptbase(thisview)
     fname = thisview + mkserial() + ".csv"
+    fname = fpath + "/" + fname
     print fname
     file2write=open(fname,'w')
     for sortLine in reportList:
-        print sortLine
-        #print str(sortLine[0]) +',' + sortLine[1] + ',' + sortLine[2]  + '\n'
-        #file2write.write(str(sortLine[0]) +',' + sortLine[1] + ',' + sortLine[2]  + '\n')
+        #print sortLine
+        file2write.write(sortLine + '\n')
     file2write.close()
     return
 
