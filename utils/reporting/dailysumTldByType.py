@@ -140,7 +140,7 @@ def writereport(resultdict,thisview):
     file2write=open(fname,'w')
 
     for sortLine in reportList:
-        file2write.write(str(sortLine[0]) +',' + sortLine[1] '\n')
+        file2write.write(str(sortLine[0]) +',' + sortLine[1] + '\n')
     file2write.close()
     return
 
