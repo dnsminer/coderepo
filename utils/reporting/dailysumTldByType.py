@@ -165,7 +165,7 @@ def datedetails(datedict,dqstr):
         evtstr = str(ed) +"," +str(eq)
         evttuple = evtstr + "," +str(ets)
         if teststr == evtstr:
-            print "matched"
+            #print "matched"
             if evttuple not in tempdict:
                 daysoccured = daysoccured + 1
                 tempdict[evttuple] = 1
