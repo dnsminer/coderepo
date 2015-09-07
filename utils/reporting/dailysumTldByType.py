@@ -134,8 +134,8 @@ def writereport(resultdict,thisview):
     for domKey,domVal in resultdict.items():
         #print(domKey)
         #print(domVal)
-        keylist= domKey.split(",")
-        tmpLine = keylist[0] +"," +keylist[1] +"," + str(domVal)
+        dom, qt = domKey
+        tmpLine = str(dom).strip() +"," + str(qt).strip() +"," + str(domVal)
         print tmpLine
         sortList.append(tmpLine)
     reportList = sorted(sortList)
