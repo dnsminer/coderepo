@@ -162,7 +162,7 @@ def datedetails(datedict,dqstr):
     for evtkey,dateval in datedict.items():
         print(evtkey)
         print dqstr
-        if teststr in evtkey:
+        if dqstr in evtkey:
             print "matched"
             print(dateval)
             print(evtkey)
