@@ -82,7 +82,8 @@ def searchindexes(ilist,wname,wval,lb,dtype):
                 dom_tld = fqdnstrip(docdict['RQuery'][0])
                 qtype = docdict['RQType'][0]
                 tstamp = docdict['@timestamp'][0]
-                print str(tstamp)
+                tstamp = str(tstamp[0:10])
+                print tstamp
                 # strip out day, add to tuple, once you get the final listloop through each dom_tld
                 # and count the occurances, add as 4th field
                 # Using tuple so it can be a key but easily split into a list if needed.
