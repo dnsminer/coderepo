@@ -132,6 +132,8 @@ def writereport(resultdict,thisview):
     sortList = list()
     # confirm we have data
     for domKey,domVal in resultdict.items():
+        print(domKey)
+        print(domVal)
         tmpLine = domKey + str(domVal)
         sortList.append(tmpLine)
     reportList = sorted(sortList)
