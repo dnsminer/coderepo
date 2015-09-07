@@ -24,10 +24,10 @@ sitecfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 
 # The module calling the clik variables needs to be there first it seems.
 def runreport(dname,lookback):
-    print "running the report for " + vname + ", completing a backwards look for the previous " + str(lookback) + " days. "
+    print "running the report for " + dname + ", completing a backwards look for the previous " + str(lookback) + " days. "
     thisidxlist = getindexlist(lookback)
-    for name in thisidxlist:
-        print name
+    for idxname in thisidxlist:
+        print idxname
     # search the view
     searchindexes(thisidxlist,'AA',"T",lookback,'PDNS')
 
