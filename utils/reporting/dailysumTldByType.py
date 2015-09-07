@@ -151,11 +151,20 @@ def mkserial():
 
 def datedetails(datedict,dqstr):
     resultlist=["99","1970-01-01"]
+    tempdict={}
     d,q = dqstr
     teststr = str(d) +"," + str(q)
-    print str(len(datedict)) + " "  + teststr
-    #for evtkey,dateval in datedict.items():
-    #    print(evtkey)
+    #print str(len(datedict)) + " "  + teststr
+    # search each row of dictionary to see it there is a match, if so test against temp dictionary
+    # uincrement occurance counter
+    matched = False
+    daysoccured = 0
+    for evtkey,dateval in datedict.items():
+        if evtkey == teststr:
+            print "matched"
+            print(dateval)
+            print(evtkey)
+            evtday = dateval
     #    print(dateval)
     resultlist[0]=str(42)
     resultlist[1] = "2015-09-03"
