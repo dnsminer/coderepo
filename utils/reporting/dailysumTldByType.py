@@ -106,7 +106,7 @@ def searchindexes(ilist,wname,wval,lb,dtype):
             print "Warning, no index found, report may not cover all days scoped"
             sys.exc_clear()
 
-    writereport(dnsHisto,wval)
+    writereport(dnsHisto,wval,dateHisto)
     return
 
 def getepoch(datestr):
