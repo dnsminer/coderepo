@@ -79,7 +79,7 @@ def searchindexes(ilist,wname,wval,lb,dtype):
                 dom_qtype = [dom_tld,qtype]
                 print str(dom_qtype[0]) +"," + str(dom_qtype[1])
         except NotFoundError:
-            print "No index found"
+            print "Warning, no index found"
             sys.exc_clear()
     return
 
