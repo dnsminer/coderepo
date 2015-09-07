@@ -149,9 +149,11 @@ def mkserial():
     datestr=str(todate.year) + mth + day
     return datestr
 
-def datedetails(datedict):
+def datedetails(datedict,dqstr):
     resultlist=["99","1970-01-01"]
-    print len(datedict)
+    d,q = dqstr
+    teststr = str(d) +"," + str(q)
+    print len(datedict) + " "  + teststr
     #for evtkey,dateval in datedict.items():
     #    print(evtkey)
     #    print(dateval)
@@ -165,7 +167,7 @@ def writereport(querydict,thisview,evtdict):
     # confirm we have data
     for domKey,domVal in querydict.items():
         # get the date details
-        evtsum = datedetails(evtdict)
+        evtsum = datedetails(evtdict,domKey)
         dom, qt = domKey
         tmpLine = str(domVal) + "," + str(dom).strip() +"," + str(qt).strip() + "," + evtsum[0] + "," + evtsum[1]
         #print tmpLine
