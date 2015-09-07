@@ -132,8 +132,8 @@ def writereport(resultdict,thisview):
     sortList = list()
     # confirm we have data
     for domKey,domVal in resultdict.items():
-        print(domKey)
-        print(domVal)
+        #print(domKey)
+        #print(domVal)
         tmpLine = domKey[0] +"," +domKey[1] +"," + str(domVal)
         sortList.append(tmpLine)
     reportList = sorted(sortList)
@@ -142,7 +142,8 @@ def writereport(resultdict,thisview):
     file2write=open(fname,'w')
 
     for sortLine in reportList:
-        file2write.write(str(sortLine[0]) +',' + sortLine[1] + '\n')
+        print str(sortLine[0]) +',' + sortLine[1] + ',' + sortLine[2]  + '\n'
+        file2write.write(str(sortLine[0]) +',' + sortLine[1] + ',' + sortLine[2]  + '\n')
     file2write.close()
     return
 
