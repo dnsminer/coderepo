@@ -41,11 +41,12 @@ def searchindexes(ilist,wname,wval,lb,dtype):
     requests = 1
 
     # Left big & open for troubleshooting syntax isses
+    # use term for non-analyzed fields and match for analyzed
     qry = "{\"fields\": [\"@timestamp\",\"soans\",\"query\",\"answers\",\"rcodename\",\"qtypename\"],\
             \"query\" : {\
             \"bool\": { \"must\": [\
             {\
-            \"term\" : { \"" + wname +"\" : \""+ wval + "\" }\
+            \"match\" : { \"" + wname +"\" : \""+ wval + "\" }\
             },{\
             \"range\": {\
                 \"@timestamp\": {\
