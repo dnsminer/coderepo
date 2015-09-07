@@ -134,7 +134,7 @@ def writereport(resultdict,thisview):
     for domKey,domVal in resultdict.items():
         print(domKey)
         print(domVal)
-        tmpLine = domKey + str(domVal)
+        tmpLine = domKey[0] +"," +domKey[1] +"," + str(domVal)
         sortList.append(tmpLine)
     reportList = sorted(sortList)
     fpath = getrptbase(thisview)
