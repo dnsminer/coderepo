@@ -75,7 +75,7 @@ def searchindexes(ilist,wname,wval,lb,dtype):
             for resp in response:
                 docdict=resp['fields']
                 dom_tld = fqdnstrip(docdict['RQuery'][0])
-                qtype = docdict['Rtype'][0]
+                qtype = docdict['RQtype'][0]
                 dom_qtype = [dom_tld,qtype]
                 print str(dom_qtype[0]) +"," + str(dom_qtype[1])
         except NotFoundError:
