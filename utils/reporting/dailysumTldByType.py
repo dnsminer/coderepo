@@ -80,7 +80,8 @@ def searchindexes(ilist,wname,wval,lb,dtype):
                 docdict=resp['fields']
                 dom_tld = fqdnstrip(docdict['RQuery'][0])
                 qtype = docdict['RQType'][0]
-                dom_qtype = [dom_tld,qtype]
+                # Using tuple so it can be a key but easily split into a list if needed.
+                dom_qtype = (dom_tld,qtype)
                 # debug
                 print str(dom_qtype[0]) +"," + str(dom_qtype[1])
                 # write data to dictionary
