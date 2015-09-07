@@ -75,11 +75,11 @@ def searchindexes(ilist,wname,wval,lb,dtype):
             for resp in response:
                 docdict=resp['fields']
                 dom_tld = fqdnstrip(docdict['RQuery'][0])
-                qtype = docdict['RQtype'][0]
+                qtype = docdict['RQType'][0]
                 dom_qtype = [dom_tld,qtype]
                 print str(dom_qtype[0]) +"," + str(dom_qtype[1])
         except NotFoundError:
-            print "Warning, no index found"
+            print "Warning, no index found, report may not cover all days scoped"
             sys.exc_clear()
     return
 
