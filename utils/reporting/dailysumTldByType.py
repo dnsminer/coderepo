@@ -52,6 +52,7 @@ def searchindexes(ilist,wname,wval,lb,dtype):
     esclient = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
     histoList = list()
     dnsHisto = dict()
+    dateHisto = dict()
     requests = 1
 
     # Left big & open for troubleshooting syntax isses
@@ -80,6 +81,10 @@ def searchindexes(ilist,wname,wval,lb,dtype):
                 docdict=resp['fields']
                 dom_tld = fqdnstrip(docdict['RQuery'][0])
                 qtype = docdict['RQType'][0]
+                tstamp = docdict['@timestamp'][0]
+                print str(tstamp)
+                # strip out day, add to tuple, once you get the final listloop through each dom_tld
+                # and count the occurances, add as 4th field
                 # Using tuple so it can be a key but easily split into a list if needed.
                 dom_qtype = (dom_tld,qtype)
                 # debug
