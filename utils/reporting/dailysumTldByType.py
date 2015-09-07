@@ -132,20 +132,19 @@ def writereport(resultdict,thisview):
     sortList = list()
     # confirm we have data
     for domKey,domVal in resultdict.items():
-        #print(domKey)
-        #print(domVal)
         dom, qt = domKey
-        tmpLine = str(dom).strip() +"," + str(qt).strip() +"," + str(domVal)
+        tmpLine = str(domVal) + "," + str(dom).strip() +"," + str(qt).strip()
         print tmpLine
         sortList.append(tmpLine)
     reportList = sorted(sortList)
     fpath = getrptbase(thisview)
     fname = thisview + mkserial() + ".csv"
+    print fname
     file2write=open(fname,'w')
-
     for sortLine in reportList:
+        print sortLine
         #print str(sortLine[0]) +',' + sortLine[1] + ',' + sortLine[2]  + '\n'
-        file2write.write(str(sortLine[0]) +',' + sortLine[1] + ',' + sortLine[2]  + '\n')
+        #file2write.write(str(sortLine[0]) +',' + sortLine[1] + ',' + sortLine[2]  + '\n')
     file2write.close()
     return
 
