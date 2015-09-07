@@ -56,9 +56,11 @@ def searchindexes(ilist,wname,wval,lb,dtype):
                }\
              }\
           ]\
-      }\
+      },{\
+     \"must_not\": {\"regexp\": { \"query\": \".*shawcable.net\"}}}\
     }\
   }"
+
     print qry
     for idx in ilist:
         try:
