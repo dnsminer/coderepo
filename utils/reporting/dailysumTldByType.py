@@ -83,7 +83,7 @@ def searchindexes(ilist,wname,wval,lb,dtype):
                 # Using tuple so it can be a key but easily split into a list if needed.
                 dom_qtype = (dom_tld,qtype)
                 # debug
-                print str(dom_qtype[0]) +"," + str(dom_qtype[1])
+                #print str(dom_qtype[0]) +"," + str(dom_qtype[1])
                 # write data to dictionary
                 if dom_qtype not in dnsHisto:
                     dnsHisto[dom_qtype] = 1
@@ -93,6 +93,8 @@ def searchindexes(ilist,wname,wval,lb,dtype):
         except NotFoundError:
             print "Warning, no index found, report may not cover all days scoped"
             sys.exc_clear()
+
+        writereport(dnsHisto,wval)
     return
 
 
@@ -126,9 +128,29 @@ def mkserial():
     datestr=str(todate.year) + mth + day
     return datestr
 
+def writereport(resultdict,thisview):
+    sortList = list()
+    # confirm we have data
+    for domKey,domVal in resultdict.items():
+        tmpLine = domKey + str(domVal)
+        sortList.append(tmpLine)
+    reportList = sorted(sortList)
+    fpath = getrptbase(thisview)
+    fname = thisview + mkserial() + ".csv"
+    file2write=open(fname,'w')
 
+    for sortLine in reportList:
+        file2write.write(str(sortLine[0]) +',' + sortLine[1] '\n')
+    file2write.close()
+    return
 
-
+def getrptbase(vname):
+    filepath = DNSMinerHome
+    thisCfgDict = cfgparse_dm.opencfg(sitecfg,'SectionThree')
+    rptbase = thisCfgDict['reportbase']
+    filepath = filepath + "/" + rptbase + "/" + vname
+    # need a little hook to make directory if not there
+    return filepath
 
 
 if __name__ == '__main__':
