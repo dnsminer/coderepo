@@ -176,8 +176,9 @@ def datedetails(datedict,dqstr):
             #print(evtkey)
             evtday = dateval
     #    print(dateval)
+    lowepoch = datetime.fromtimestamp(lowepoch).strftime('%Y-%m-%d')
     resultlist[0]=str(daysoccured)
-    resultlist[1] = str(lowepoch)
+    resultlist[1] = lowepoch
     return resultlist
 
 
