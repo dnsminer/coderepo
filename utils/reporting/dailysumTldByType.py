@@ -154,6 +154,7 @@ def datedetails(datedict,dqstr):
     tempdict={}
     d,q = dqstr
     teststr = str(d) +"," + str(q)
+    lowepoch = 9999999999
     #print str(len(datedict)) + " "  + teststr
     # search each row of dictionary to see it there is a match, if so test against temp dictionary
     # uincrement occurance counter
@@ -162,14 +163,21 @@ def datedetails(datedict,dqstr):
     for evtkey,dateval in datedict.items():
         ed, eq, ets = evtkey
         evtstr = str(ed) +"," +str(eq)
+        evttuple = evtstr + "," +str(ets)
         if teststr == evtstr:
             print "matched"
-            print(dateval)
-            print(evtkey)
+            if evttuple not in tempdict:
+                daysoccured += daysoccured
+                tempdict[evttuple] = 1
+            if int(ets) < lowepoch:
+                lowepoch = int(ets)
+
+            #print(dateval)
+            #print(evtkey)
             evtday = dateval
     #    print(dateval)
-    resultlist[0]=str(42)
-    resultlist[1] = "2015-09-03"
+    resultlist[0]=str(daysoccured)
+    resultlist[1] = str(lowepoch)
     return resultlist
 
 
