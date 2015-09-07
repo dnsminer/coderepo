@@ -58,7 +58,7 @@ def searchindexes(ilist,wname,wval,lb,dtype):
       }\
     }\
   }"
-
+    print qry
     for idx in ilist:
         try:
             response = scan(client=esclient, query=qry, index=idx, doc_type=dtype, scroll="3m", timeout="3m")
