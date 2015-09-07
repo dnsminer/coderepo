@@ -18,6 +18,7 @@ for line in file2read: #ough for historical analysis
         line = line.rstrip()
         tmpList = line.split()
         clientQuery = tmpList[9]
+
         lastRequest = tmpList[0] + "," + tmpList[1]
     # ignore all local queries
     if 'queries: info: client 127.0.0.1' in line : continue
