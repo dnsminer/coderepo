@@ -134,11 +134,11 @@ def writereport(resultdict,thisview):
     for domKey,domVal in resultdict.items():
         dom, qt = domKey
         tmpLine = str(domVal) + "," + str(dom).strip() +"," + str(qt).strip()
-        print tmpLine
+        #print tmpLine
         sortList.append(tmpLine)
     reportList = sorted(sortList)
     fpath = getrptbase(thisview)
-    fname = thisview + mkserial() + ".csv"
+    fname = thisview + "-" +mkserial() + ".csv"
     fname = fpath + "/" + fname
     print fname
     file2write=open(fname,'w')
@@ -152,7 +152,7 @@ def getrptbase(vname):
     filepath = DNSMinerHome
     thisCfgDict = cfgparse_dm.opencfg(sitecfg,'SectionThree')
     rptbase = thisCfgDict['reportbase']
-    filepath = filepath + "/" + rptbase + "/" + vname
+    filepath = filepath +  rptbase + "/" + vname
     # need a little hook to make directory if not there
     return filepath
 
