@@ -55,7 +55,7 @@ def searchindexes(ilist,wname,wval,lb,dtype):
             \"query\" : {\
             \"bool\": { \"must\": [\
             {\
-            \"term\" : { \"" + wname +" \" : "+ wval + "}\
+            \"term\" : { \"" + wname +" \" : \""+ wval + "\"}\
             \},{\
             \"range\": {\
                 \"@timestamp\": {\
