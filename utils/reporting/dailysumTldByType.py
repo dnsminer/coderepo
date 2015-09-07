@@ -150,7 +150,7 @@ def mkserial():
     return datestr
 
 def datedetails(datedict):
-    resultlist=[]
+    resultlist=["99","1970-01-01"]
     print len(datedict)
     #for evtkey,dateval in datedict.items():
     #    print(evtkey)
