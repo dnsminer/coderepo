@@ -51,7 +51,7 @@ def searchindexes(ilist,wname,wval,lb,dtype):
     daysback = "now-"+str(lb)+"d"
     esclient = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
     # Left big & open for troubleshooting syntax isses
-    qry = "q={\"fields\": [\"@timestamp\",\"RQuery\",\"RQType\"],\
+    qry = "{\"fields\": [\"@timestamp\",\"RQuery\",\"RQType\"],\
             \"query\" : {\
             \"bool\": { \"must\": [\
             {\
