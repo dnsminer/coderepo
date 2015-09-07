@@ -82,11 +82,12 @@ def searchindexes(ilist,wname,wval,lb,dtype):
                 dom_tld = fqdnstrip(docdict['RQuery'][0])
                 qtype = docdict['RQType'][0]
                 tstamp = docdict['@timestamp'][0]
-                tstamp = str(tstamp[0:10])
+                tsint = getepoch(str(tstamp))
+
                 # strip out day, add to tuple, once you get the final listloop through each dom_tld
                 # and count the occurances, add as 4th field
                 # Using tuple so it can be a key but easily split into a list if needed.
-                dom_qtype = (dom_tld,qtype,tstamp)
+                dom_qtype = (dom_tld,qtype,tsint)
                 # debug
                 #print str(dom_qtype[0]) +"," + str(dom_qtype[1])
                 # write data to dictionary
@@ -102,6 +103,16 @@ def searchindexes(ilist,wname,wval,lb,dtype):
     writereport(dnsHisto,wval)
     return
 
+def getepoch(datestr):
+    # convert the string into a date python can ingest and return epoch value.
+    tsevt = str(datestr[0:10])
+    dtevt = datetime.strptime(tsevt, "%Y-%m-%d")
+    ep = datetime.utcfromtimestamp(0)
+    tsdelta = dtevt - ep
+    epochday = int(tsdelta.total_seconds())
+    return epochday
+
+    return epochint
 
 def fqdnstrip(fqdn):
     fqdn=fqdn.strip()
@@ -137,7 +148,7 @@ def writereport(resultdict,thisview):
     sortList = list()
     # confirm we have data
     for domKey,domVal in resultdict.items():
-        dom, qt,ts = domKey
+        dom, qt, ts = domKey
         tmpLine = str(domVal) + "," + str(dom).strip() +"," + str(qt).strip() + "," + ts
         #print tmpLine
         sortList.append(tmpLine)
