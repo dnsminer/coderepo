@@ -32,6 +32,7 @@ def runreport(dname,lookback):
     searchindexes(thisidxlist,'AA',"T",lookback,'PDNS')
 
 def searchindexes(ilist,wname,wval,lb,dtype):
+    print "running search indexes"
     daysback = "now-"+str(lb)+"d"
     esclient = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
     histoList = list()
