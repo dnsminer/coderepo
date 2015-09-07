@@ -23,7 +23,7 @@ sitecfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 @click.option('--lookback',default=10,help='Number of days, previous to today to include in report scope')
 
 # The module calling the clik variables needs to be there first it seems.
-def runreport(vname,lookback):
+def runreport(dname,lookback):
     print "running the report for " + vname + ", completing a backwards look for the previous " + str(lookback) + " days. "
     thisidxlist = getindexlist(lookback)
     for name in thisidxlist:
