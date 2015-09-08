@@ -79,8 +79,11 @@ def searchindexes(ilist,wname,wval,lb,dtype,tiname):
                 }\
         }\
 }'"
-#\"must_not\": {\"regexp\": { \"query\": \".*shawcable.net\"}}}\
+
     print qry
+    # Temp file just to test timing
+    fname = "/var/tmp/rpztest.txt"
+    file2write=open(fname,'w')
     for idx in ilist:
         try:
             response = scan(client=esclient, query=qry, index=idx, doc_type=dtype, scroll="3m", timeout="3m")
@@ -93,14 +96,10 @@ def searchindexes(ilist,wname,wval,lb,dtype,tiname):
                 qtype = docdict['qtypename'][0]
                 rcode = docdict['rcodename'][0]
                 #tsint = getepoch(str(tstamp))
-                print "TS: " + str(tstamp) + " SOANS: " + str(authns) + " QRY: " + resqry + " ANS: " + ans \
+                fileline = "TS: " + str(tstamp) + " SOANS: " + str(authns) + " QRY: " + resqry + " ANS: " + ans \
                 + " QT: " + qtype + " Resp: " + rcode
-                # strip out day, add to tuple, once you get the final listloop through each dom_tld
-                # and count the occurances, add as 4th field
-                # Using tuple so it can be a key but easily split into a list if needed.
-                #dom_qtype = (dom_tld,qtype)
-                #dom_qtype_ts = (dom_tld,qtype,tsint)
-
+                # Temp file just to test timing
+                file2write.write(fileline +"\n")
                 # write data to dictionary
                 #if dom_qtype not in dnsHisto:
                 #    dnsHisto[dom_qtype] = 1
@@ -116,7 +115,7 @@ def searchindexes(ilist,wname,wval,lb,dtype,tiname):
         except NotFoundError:
             print "Warning, no index found, report may not cover all days scoped"
             sys.exc_clear()
-
+    file2write.close()
     #writereport(dnsHisto,wval,dateHisto)
     return
 
