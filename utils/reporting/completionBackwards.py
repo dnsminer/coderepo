@@ -100,7 +100,7 @@ def searchindexes(ilist,wname,wval,lb,dtype,tiname):
                 + " QT: " + qtype + " Resp: " + rcode
                 # Temp file just to test timing
                 file2write.write(fileline +"\n")
-                # write data to dictionary
+
                 #if dom_qtype not in dnsHisto:
                 #    dnsHisto[dom_qtype] = 1
                 #    # write tuple and time stamp to datehistory dictionary
