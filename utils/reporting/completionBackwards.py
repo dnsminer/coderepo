@@ -29,9 +29,9 @@ def runreport(dname,lookback):
     for idxname in thisidxlist:
         print idxname
     # search the view
-    searchindexes(thisidxlist,'AA',"T",lookback,'PDNS')
+    searchindexes(thisidxlist,'AA',"T",lookback,'PDNS',dname)
 
-def searchindexes(ilist,wname,wval,lb,dtype):
+def searchindexes(ilist,wname,wval,lb,dtype,tiname):
     print "running search indexes"
     daysback = "now-"+str(lb)+"d"
     esclient = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
@@ -42,24 +42,43 @@ def searchindexes(ilist,wname,wval,lb,dtype):
 
     # Left big & open for troubleshooting syntax isses
     # use term for non-analyzed fields and match for analyzed
-    qry = "{\"fields\": [\"@timestamp\",\"soans\",\"query\",\"answers\",\"rcodename\",\"qtypename\"],\
-            \"query\" : {\
-            \"bool\": { \"must\": [\
-            {\
-            \"match\" : { \"" + wname +"\" : \""+ wval + "\" }\
-            },{\
-            \"range\": {\
-                \"@timestamp\": {\
-                    \"gt\" : \"" + daysback +"\",\
-                 \"lt\" : \"now\"\
-                 }\
-               }\
-             }\
-          ]\
-      }\
-    }\
-  }"
+    #qry = "{\"fields\": [\"@timestamp\",\"soans\",\"query\",\"answers\",\"rcodename\",\"qtypename\"],\
+    #        \"query\" : {\
+    #        \"bool\": { \"must\": [\
+    #        {\
+    #        \"match\" : { \"" + wname +"\" : \""+ wval + "\" }\
+    #        },{\
+    #        \"range\": {\
+    #            \"@timestamp\": {\
+    #                \"gt\" : \"" + daysback +"\",\
+    #             \"lt\" : \"now\"\
+    #             }\
+    #           }\
+    #         }\
+    #      ]\
+    #  }\
+    #}\
+  #}"
 
+
+    qry = "{\"fields\": [\"@timestamp\",\"soans\",\"query\",\"answers\",\"rcodename\",\"qtypename\"],\
+        \"query\": {\
+            \"filtered\" : {\
+                \"query\": {\
+                    \"bool\": { \"must\": { \"match\" : { \"AA\":\"T\"}},\
+                                \"should\": [\
+                                    { \"wildcard\": { \"query\": \"*" + tiname + "*\" }},\
+                                    { \"wildcard\": { \"answers\": \"*" + tiname + "*\" }}\
+                                ],\
+                                \"minimum_should_match\": 1\
+                        }\
+                },\
+                \"filter\": {\
+                        \"range\": { \"@timestamp\" : { \"gt\" : \"" + daysback + ", \"lt\" : \"now\"}}\
+                        }\
+                }\
+        }\
+}'"
 #\"must_not\": {\"regexp\": { \"query\": \".*shawcable.net\"}}}\
     print qry
     for idx in ilist:
