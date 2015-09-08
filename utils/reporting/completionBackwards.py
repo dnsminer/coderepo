@@ -74,7 +74,7 @@ def searchindexes(ilist,wname,wval,lb,dtype,tiname):
                         }\
                 },\
                 \"filter\": {\
-                        \"range\": { \"@timestamp\" : { \"gt\" : \"" + daysback + ", \"lt\" : \"now\"}}\
+                        \"range\": { \"@timestamp\" : { \"gt\" : \"" + daysback + "\", \"lt\" : \"now\"}}\
                         }\
                 }\
         }\
