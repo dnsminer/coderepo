@@ -91,12 +91,13 @@ def searchindexes(ilist,wname,wval,lb,dtype,tiname):
                 docdict=resp['fields']
                 tstamp = docdict['@timestamp'][0]
                 authns = docdict['soans'][0]
-                resqry = fqdnstrip(docdict['query'][0])
+                dedupeqry = fqdnstrip(docdict['query'][0])
+                resqry = docdict['query'][0]
                 ans = docdict['answers'][0]
                 qtype = docdict['qtypename'][0]
                 rcode = docdict['rcodename'][0]
                 #tsint = getepoch(str(tstamp))
-                fileline = "TS: " + str(tstamp) + " SOANS: " + str(authns) + " QRY: " + resqry + " ANS: " + ans \
+                fileline = "TS: " + str(tstamp) + " SOANS: " + str(authns) + "DDQRY: " + dedupeqry + " QRY: " + resqry + " ANS: " + ans \
                 + " QT: " + qtype + " Resp: " + rcode
                 # Temp file just to test timing
                 file2write.write(fileline +"\n")
