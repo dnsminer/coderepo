@@ -23,7 +23,7 @@ def genvhtml(flist,vpath):
     title = "Daily reports for View"
     header = "The CSV files below are generated daily, save a local copy and filter using the spreadsheet tool of your choice"
     footer = "Don't forget to revist the Kibana discover application to do additional drill downs into anything from teh reports that piques your curiosity"
-
+    blank = "  "
     page = markup.page()
     page.init (title=title,header=header, footer=footer)
     page.br()
@@ -31,17 +31,14 @@ def genvhtml(flist,vpath):
     for f in flist:
         linkstr = "\"Report: " + f + "\", href='" + f + "' "
         page.a(linkstr)
-
-
+    page.p(blank)
+    # write teh file
     viewhtml = vpath + "/" + "view.html"
     print viewhtml
-    print page
-    #file2write=open(viewhtml,'w')
-    #file2write.write(page)
-    #file2write.close()
-
-    # list elements
-
+    htmlstr = str(page)
+    file2write=open(viewhtml,'w')
+    file2write.write(htmlstr)
+    file2write.close()
     return
 
 
