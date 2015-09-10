@@ -19,11 +19,27 @@ def getreportparams():
     return rptbase
 
 def genvhtml(flist,vpath):
-    dlim = "\",\""
-    ilist = dlim.join(flist)
-    print ilist
+
+    title = "Daily reports for View"
+    header = "The CSV files below are generated daily, save a local copy and filter using the spreadsheet tool of your choice"
+    footer = "Don't forget to revist the Kibana discover application to do additional drill downs into anything from teh reports that piques your curiosity"
+
+    page = markup.page()
+    page.init (title=title,header=header, footer=footer)
+    page.br()
+
     for f in flist:
-        print f
+        linkstr = "\"Report: " + f + "\", href='" + f + "' "
+        page.a(linkstr)
+
+
+    viewhtml = vpath + "/" + "view.html"
+    print viewhtml
+    file2write=open(viewhtml,'w')
+    file2write.write(page)
+    file2write.close()
+
+    # list elements
 
     return
 
