@@ -78,8 +78,8 @@ def genConfig(valList):
 
 
 def genreportcfg(rvalList):
-    RCFG = nginxdir + "/sites-available/revproxynginx"
-    RCFGLn = nginxdir + "/sites-enabled/revproxynginx"
+    RCFG = nginxdir + "/sites-available/reports"
+    RCFGLn = nginxdir + "/sites-enabled/reports"
     if isFileValid(RCFGLn):
         try:
             os.unlink(RCFGLn)
