@@ -22,9 +22,10 @@ def getreportparams():
 
 def getviewlist(dirpath):
     #Get all the directories that are not empty
-    filepaths = []
+
     viewlist = os.listdir(dirpath)
     for fdir in viewlist:
+        filepaths = []
         vdir = dirpath + "/" + fdir
         print vdir
         for dpath, dname, fnames in os.walk(vdir):
