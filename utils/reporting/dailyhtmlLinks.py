@@ -15,7 +15,7 @@ sitecfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 def getreportparams():
     thisCfgDict = cfgparse_dm.opencfg(sitecfg,'SectionThree')
     rptbase = thisCfgDict['reportbase']
-    rptbase =  DNSMinerHome + "/" + rptbase
+    rptbase =  DNSMinerHome  + rptbase
     return rptbase
 
 
