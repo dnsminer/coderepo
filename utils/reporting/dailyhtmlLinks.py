@@ -19,7 +19,9 @@ def getreportparams():
     return rptbase
 
 def genvhtml(flist,vpath):
-    print flist
+    dlim = "\",\""
+    ilist = dlim.join(flist)
+    print ilist
     for f in flist:
         print f
 
