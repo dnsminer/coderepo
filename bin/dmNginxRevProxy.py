@@ -74,6 +74,41 @@ def genConfig(valList):
             print "symlink to " + CFG + " has been created"
         except:
             print "Unable to create symlink, check file permissions"
+    return
+
+
+def genreportcfg(rvalList):
+    RCFG = nginxdir + "/sites-available/revproxynginx"
+    RCFGLn = nginxdir + "/sites-enabled/revproxynginx"
+    if isFileValid(RCFGLn):
+        try:
+            os.unlink(RCFGLn)
+            print "old symlink to "+ RCFGLn + " has been removed"
+        except:
+            print " unable to remove symfile"# Remove old symlink
+            cStatus = "Check file permissions"
+    RCFGfh = open(RCFG,'w')
+    # build the config
+    wline = "server {\n"
+    wline = wline + "  listen 8080;\n"
+    wline = wline + "  root /" + DNSMHome + "/var/reports;\n"
+    wline = wline + "  index replist.html view.html;\n"
+    wline = wline + "  server_name " + rvalList[0] + ";\n"
+    wline = wline + "  location / { \n"
+    wline = wline + "      try_files $uri $uri/ /index.html;"
+    wline = wline + "  } \n }\n"
+    RCFGfh.write(wline)
+    RCFGfh.close()
+
+    if isFileValid(RCFG):
+        try:
+            os.symlink(RCFG,RCFGLn)
+            print "symlink to " + RCFG + " has been created"
+        except:
+            print "Unable to create symlink, check file permissions"
+
+    return
+
 
 def copyProxyConf():
     PConf = DNSMHome + "/contrib/proxy.conf"
@@ -96,4 +131,5 @@ conflist = minInput()
 #    print items
 
 genConfig(conflist)
+genreportcfg(conflist)
 copyProxyConf()
