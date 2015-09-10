@@ -18,7 +18,8 @@ def getreportparams():
     rptbase =  DNSMinerHome  + rptbase
     return rptbase
 
-def genvhtml(flist):
+def genvhtml(flist,vpath):
+    print flist
     for f in flist:
         print f
 
@@ -38,7 +39,7 @@ def getviewlist(dirpath):
             for fname in fnames:
                 filepaths.append(fname)
             if len(filepaths) > 1:
-                genvhtml(filepaths)
+                genvhtml(filepaths,vdir)
 
 
     return
