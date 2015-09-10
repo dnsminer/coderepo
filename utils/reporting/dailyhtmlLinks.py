@@ -35,9 +35,10 @@ def genvhtml(flist,vpath):
 
     viewhtml = vpath + "/" + "view.html"
     print viewhtml
-    file2write=open(viewhtml,'w')
-    file2write.write(page)
-    file2write.close()
+    print page
+    #file2write=open(viewhtml,'w')
+    #file2write.write(page)
+    #file2write.close()
 
     # list elements
 
