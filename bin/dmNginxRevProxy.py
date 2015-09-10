@@ -63,7 +63,7 @@ def genConfig(valList):
     wline = wline + "  include proxy.conf;\n"
     wline = wline + "  auth_basic  \" Restricted to authorized users only\";\n"
     wline = wline + "  auth_basic_user_file /etc/nginx/local/user_auth;\n"
-    wline = wline + "  proxy_pass http://127.0.0.1:8080";\n"
+    wline = wline + "  proxy_pass http://127.0.0.1:8080;\n"
     wline = wline + " }\n}\n"
     CFGfh.write(wline)
     CFGfh.close()
