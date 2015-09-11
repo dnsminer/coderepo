@@ -66,7 +66,7 @@ def repdirmgmt(avl):
     rbase = getreportparams()
     for thisview in avl:
         viewrptdir = rbase + "/" + thisview
-        print viewrptdir
+        #print viewrptdir
         if os.path.isdir(viewrptdir):
             if os.access(viewrptdir,os.W_OK):
                 evlist.append(thisview)
@@ -117,7 +117,7 @@ def dodsum1(uvl):
     # usable View list is parsed to pass arguments to dailyTLD summary program
     repscript = DNSMinerHome + "/utils/reporting/dailysumTldByType.py"
     for uview in uvl:
-        params = '--vname ' + uview + " --lookback 10"
+        params = '--vname ' + uview
         # not a fan but need to rework method input, click seems to be messing it up
         subprocess.call([repscript, params])
         #dailysumTldByType.runreport(vname=uview)
