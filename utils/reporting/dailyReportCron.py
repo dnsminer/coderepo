@@ -100,7 +100,6 @@ def writeerrorlog(estring):
 
 def mkserial():
     todate=date.today()
-    # need to deal with leading 0s to avoid zone transfer issues due to bad serial numbers
     day = '%02d' % todate.day
     mth = '%02d' % todate.month
     datestr=str(todate.year) + mth + day
