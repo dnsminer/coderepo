@@ -1,21 +1,22 @@
 #!/usr/bin/env python
 __author__ = 'dleece'
-# Set the path to include the dns miner modules directory
-import sys, os, markup, string
-#import MySQLdb as mdb
-#import string
+import sys, os
 from dm_modules import cfgparse_dm, bulkdbselect1w_dm,bulkdbselectJoin1w_dm, dbselectSubqueryExclude_dm
-
-DNSMinerHome='/opt/dnsminer-alpha'
-sitecfg= DNSMinerHome + "/etc/siteSpecific.cfg"
-
+from datetime import date, datetime, timedelta
+# call the reporting job in the same directory
+import  dailysumTldByType
+# general elastic search collection
 from elasticsearch import Elasticsearch
 from elasticsearch import helpers
 from elasticsearch.exceptions import NotFoundError
 from elasticsearch.helpers import scan
 
 
+# Update if installed in non-default location
+DNSMinerHome='/opt/dnsminer-alpha'
+sitecfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 
+#  Nothing below here likely needs to be edited unless debugging
 
 def aggbuckets(idxnamewq,wname,wval,lb,dtype):
     # Get all the Views that have had some activity in the previous 10 days, count DNSQRY docs, bucket by View
@@ -60,7 +61,6 @@ def aggbuckets(idxnamewq,wname,wval,lb,dtype):
 def repdirmgmt(avl):
     # parse active view list, confirm dir exists and is writable
     evlist = []  # store if dir exists test results
-
     # get report path
     rbase = getreportparams()
     for thisview in avl:
@@ -95,6 +95,7 @@ def writeerrorlog(estring):
     file2write=open(logname,'a')
     file2write.write(logline + '\n')
     file2write.close()
+    return
 
 
 def mkserial():
@@ -111,63 +112,17 @@ def getreportparams():
     rptbase =  DNSMinerHome  + rptbase
     return rptbase
 
-def genvhtml(flist,vpath):
 
-    title = "Daily reports for View"
-    header = "The CSV files below are generated daily, save a local copy and filter using the spreadsheet tool of your choice"
-    footer = "Don't forget to revist the Kibana discover application to do additional drill downs into anything from teh reports that piques your curiosity"
-    blank = "  "
-    page = markup.page()
-    page.init (title=title,header=header, footer=footer)
-    page.br()
-
-    for f in flist:
-        linkstr = "\"Report: " + f + "\", href='" + f + "' "
-        page.a(linkstr)
-    page.p(blank)
-    # write teh file
-    viewhtml = vpath + "/" + "view.html"
-    print viewhtml
-    htmlstr = str(page)
-    file2write=open(viewhtml,'w')
-    file2write.write(htmlstr)
-    file2write.close()
+def dodsum1(uvl):
+    # usable View list is parsed to pass arguments to dailyTLD summary program
+    for uview in uvl:
+        dailysumTldByType.runreport(uview,'10')
     return
-
-
-
-def getviewlist(dirpath):
-    #Get all the directories that are not empty
-
-    viewlist = os.listdir(dirpath)
-    for fdir in viewlist:
-        filepaths = []
-        vdir = dirpath + "/" + fdir
-        print vdir
-        for dpath, dname, fnames in os.walk(vdir):
-            for fname in fnames:
-                filepaths.append(fname)
-            if len(filepaths) > 1:
-                genvhtml(filepaths,vdir)
-
-
-    return
-
-
-
-def genhtmlwrapper():
-    reppath = getreportparams()
-    vlist = getviewlist(reppath)
-
-
-    return
-
-
 
 
 if __name__ == '__main__':
 
     activeviewlist=aggbuckets('dmlogstash2-*','terms','View','10','DNSQRY')
-    tlist = repdirmgmt(activeviewlist)
-    for v in tlist:
-        print v
+    vlist = repdirmgmt(activeviewlist)
+    dodsum1(vlist)
+
