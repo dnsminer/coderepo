@@ -116,7 +116,7 @@ def getreportparams():
 def dodsum1(uvl):
     # usable View list is parsed to pass arguments to dailyTLD summary program
     for uview in uvl:
-        dailysumTldByType.runreport(uview,'10')
+        dailysumTldByType.runreport(vname=uview,lookback=10)
     return
 
 
