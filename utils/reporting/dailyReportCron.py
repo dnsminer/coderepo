@@ -17,14 +17,10 @@ from elasticsearch.helpers import scan
 
 
 
-def searchindexes(idxnamewq,wname,wval,lb,dtype):
-    # Get all the Views that have had some activity in the previous 10 days
+def aggbuckets(idxnamewq,wname,wval,lb,dtype):
+    # Get all the Views that have had some activity in the previous 10 days, count DNSQRY docs, bucket by View
     daysback = "now-"+str(lb)+"d"
     esclient = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
-    #histoList = list()
-    #dnsHisto = dict()
-    #dateHisto = dict()
-    #requests = 1
 
     # Left big & open for troubleshooting syntax isses
     qry = "{ \"query\": {\
@@ -35,7 +31,7 @@ def searchindexes(idxnamewq,wname,wval,lb,dtype):
                 }\
         },\
         \"aggs\": {\
-                \"ViewQueries\": {\
+                \"aggname\": {\
                         \"" + wname + "\" : {\
                                 \"field\": \"" + wval + "\"\
                                 }\
@@ -43,14 +39,20 @@ def searchindexes(idxnamewq,wname,wval,lb,dtype):
                 }\
 }"
     print qry
+    viewlist=[]
     try:
         response = esclient.search(index=idxnamewq, body=qry, doc_type=dtype)
-        for tag in response['aggregations']['ViewQueries']['buckets']:
+        for tag in response['aggregations']['aggname']['buckets']:
             print(tag['key'],tag['doc_count'])
-
+            viewname = tag['key']
+            print viewname
+            viewlist.append(viewname)
     except NotFoundError:
         print "Warning, no index found, report may not cover all days scoped"
         sys.exc_clear()
+    # debug print out list
+    for i in range(len(viewlist)):
+        print viewlist[i]
 
     return
 
@@ -122,4 +124,4 @@ def genhtmlwrapper():
 
 if __name__ == '__main__':
 
-    searchindexes('dmlogstash2-*','terms','View','10','DNSQRY')
+    aggbuckets('dmlogstash2-*','terms','View','10','DNSQRY')
