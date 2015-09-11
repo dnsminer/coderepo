@@ -5,6 +5,7 @@ from dm_modules import cfgparse_dm, bulkdbselect1w_dm,bulkdbselectJoin1w_dm, dbs
 from datetime import date, datetime, timedelta
 # call the reporting job in the same directory
 import  dailysumTldByType
+import subprocess
 # general elastic search collection
 from elasticsearch import Elasticsearch
 from elasticsearch import helpers
@@ -114,8 +115,12 @@ def getreportparams():
 
 def dodsum1(uvl):
     # usable View list is parsed to pass arguments to dailyTLD summary program
+    repscript = DNSMinerHome + "/utils/reporting/dailysumTldByType.py"
     for uview in uvl:
-        dailysumTldByType.runreport(vname=uview)
+        params = '--vname ' + uview + " --lookback 10"
+        # not a fan but need to rework method input, click seems to be messing it up
+        subprocess.call([repscript, params])
+        #dailysumTldByType.runreport(vname=uview)
     return
 
 
