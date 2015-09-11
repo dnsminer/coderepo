@@ -80,7 +80,7 @@ def repdirmgmt(avl):
                     evlist.append(thisview)
                 else:
                     logme = "fix file permissions for this directory: " + viewrptdir
-                writeerrorlog(logme)
+                    writeerrorlog(logme)
             except OSError as e:
                 print "Sorry, looks like the report directory for this view was not created : " + thisview +"\n"
                 writeerrorlog(e)
