@@ -63,7 +63,7 @@ def genConfig(valList):
     wline = wline + "  include proxy.conf;\n"
     wline = wline + "  auth_basic  \" Restricted to authorized users only\";\n"
     wline = wline + "  auth_basic_user_file /etc/nginx/local/user_auth;\n"
-    wline = wline + "  proxy_pass http://127.0.0.1:8080;\n"
+    wline = wline + "  proxy_pass http://127.0.0.1:8443;\n"
     wline = wline + " }\n}\n"
     CFGfh.write(wline)
     CFGfh.close()
@@ -90,10 +90,10 @@ def genreportcfg(rvalList):
     RCFGfh = open(RCFG,'w')
     # build the config
     wline = "server {\n"
-    wline = wline + "  listen 8080;\n"
-    wline = wline + "  root /" + DNSMHome + "/var/reports;\n"
-    wline = wline + "  index replist.html view.html;\n"
-    wline = wline + "  server_name " + rvalList[0] + ";\n"
+    wline = wline + "  listen 8443;\n"
+    wline = wline + "  root /" + DNSMHome + "/var;\n"
+    wline = wline + "  index replist.html view.html index.html index.html;\n"
+    wline = wline + "  server_name localhost alias " + rvalList[0] + ";\n"
     wline = wline + "  location / { \n"
     wline = wline + "      try_files $uri $uri/ /index.html;"
     wline = wline + "  } \n }\n"
@@ -112,7 +112,7 @@ def genreportcfg(rvalList):
 
 def copyProxyConf():
     PConf = DNSMHome + "/contrib/proxy.conf"
-    NGINXLocal = nginxdir +"/local/"
+    #NGINXLocal = nginxdir +"/local/"
     if isFileValid(PConf):
         shutil.copy(PConf,nginxdir)
     else:
@@ -127,6 +127,7 @@ else:
     quit()
 
 conflist = minInput()
+# debug
 #for items in conflist:
 #    print items
 
