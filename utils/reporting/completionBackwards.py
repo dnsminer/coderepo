@@ -30,7 +30,7 @@ def getfibrpz():
     newest = 19992359
     thisrpz = ''
     rpzlist = os.listdir(fibpath)
-    retlist = [fibpath]
+    retlist = [fibpath,thisrpz]
 
     for fname in rpzlist:
         fname = fname.strip()
@@ -47,7 +47,7 @@ def getfibrpz():
             filepaths = []
             # expecting yyyymmdd-*.rpz
             if len(thisrpz) > 11 :
-                retlist.append(thisrpz)
+                retlist[1]=thisrpz
             else:
                 print "Sorry, unable to find a usable RPZ file, please debug"
 
