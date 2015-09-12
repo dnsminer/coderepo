@@ -9,7 +9,8 @@ from dm_modules import cfgparse_dm, bulkdbselect1w_dm,bulkdbselectJoin1w_dm, dbs
 DNSMinerHome='/opt/dnsminer-alpha'
 sitecfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 
-
+# small kludge in the interest of time, update to a global
+linkpaths = []
 
 
 def getreportparams():
@@ -59,7 +60,7 @@ def getviewlist(dirpath):
     viewlist = os.listdir(dirpath)
     for fdir in viewlist:
         filepaths = []
-        linkpaths = []
+
         vdir = dirpath + "/" + fdir
         for dpath, dname, fnames in os.walk(vdir):
             for fname in fnames:
@@ -68,7 +69,7 @@ def getviewlist(dirpath):
             if len(filepaths) > 1:
                 genvhtml(filepaths,vdir)
                 linkpaths.append("/views/" +fdir +"view.html")
-    return linkpaths
+    return
 
 def gendailyviewindex(vdl):
     for v in vdl:
@@ -79,7 +80,7 @@ def gendailyviewindex(vdl):
 def genviewdailyhtml():
     reppath = getreportparams()
     viewdirs=getviewlist(reppath)
-    gendailyviewindex(viewdirs)
+    gendailyviewindex(linkpaths)
     return
 
 
