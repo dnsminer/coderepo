@@ -39,7 +39,7 @@ def genvhtml(flist,vpath):
      into anything from the reports that piques your curiosity</p>"
     httpbdy = httpbdy + "</main><!-- .content -->\n</div><!-- .wrapper -->"
     httpftr = "<footer class=\"footer\">\n\
-    <p class=\"foot\"> \"before evil can be done, contact must take place , .... find that which you seek now\" </p>\n\
+    <p class=\"foot\"> \"The horses may have already left the barn, take a look though, at least you'll be able to figure out how long they have been gone\" </p>\n\
     <p class=\"footlegal\"> Copyright 2015, DNS Miner. Apache 2.0 license </p>\n\
     <img src=\"/reports/images/python.png\">\n</footer><!-- .footer -->\n</body></html>"
 
