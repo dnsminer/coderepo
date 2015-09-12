@@ -77,6 +77,7 @@ def readrpzfile():
     rpzlist = getfibrpz()
     if len(rpzlist)== 2:
         rpzfname = rpzlist[0] + "/" + rpzlist[1]
+        print rpzfname
         try:
             file2read=open(rpzfname,'r')
         except OSError as e:
