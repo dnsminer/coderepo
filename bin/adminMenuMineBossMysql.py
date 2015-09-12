@@ -142,34 +142,42 @@ def genBcrpytHash(plainString):
 
 def userMenu(azlist):
     # accepts a boolean and integer, boolean is proof of authentication and org id is required for all user menu items
-    if azlist[0]:
+    if azlist[0] :
         menuactive=True
         while menuactive:
-            print "\nCustomize Mineboss application settings to suit your organization"
-            print "menu choices are: view, genorgview, blacklist, whitelist, exit\n"
-            uinput = raw_input("Enter choice: ")
-            uinput = uinput.strip().lower()
-            mresult = inputMenu(uinput) # needed to get the status, using length of list to avoid global vars
+            if azlist[2] > 8:
+                print "\nCustomize Mineboss application settings to suit your organization"
+                print "menu choices are: view, genorgview, blacklist, whitelist, exit\n"
+                uinput = raw_input("Enter choice: ")
+                uinput = uinput.strip().lower()
+                mresult = inputMenu(uinput) # needed to get the status, using length of list to avoid global vars
+            else:
+                print "\nYou are authorized to modify the following"
+                print "menu choices are: blacklist, whitelist, exit\n"
+                uinput = raw_input("Enter choice: ")
+                uinput = uinput.strip().lower()
+                mresult = inputMenu(uinput) # needed to get the status, using length of list to avoid global vars
+
             if not mresult:
                 menuactive = False
                 print "\nThankyou, goodbye\n"
             elif mresult[0] == 'invalid':  # catch the bad input and keep menu open for retry
                 menuactive = True
             else:
-                #print azlist[1]
-                doMenuSelect(mresult,azlist[1])
+                #need to pass the auth level from here on.
+                doMenuSelect(mresult,azlist[1],azlist[2])
     else:
         print "invalid credentials and something funny is going on here, quitting now"
         exit()
     return
 
-def doMenuSelect(menulist,orgid):
+def doMenuSelect(menulist,orgid,alvl):
     # sort of a long way around sanitizing the input and then calling the SQL function required
-    if menulist[0] == 'view':
+    if menulist[0] == 'view' and alvl > 8:
         #if menulist[1] == 'update':
         doMWList = [menulist[0],menulist[1],orgid]
         doMView_dm.doView(doMWList)
-    elif menulist[0] == 'genorgview':
+    elif menulist[0] == 'genorgview' and alvl > 8:
         # debug
         #print "\nGenerating a view file for org " + str(orgid)
         doMGenOrgView.doGenView(orgid)
@@ -178,11 +186,13 @@ def doMenuSelect(menulist,orgid):
             print "\nsend blacklist,update to blacklist function for org " + str(orgid)
         else:
             print "\nsend blacklist,new to blacklist function for org " + str(orgid)
-    else:
+    elif menulist[0] == 'whitelist':
         if menulist[1] == 'update':
-            print "\nsend whitelist,update to whitelist function for org " + str(orgid)
+            print "\nsend whitelist update to whitelist function for org " + str(orgid)
         else:
-            print "\nsend whitelist,new to whitelist function for org " + str(orgid)
+            print "\nsend whitelist new to whitelist function for org " + str(orgid)
+    else:
+        print "\nNo authorized selection was detected\n"
     return
 
 
