@@ -17,12 +17,12 @@ DNSMinerHome='/opt/dnsminer-alpha'
 sitecfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 
 
-def runreport(dname,lookback):
+def runreport(lookback):
     thisidxlist = getindexlist(lookback)
     #for idxname in thisidxlist:
     #    print idxname
     # search the view
-    searchindexes(thisidxlist,lookback,'PDNS',dname)
+    searchindexes(thisidxlist,lookback,'PDNS')
 
 def readrpzfile():
     rpzfname = "/var/tmp/test500.rpz"
@@ -131,4 +131,4 @@ def fqdnstrip(fqdn):
 
 if __name__ == '__main__':
 
-    runreport()
+    runreport(15)
