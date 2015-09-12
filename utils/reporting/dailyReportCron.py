@@ -117,10 +117,10 @@ def dodsum1(uvl):
     # usable View list is parsed to pass arguments to dailyTLD summary program
     repscript = DNSMinerHome + "/utils/reporting/dailysumTldByType.py"
     for uview in uvl:
-        params = '--vname ' + uview
+        #params = '--vname ' + uview
         # not a fan but need to rework method input, click seems to be messing it up
-        subprocess.call([repscript, params])
-        #dailysumTldByType.runreport(vname=uview)
+        #subprocess.call([repscript, params])
+        dailysumTldByType.runreport(uview,10)
     return
 
 
