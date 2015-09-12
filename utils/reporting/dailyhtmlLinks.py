@@ -24,7 +24,7 @@ def genvhtml(flist,vpath):
         <meta name=\"keywords\" content=\"Reports DNS Analysis\" />\n\
         <meta name=\"description\" content=\"DNS Miner automated reports\" />\n\
         <link href=\"/reports/css/style.css\" rel=\"stylesheet\">\n</head>\n"
-    httpbdy ="<div class=\"wrapper>\n<header class=\"header\">\n\
+    httpbdy ="<div class=\"wrapper\">\n<header class=\"header\">\n\
             <h1> Daily reports for View </h1>\n</header><!-- .header-->\n\
             <main class=\"content\">\n\
             <p> The CSV files below are generated daily. Save a local copy and filter as required using the spreadsheet of your choice.</p>\n\
@@ -63,7 +63,8 @@ def getviewlist(dirpath):
         print vdir
         for dpath, dname, fnames in os.walk(vdir):
             for fname in fnames:
-                filepaths.append(fname)
+                if fname.endswith(".csv"):
+                    filepaths.append(fname)
             if len(filepaths) > 1:
                 genvhtml(filepaths,vdir)
     return
