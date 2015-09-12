@@ -23,9 +23,10 @@ def genvhtml(flist,vpath):
     title = "Daily reports for View"
     header = "The CSV files below are generated daily, save a local copy and filter using the spreadsheet tool of your choice"
     footer = "Don't forget to revist the Kibana discover application to do additional drill downs into anything from teh reports that piques your curiosity"
+    styles = ('/css/style.css')
     blank = "  "
     page = markup.page()
-    page.init (title=title,header=header, footer=footer)
+    page.init (title=title,header=header, footer=footer, css=styles)
     page.br()
 
     for f in flist:
