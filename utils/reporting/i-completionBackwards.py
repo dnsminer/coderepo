@@ -17,6 +17,12 @@ from elasticsearch.helpers import scan
 DNSMinerHome='/opt/dnsminer-alpha'
 sitecfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 
+# third party library for bootstrapping command line  http://click.pocoo.org/
+@click.command()
+@click.option('--dname',prompt='domain name of interst',help='The partial domain name you are looking for, often a third party IOC')
+@click.option('--lookback',default=10,help='Number of days, previous to today to include in report scope')
+
+# The module calling the clik variables needs to be there first it seems.
 def runreport(dname,lookback):
     print "running the report for " + dname + ", completing a backwards look for the previous " + str(lookback) + " days. "
     thisidxlist = getindexlist(lookback)
@@ -34,6 +40,9 @@ def searchindexes(ilist,wname,wval,lb,dtype,tiname):
     dateHisto = dict()
     requests = 1
 
+
+
+
     qry = "{\"fields\": [\"@timestamp\",\"soans\",\"query\",\"answers\",\"rcodename\",\"qtypename\"],\
         \"query\": {\
             \"filtered\" : {\
@@ -47,7 +56,7 @@ def searchindexes(ilist,wname,wval,lb,dtype,tiname):
                         }\
                 },\
                 \"filter\": {\
-                        \"range\": { \"@timestamp\" : { \"gt\" : \"" + daysback + "\", \"lt\" : \"now/d\"}}\
+                        \"range\": { \"@timestamp\" : { \"gt\" : \"" + daysback + "\", \"lt\" : \"now\"}}\
                         }\
                 }\
         }\

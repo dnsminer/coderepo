@@ -82,7 +82,7 @@ def gendailyviewindex(vdl):
             <h2> Daily reports segmented by View </h2>\n</header><!-- .header-->\n\
             <main class=\"content\">\n\
             <p> The Views listed in the table below have at least one report for the past 10 days. Click the View name to reach the reports.</p>\n\
-            <table><tr><th>View Name</th></tr>\n"
+            <table><tr><th>View Based Reports</th></tr>\n"
     for v in vdl:
         vidx = "views/" + v + "/view.html"
         httpbdy = httpbdy + "<tr><td><a href=\"" + vidx + "\"> " + v + "</a></td></tr>"
