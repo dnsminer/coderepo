@@ -50,9 +50,6 @@ def getfibrpz():
                 retlist[1]=thisrpz
             else:
                 print "Sorry, unable to find a usable RPZ file, please debug"
-
-    for i in retlist:
-        print i
     return retlist
 
 
@@ -77,10 +74,8 @@ def writeerrorlog(estring):
 
 def readrpzfile():
     rpzlist = getfibrpz()
-    print len(rpzlist)
     if len(rpzlist)== 2:
         rpzfname = rpzlist[0] + "/" + rpzlist[1]
-        print rpzfname
         try:
             file2read=open(rpzfname,'r')
         except OSError as e:
@@ -151,8 +146,7 @@ def searchindexes(idxname,lb,dtype):
                 }\
         }\
 }'"
-            #print qry
-            #for idx in ilist:
+            # search for each , this is very inefficient and needs to be optimized perhaps splitting into 10s, a or b or c or n. Not sure of the impact on memeory but should benchmark
             try:
                 response = scan(client=esclient, query=qry, index=idxname, doc_type=dtype, scroll="6m", timeout="6m")
                 for resp in response:
@@ -172,12 +166,8 @@ def searchindexes(idxname,lb,dtype):
             except NotFoundError:
                 #print "Warning, no index found, report may not cover all days scoped"
                 sys.exc_clear()
-
     file2write.close()
-    #writereport(dnsHisto,wval,dateHisto)
     return
-
-
 
 
 if __name__ == '__main__':
