@@ -18,11 +18,9 @@ sitecfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 
 
 def runreport(lookback):
-    #thisidxlist = getindexlist(lookback)
-    #for idxname in thisidxlist:
-    #    print idxname
-    # search the view
+    # Need to pass index wildcard, number of days to look backwards and the type of document, I.e PDNS or DNSQRY
     searchindexes('dmlogstash2-*',lookback,'PDNS')
+    return
 
 
 def getfibrpz():
@@ -55,7 +53,6 @@ def getfibrpz():
     return retlist
 
 
-
 def mkserial():
     todate=date.today()
     # need to deal with leading 0s to avoid zone transfer issues due to bad serial numbers
@@ -63,6 +60,7 @@ def mkserial():
     mth = '%02d' % todate.month
     datestr=str(todate.year) + mth + day
     return datestr
+
 
 def writeerrorlog(estring):
     evtdate = mkserial()
@@ -72,6 +70,7 @@ def writeerrorlog(estring):
     file2write.write(logline + '\n')
     file2write.close()
     return
+
 
 def readrpzfile():
     rpzlist = getfibrpz()
@@ -86,12 +85,12 @@ def readrpzfile():
                 return
     return file2read
 
+
 def getreportparams():
     thisCfgDict = cfgparse_dm.opencfg(sitecfg,'SectionThree')
     rptbase = thisCfgDict['dmhome']
     rptbase = rptbase + "/var/reports"
     return rptbase
-
 
 
 def searchindexes(idxname,lb,dtype):
@@ -159,32 +158,6 @@ def searchindexes(idxname,lb,dtype):
     return
 
 
-def getindexlist(lbdays):
-    thisCfgDict = cfgparse_dm.opencfg(sitecfg,'SectionThree')
-    idxpre = thisCfgDict['lsindexprefix']
-    idxlist = []
-    while lbdays > 0:
-        d = date.today() - timedelta(days=lbdays)
-        chrtrans = maketrans("-",".")
-        idxsfx = str(d).translate(chrtrans)
-        idxname = idxpre + "-" + idxsfx
-        idxlist.append(idxname)
-        lbdays = lbdays - 1
-    return idxlist
-
-def fqdnstrip(fqdn):
-    fqdn=fqdn.strip()
-    fullqry= fqdn.split('.')
-    dnsize=len(fullqry)
-    if dnsize > 1:
-        domonly = fullqry[dnsize -2] + "." + fullqry[dnsize -1]
-    elif dnsize == 1:
-        domonly = fullqry[0]
-    else:
-        domonly = "no.tld"
-
-    return domonly
-
 if __name__ == '__main__':
 
-    runreport(15)
+    runreport(30)
