@@ -68,12 +68,39 @@ def getviewlist(dirpath):
                     filepaths.append(fname)
             if len(filepaths) > 1:
                 genvhtml(filepaths,vdir)
-                linkpaths.append("/views/" +fdir +"view.html")
+                linkpaths.append(fdir)
     return
 
 def gendailyviewindex(vdl):
+    # writing the pages out by hand to take advanatge of teh custom style sheet
+    httphdr ="<!DOCTYPE html>\n<HTML><HEAD>\n<meta charset=\"utf-8\" />\n<title> Report Index</title>\n\
+        <meta name=\"keywords\" content=\"Reports DNS Analysis\" />\n\
+        <meta name=\"description\" content=\"DNS Miner automated reports\" />\n\
+        <link href=\"/reports/css/style.css\" rel=\"stylesheet\">\n</head>\n"
+    httpbdy ="<div class=\"wrapper\">\n<header class=\"header\">\n\
+            <h1> DNS Miner Report Home </h1>\n\
+            <h2> Daily reports segmented by View </h2>\n</header><!-- .header-->\n\
+            <main class=\"content\">\n\
+            <p> The Views listed in the table below have at least one report for the past 10 days. Click the View name to reach the reports.</p>\n\
+            <table><tr><th>View Name</th></tr>\n"
     for v in vdl:
-        print v
+        vidx = "views/" + v + "/view.html"
+        httpbdy = httpbdy + "<tr><td><a href=\"" + vidx + "\"> " + v + "</a></td></tr>"
+    httpbdy = httpbdy + "</table>\n"
+    httpbdy = httpbdy + "</main><!-- .content -->\n</div><!-- .wrapper -->"
+    httpftr = "<footer class=\"footer\">\n\
+    <p class=\"foot\"> \" An analyst is the first line of defense. The analyst is sitting in the crows nest watching for the icebergs.\" </p>\n\
+    <p class=\"foot\"> Selection from Chrissanders.org,  The 10 commandments of intrusion analysis.</p>\n\
+    <p class=\"footlegal\"> Copyright 2015, DNS Miner. Apache 2.0 license </p>\n\
+    <img src=\"/reports/images/python.png\">\n</footer><!-- .footer -->\n</body></html>"
+    htmlpage= httphdr + httpbdy + httpftr
+    # write teh file
+    rephtml = DNSMinerHome + "/var/reports/" + "replist.html"
+    print rephtml
+    file2write=open(rephtml,'w')
+    file2write.write(htmlpage)
+    file2write.close()
+
     return
 
 
