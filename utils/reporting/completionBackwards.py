@@ -92,6 +92,19 @@ def getreportparams():
     rptbase = rptbase + "/var/reports"
     return rptbase
 
+def fqdnstrip(fqdn):
+    fqdn=fqdn.strip()
+    fullqry= fqdn.split('.')
+    dnsize=len(fullqry)
+    if dnsize > 1:
+        domonly = fullqry[dnsize -2] + "." + fullqry[dnsize -1]
+    elif dnsize == 1:
+        domonly = fullqry[0]
+    else:
+        domonly = "no.tld"
+
+    return domonly
+
 
 def searchindexes(idxname,lb,dtype):
     #print "running search indexes"
@@ -156,6 +169,8 @@ def searchindexes(idxname,lb,dtype):
     file2write.close()
     #writereport(dnsHisto,wval,dateHisto)
     return
+
+
 
 
 if __name__ == '__main__':
