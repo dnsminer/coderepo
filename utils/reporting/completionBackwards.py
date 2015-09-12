@@ -50,6 +50,7 @@ def getfibrpz():
                 retlist.append(thisrpz)
             else:
                 print "Sorry, unable to find a usable RPZ file, please debug"
+    print thisrpz
     return retlist
 
 
