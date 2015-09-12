@@ -112,7 +112,6 @@ def genreportcfg(rvalList):
 
 def copyProxyConf():
     PConf = DNSMHome + "/contrib/proxy.conf"
-    #NGINXLocal = nginxdir +"/local/"
     if isFileValid(PConf):
         shutil.copy(PConf,nginxdir)
     else:
