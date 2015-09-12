@@ -59,24 +59,27 @@ def getviewlist(dirpath):
     viewlist = os.listdir(dirpath)
     for fdir in viewlist:
         filepaths = []
+        linkpaths = []
         vdir = dirpath + "/" + fdir
-        print fdir
         for dpath, dname, fnames in os.walk(vdir):
             for fname in fnames:
                 if fname.endswith(".csv"):
                     filepaths.append(fname)
             if len(filepaths) > 1:
                 genvhtml(filepaths,vdir)
-    return
+                linkpaths.append("/views/" +fdir +"view.html")
+    return linkpaths
 
-def getviewdirs():
-
+def gendailyviewindex(vdl):
+    for v in vdl:
+        print v
     return
 
 
 def genviewdailyhtml():
     reppath = getreportparams()
-    getviewlist(reppath)
+    viewdirs=getviewlist(reppath)
+    gendailyviewindex(viewdirs)
     return
 
 
