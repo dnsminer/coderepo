@@ -125,9 +125,11 @@ def searchindexes(idxname,lb,dtype):
 
     # Need to create unique queries to be passed to the bulk index search
     for tiname in thisrpzfh:
-        tiname = tiname.strip()
+        if len(tiname) > 3:
+            tiname = tiname.strip()
 
-        qry = "{\"fields\": [\"@timestamp\",\"soans\",\"query\",\"answers\",\"rcodename\",\"qtypename\"],\
+
+            qry = "{\"fields\": [\"@timestamp\",\"soans\",\"query\",\"answers\",\"rcodename\",\"qtypename\"],\
         \"query\": {\
             \"filtered\" : {\
                 \"query\": {\
@@ -144,27 +146,27 @@ def searchindexes(idxname,lb,dtype):
                 }\
         }\
 }'"
-        #print qry
-        #for idx in ilist:
-        try:
-            response = scan(client=esclient, query=qry, index=idxname, doc_type=dtype, scroll="6m", timeout="6m")
-            for resp in response:
-                docdict=resp['fields']
-                tstamp = docdict['@timestamp'][0]
-                authns = docdict['soans'][0]
-                dedupeqry = fqdnstrip(docdict['query'][0])
-                resqry = docdict['query'][0]
-                ans = docdict['answers'][0]
-                qtype = docdict['qtypename'][0]
-                rcode = docdict['rcodename'][0]
-                #tsint = getepoch(str(tstamp))
-                fileline = "TS: " + str(tstamp) + " SOANS: " + str(authns) + "DDQRY: " + dedupeqry + " QRY: " + resqry + " ANS: " + ans \
-                + " QT: " + qtype + " Resp: " + rcode
-                # Temp file just to test timing
-                file2write.write(fileline +"\n")
-        except NotFoundError:
-            #print "Warning, no index found, report may not cover all days scoped"
-            sys.exc_clear()
+            #print qry
+            #for idx in ilist:
+            try:
+                response = scan(client=esclient, query=qry, index=idxname, doc_type=dtype, scroll="6m", timeout="6m")
+                for resp in response:
+                    docdict=resp['fields']
+                    tstamp = docdict['@timestamp'][0]
+                    authns = docdict['soans'][0]
+                    dedupeqry = fqdnstrip(docdict['query'][0])
+                    resqry = docdict['query'][0]
+                    ans = docdict['answers'][0]
+                    qtype = docdict['qtypename'][0]
+                    rcode = docdict['rcodename'][0]
+                    #tsint = getepoch(str(tstamp))
+                    fileline = "TS: " + str(tstamp) + " SOANS: " + str(authns) + "DDQRY: " + dedupeqry + " QRY: " + resqry + " ANS: " + ans \
+                    + " QT: " + qtype + " Resp: " + rcode
+                    # Temp file just to test timing
+                    file2write.write(fileline +"\n")
+            except NotFoundError:
+                #print "Warning, no index found, report may not cover all days scoped"
+                sys.exc_clear()
 
     file2write.close()
     #writereport(dnsHisto,wval,dateHisto)
