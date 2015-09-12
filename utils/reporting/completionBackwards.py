@@ -45,6 +45,7 @@ def searchindexes(ilist,lb,dtype):
     # get the domain names from teh RPZ file
     thisrpzfh = readrpzfile()
     for tiname in thisrpzfh:
+        tiname = tiname.strip()
         qry = "{\"fields\": [\"@timestamp\",\"soans\",\"query\",\"answers\",\"rcodename\",\"qtypename\"],\
             \"query\": {\
                 \"filtered\" : {\
