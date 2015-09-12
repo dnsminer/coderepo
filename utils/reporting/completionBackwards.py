@@ -51,6 +51,7 @@ def getfibrpz():
             else:
                 print "Sorry, unable to find a usable RPZ file, please debug"
     print thisrpz
+    print len(thisrpz)
     return retlist
 
 
@@ -75,6 +76,7 @@ def writeerrorlog(estring):
 
 def readrpzfile():
     rpzlist = getfibrpz()
+    print len(rpzlist)
     if len(rpzlist)== 2:
         rpzfname = rpzlist[0] + "/" + rpzlist[1]
         print rpzfname
