@@ -4,7 +4,6 @@ __author__ = 'dleece'
 import sys, os
 #import MySQLdb as mdb
 import string
-import click
 from dm_modules import cfgparse_dm, bulkdbselect1w_dm,bulkdbselectJoin1w_dm, dbselectSubqueryExclude_dm
 from elasticsearch import Elasticsearch
 #from elasticsearch_dsl import Search, Q
@@ -17,17 +16,19 @@ from elasticsearch.helpers import scan
 DNSMinerHome='/opt/dnsminer-alpha'
 sitecfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 
+
 def runreport(dname,lookback):
-    print "running the report for " + dname + ", completing a backwards look for the previous " + str(lookback) + " days. "
     thisidxlist = getindexlist(lookback)
-    for idxname in thisidxlist:
-        print idxname
+    #for idxname in thisidxlist:
+    #    print idxname
     # search the view
     searchindexes(thisidxlist,'AA',"T",lookback,'PDNS',dname)
 
+
+
 def searchindexes(ilist,wname,wval,lb,dtype,tiname):
     print "running search indexes"
-    daysback = "now-"+str(lb)+"d"
+    daysback = "now/d-"+str(lb)+"d"
     esclient = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
     histoList = list()
     dnsHisto = dict()
@@ -53,7 +54,7 @@ def searchindexes(ilist,wname,wval,lb,dtype,tiname):
         }\
 }'"
 
-    print qry
+    #print qry
     # Temp file just to test timing
     fname = "/var/tmp/rpztest.txt"
     file2write=open(fname,'w')
@@ -87,7 +88,7 @@ def searchindexes(ilist,wname,wval,lb,dtype,tiname):
                 #        dateHisto[dom_qtype_ts] = tsint
 
         except NotFoundError:
-            print "Warning, no index found, report may not cover all days scoped"
+            #print "Warning, no index found, report may not cover all days scoped"
             sys.exc_clear()
     file2write.close()
     #writereport(dnsHisto,wval,dateHisto)

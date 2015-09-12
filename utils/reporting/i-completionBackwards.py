@@ -24,14 +24,14 @@ sitecfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 
 # The module calling the clik variables needs to be there first it seems.
 def runreport(dname,lookback):
-    #print "running the report for " + dname + ", completing a backwards look for the previous " + str(lookback) + " days. "
+    print "running the report for " + dname + ", completing a backwards look for the previous " + str(lookback) + " days. "
     thisidxlist = getindexlist(lookback)
     #for idxname in thisidxlist:
     #print idxname
     # search the view
-    searchindexes(thisidxlist,'AA',"T",lookback,'PDNS',dname)
+    searchindexes(thisidxlist,lookback,'PDNS',dname)
 
-def searchindexes(ilist,wname,wval,lb,dtype,tiname):
+def searchindexes(ilist,lb,dtype,tiname):
     #print "running search indexes"
     daysback = "now/d-"+str(lb)+"d"
     esclient = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
@@ -44,8 +44,7 @@ def searchindexes(ilist,wname,wval,lb,dtype,tiname):
         \"query\": {\
             \"filtered\" : {\
                 \"query\": {\
-                    \"bool\": { \"must\": { \"match\" : { \"AA\":\"T\"}},\
-                                \"should\": [\
+                    \"bool\": { \"should\": [\
                                     { \"wildcard\": { \"query\": \"*" + tiname + "*\" }},\
                                     { \"wildcard\": { \"answers\": \"*" + tiname + "*\" }}\
                                 ],\
@@ -59,13 +58,13 @@ def searchindexes(ilist,wname,wval,lb,dtype,tiname):
         }\
 }'"
 
-    #print qry
+    print qry
     # Temp file just to test timing
     fname = "/var/tmp/rpztest.txt"
     file2write=open(fname,'w')
     for idx in ilist:
         try:
-            response = scan(client=esclient, query=qry, index=idx, doc_type=dtype, scroll="3m", timeout="3m")
+            response = scan(client=esclient, query=qry, index=idx, doc_type=dtype, scroll="6m", timeout="6m")
             for resp in response:
                 docdict=resp['fields']
                 tstamp = docdict['@timestamp'][0]
@@ -82,7 +81,7 @@ def searchindexes(ilist,wname,wval,lb,dtype,tiname):
                 file2write.write(fileline +"\n")
 
         except NotFoundError:
-            #print "Warning, no index found, report may not cover all days scoped"
+            print "Warning, no index found, report may not cover all days scoped"
             sys.exc_clear()
     file2write.close()
     return
