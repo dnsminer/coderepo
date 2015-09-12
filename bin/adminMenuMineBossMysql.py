@@ -85,11 +85,10 @@ def checkauthn(checkinput):
             # from here we'd generated a second query to grab the org_id and over write authzlist[1]
             sqlStr = "SELECT org_id,access_lvl from org_info WHERE org_contact = '" + contactEmail +"';"
             cur.execute(sqlStr)
-            storedOrgId = cur.fetchone()[0]
-            alvl = cur.fetchone()[1]
-            #print storedOrgId
-            authzlist[1]= storedOrgId
-            authzlist[2]= alvl
+            storedOrgIdInfo = cur.fetchone()
+            #split mysql row tuple
+            authzlist[1]= storedOrgIdInfo[0]
+            authzlist[2]= storedOrgIdInfo[1]
     dbcon.commit()
     dbcon.close()
     return authzlist
