@@ -46,23 +46,24 @@ def searchindexes(ilist,lb,dtype):
     thisrpzfh = readrpzfile()
     for tiname in thisrpzfh:
         tiname = tiname.strip()
+        print tiname
         qry = "{\"fields\": [\"@timestamp\",\"soans\",\"query\",\"answers\",\"rcodename\",\"qtypename\"],\
-            \"query\": {\
-                \"filtered\" : {\
-                    \"query\": {\
-                        \"bool\": \"should\": [\
-                                        { \"wildcard\": { \"query\": \"*" + tiname + "*\" }},\
-                                        { \"wildcard\": { \"answers\": \"*" + tiname + "*\" }}\
-                                    ],\
-                                    \"minimum_should_match\": 1\
-                            }\
-                    },\
-                    \"filter\": {\
-                            \"range\": { \"@timestamp\" : { \"gt\" : \"" + daysback + "\", \"lt\" : \"now/d\"}}\
-                            }\
-                    }\
-            }\
-    }'"
+        \"query\": {\
+            \"filtered\" : {\
+                \"query\": {\
+                    \"bool\": { \"should\": [\
+                                    { \"wildcard\": { \"query\": \"*" + tiname + "*\" }},\
+                                    { \"wildcard\": { \"answers\": \"*" + tiname + "*\" }}\
+                                ],\
+                                \"minimum_should_match\": 1\
+                        }\
+                },\
+                \"filter\": {\
+                        \"range\": { \"@timestamp\" : { \"gt\" : \"" + daysback + "\", \"lt\" : \"now/d\"}}\
+                        }\
+                }\
+        }\
+}'"
     print qry
     # Temp file just to test timing
     fname = "/var/tmp/rpztest.txt"
