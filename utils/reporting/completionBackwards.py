@@ -35,7 +35,7 @@ def readrpzfile():
 
 def searchindexes(idxname,lb,dtype):
     #print "running search indexes"
-    daysback = "now/d-"+str(lb)+"d"
+    daysback = "now-"+str(lb)+"d"
     esclient = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
     histoList = list()
     dnsHisto = dict()
@@ -64,7 +64,7 @@ def searchindexes(idxname,lb,dtype):
                         }\
                 },\
                 \"filter\": {\
-                        \"range\": { \"@timestamp\" : { \"gt\" : \"" + daysback + "\", \"lt\" : \"now/d\"}}\
+                        \"range\": { \"@timestamp\" : { \"gt\" : \"" + daysback + "\", \"lt\" : \"now\"}}\
                         }\
                 }\
         }\
