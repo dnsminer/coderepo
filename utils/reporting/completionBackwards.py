@@ -24,9 +24,16 @@ def runreport(dname,lookback):
     # search the view
     searchindexes(thisidxlist,lookback,'PDNS',dname)
 
+def readrpzfile():
+    rpzfname = "/var/tmp/test500.rpz"
+    file2read=open(rpzfname,'r')
+
+    return file2read
 
 
-def searchindexes(ilist,lb,dtype,tiname):
+
+
+def searchindexes(ilist,lb,dtype):
     #print "running search indexes"
     daysback = "now/d-"+str(lb)+"d"
     esclient = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
@@ -35,25 +42,27 @@ def searchindexes(ilist,lb,dtype,tiname):
     dateHisto = dict()
     requests = 1
 
-    qry = "{\"fields\": [\"@timestamp\",\"soans\",\"query\",\"answers\",\"rcodename\",\"qtypename\"],\
-        \"query\": {\
-            \"filtered\" : {\
-                \"query\": {\
-                    \"bool\": \"should\": [\
-                                    { \"wildcard\": { \"query\": \"*" + tiname + "*\" }},\
-                                    { \"wildcard\": { \"answers\": \"*" + tiname + "*\" }}\
-                                ],\
-                                \"minimum_should_match\": 1\
-                        }\
-                },\
-                \"filter\": {\
-                        \"range\": { \"@timestamp\" : { \"gt\" : \"" + daysback + "\", \"lt\" : \"now/d\"}}\
-                        }\
-                }\
-        }\
-}'"
-
-    #print qry
+    # get the domain names from teh RPZ file
+    thisrpzfh = readrpzfile()
+    for tiname in thisrpzfh:
+        qry = "{\"fields\": [\"@timestamp\",\"soans\",\"query\",\"answers\",\"rcodename\",\"qtypename\"],\
+            \"query\": {\
+                \"filtered\" : {\
+                    \"query\": {\
+                        \"bool\": \"should\": [\
+                                        { \"wildcard\": { \"query\": \"*" + tiname + "*\" }},\
+                                        { \"wildcard\": { \"answers\": \"*" + tiname + "*\" }}\
+                                    ],\
+                                    \"minimum_should_match\": 1\
+                            }\
+                    },\
+                    \"filter\": {\
+                            \"range\": { \"@timestamp\" : { \"gt\" : \"" + daysback + "\", \"lt\" : \"now/d\"}}\
+                            }\
+                    }\
+            }\
+    }'"
+    print qry
     # Temp file just to test timing
     fname = "/var/tmp/rpztest.txt"
     file2write=open(fname,'w')
