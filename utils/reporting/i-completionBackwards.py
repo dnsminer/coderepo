@@ -33,7 +33,7 @@ def runreport(dname,lookback):
 
 def searchindexes(ilist,wname,wval,lb,dtype,tiname):
     print "running search indexes"
-    daysback = "now/d-"+str(lb)+"d"
+    daysback = "now-"+str(lb)+"d"
     esclient = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
     histoList = list()
     dnsHisto = dict()
@@ -56,7 +56,7 @@ def searchindexes(ilist,wname,wval,lb,dtype,tiname):
                         }\
                 },\
                 \"filter\": {\
-                        \"range\": { \"@timestamp\" : { \"gt\" : \"" + daysback + "\", \"lt\" : \"now/d\"}}\
+                        \"range\": { \"@timestamp\" : { \"gt\" : \"" + daysback + "\", \"lt\" : \"now\"}}\
                         }\
                 }\
         }\
