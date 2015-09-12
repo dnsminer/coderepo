@@ -91,7 +91,7 @@ def genreportcfg(rvalList):
     # build the config
     wline = "server {\n"
     wline = wline + "  listen 8443;\n"
-    wline = wline + "  root /" + DNSMHome + "/var;\n"
+    wline = wline + "  root " + DNSMHome + "/var;\n"
     wline = wline + "  index replist.html view.html index.html index.html;\n"
     wline = wline + "  server_name localhost alias " + rvalList[0] + ";\n"
     wline = wline + "  location / { \n"

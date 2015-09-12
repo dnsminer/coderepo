@@ -33,7 +33,7 @@ def genvhtml(flist,vpath):
         page.a(linkstr)
     page.p(blank)
     # write teh file
-    viewhtml = vpath + "/" + "view.html"
+    viewhtml = vpath + "/" + "viewnew.html"
     print viewhtml
     htmlstr = str(page)
     file2write=open(viewhtml,'w')
