@@ -60,13 +60,17 @@ def getviewlist(dirpath):
     for fdir in viewlist:
         filepaths = []
         vdir = dirpath + "/" + fdir
-        print vdir
+        print fdir
         for dpath, dname, fnames in os.walk(vdir):
             for fname in fnames:
                 if fname.endswith(".csv"):
                     filepaths.append(fname)
             if len(filepaths) > 1:
                 genvhtml(filepaths,vdir)
+    return
+
+def getviewdirs():
+
     return
 
 
