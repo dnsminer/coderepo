@@ -18,11 +18,11 @@ sitecfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 
 
 def runreport(lookback):
-    thisidxlist = getindexlist(lookback)
+    #thisidxlist = getindexlist(lookback)
     #for idxname in thisidxlist:
     #    print idxname
     # search the view
-    searchindexes(thisidxlist,lookback,'PDNS')
+    searchindexes('dmlogstash2-*',lookback,'PDNS')
 
 def readrpzfile():
     rpzfname = "/var/tmp/test500.rpz"
@@ -33,7 +33,7 @@ def readrpzfile():
 
 
 
-def searchindexes(ilist,lb,dtype):
+def searchindexes(idxname,lb,dtype):
     #print "running search indexes"
     daysback = "now/d-"+str(lb)+"d"
     esclient = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
@@ -44,9 +44,14 @@ def searchindexes(ilist,lb,dtype):
 
     # get the domain names from teh RPZ file
     thisrpzfh = readrpzfile()
+    # Temp file just to test timing
+    fname = "/var/tmp/rpztest.txt"
+    file2write=open(fname,'w')
+
+    # Need to create unique queries to be passed to the bulk index search
     for tiname in thisrpzfh:
         tiname = tiname.strip()
-        print tiname
+
         qry = "{\"fields\": [\"@timestamp\",\"soans\",\"query\",\"answers\",\"rcodename\",\"qtypename\"],\
         \"query\": {\
             \"filtered\" : {\
@@ -64,13 +69,11 @@ def searchindexes(ilist,lb,dtype):
                 }\
         }\
 }'"
-    print qry
-    # Temp file just to test timing
-    fname = "/var/tmp/rpztest.txt"
-    file2write=open(fname,'w')
-    for idx in ilist:
+        print qry
+
+        #for idx in ilist:
         try:
-            response = scan(client=esclient, query=qry, index=idx, doc_type=dtype, scroll="6m", timeout="6m")
+            response = scan(client=esclient, query=qry, index=idxname, doc_type=dtype, scroll="6m", timeout="6m")
             for resp in response:
                 docdict=resp['fields']
                 tstamp = docdict['@timestamp'][0]
@@ -85,21 +88,10 @@ def searchindexes(ilist,lb,dtype):
                 + " QT: " + qtype + " Resp: " + rcode
                 # Temp file just to test timing
                 file2write.write(fileline +"\n")
-
-                #if dom_qtype not in dnsHisto:
-                #    dnsHisto[dom_qtype] = 1
-                #    # write tuple and time stamp to datehistory dictionary
-                #    dateHisto[dom_qtype_ts] = tsint
-                #else:
-                #    dnsHisto[dom_qtype] += 1
-                    # test if dom_type time stamp exits, if not add value,
-                    # select occurances and lowest value at print time.
-                #    if dom_qtype_ts not in dateHisto:
-                #        dateHisto[dom_qtype_ts] = tsint
-
         except NotFoundError:
             #print "Warning, no index found, report may not cover all days scoped"
             sys.exc_clear()
+
     file2write.close()
     #writereport(dnsHisto,wval,dateHisto)
     return
