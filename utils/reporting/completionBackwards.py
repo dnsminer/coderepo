@@ -132,7 +132,7 @@ def searchindexes(idxname,lb,dtype):
                 }\
         }\
 }'"
-        #print qry
+        print qry
         #for idx in ilist:
         try:
             response = scan(client=esclient, query=qry, index=idxname, doc_type=dtype, scroll="6m", timeout="6m")
