@@ -24,29 +24,92 @@ def runreport(lookback):
     # search the view
     searchindexes('dmlogstash2-*',lookback,'PDNS')
 
-def readrpzfile():
-    rpzfname = "/var/tmp/test500.rpz"
-    file2read=open(rpzfname,'r')
 
+def getfibrpz():
+    # parsse the config file to figure out the location of the RPZ files,  look for the newest and return a lsit with file path and file name
+    thisCfgDict = cfgparse_dm.opencfg(sitecfg,'SectionThree')
+    fibpath = thisCfgDict['fibhome']
+    newest = 19992359
+    thisrpz = ''
+    rpzlist = os.listdir(fibpath)
+    retlist = [fibpath]
+
+    for fname in rpzlist:
+        fname = fname.strip()
+        if fname.endswith(".rpz"):
+            fnamesplit = fname.split('-')
+            try:
+                fnamedate = int(fnamesplit[0])
+                if fnamedate > newest:
+                    newest = fnamedate
+                    thisrpz = fname
+            except:
+                print "rpz file not in expected format"
+                sys.exc_clear()
+            filepaths = []
+            # expecting yyyymmdd-*.rpz
+            if len(thisrpz) > 11 :
+                retlist.append(thisrpz)
+            else:
+                print "Sorry, unable to find a usable RPZ file, please debug"
+    return retlist
+
+
+
+def mkserial():
+    todate=date.today()
+    # need to deal with leading 0s to avoid zone transfer issues due to bad serial numbers
+    day = '%02d' % todate.day
+    mth = '%02d' % todate.month
+    datestr=str(todate.year) + mth + day
+    return datestr
+
+def writeerrorlog(estring):
+    evtdate = mkserial()
+    logline = evtdate + ":" + estring
+    logname = DNSMinerHome + "/" + "errors.log"
+    file2write=open(logname,'a')
+    file2write.write(logline + '\n')
+    file2write.close()
+    return
+
+def readrpzfile():
+    rpzlist = getfibrpz()
+    if len(rpzlist)== 2:
+        rpzfname = rpzlist[0] + "/" + rpzlist[1]
+        try:
+            file2read=open(rpzfname,'r')
+        except OSError as e:
+                print "Sorry, looks like there is a problem opening that file  : " + rpzfname +"\n"
+                writeerrorlog(e)
+                sys.exc_clear()
+                return
     return file2read
 
+def getreportparams():
+    thisCfgDict = cfgparse_dm.opencfg(sitecfg,'SectionThree')
+    rptbase = thisCfgDict['dmhome']
+    rptbase = rptbase + "/var/reports"
+    return rptbase
 
 
 
 def searchindexes(idxname,lb,dtype):
     #print "running search indexes"
-    daysback = "now-"+str(lb)+"d"
+    daysback = "now/d-"+str(lb)+"d"
     esclient = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
-    histoList = list()
-    dnsHisto = dict()
-    dateHisto = dict()
-    requests = 1
-
     # get the domain names from teh RPZ file
     thisrpzfh = readrpzfile()
     # Temp file just to test timing
-    fname = "/var/tmp/rpztest.txt"
-    file2write=open(fname,'w')
+    cbfname = getreportparams()
+    cbfname = cbfname + "/" + mkserial() + "-cb.txt"
+    try:
+        file2write=open(cbfname,'w')
+    except OSError as e:
+        print "Sorry, looks like there is a problem opening that file  : " + cbfname +"\n"
+        writeerrorlog(e)
+        sys.exc_clear()
+        return
 
     # Need to create unique queries to be passed to the bulk index search
     for tiname in thisrpzfh:
@@ -64,7 +127,7 @@ def searchindexes(idxname,lb,dtype):
                         }\
                 },\
                 \"filter\": {\
-                        \"range\": { \"@timestamp\" : { \"gt\" : \"" + daysback + "\", \"lt\" : \"now\"}}\
+                        \"range\": { \"@timestamp\" : { \"gt\" : \"" + daysback + "\", \"lt\" : \"now/d\"}}\
                         }\
                 }\
         }\
