@@ -73,10 +73,10 @@ def checkauthn(checkinput):
         sqlStr = "USE " + ivDBName
         cur.execute(sqlStr)
         sqlStr = "SELECT pwd from org_info WHERE org_contact = '" + contactEmail +"';"
-        #print sqlStr
+        print sqlStr
         cur.execute(sqlStr)
         storedpwd = cur.fetchone()[0]
-        #print storedpwd
+        print storedpwd
         # pass the stored hash to checkPW(st
         testPwd = checkPwd(storedpwd,clearpasswd)
         authzlist[0] = testPwd
