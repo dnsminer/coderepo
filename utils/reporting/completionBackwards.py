@@ -22,12 +22,12 @@ def runreport(dname,lookback):
     #for idxname in thisidxlist:
     #    print idxname
     # search the view
-    searchindexes(thisidxlist,'AA',"T",lookback,'PDNS',dname)
+    searchindexes(thisidxlist,lookback,'PDNS',dname)
 
 
 
-def searchindexes(ilist,wname,wval,lb,dtype,tiname):
-    print "running search indexes"
+def searchindexes(ilist,lb,dtype,tiname):
+    #print "running search indexes"
     daysback = "now/d-"+str(lb)+"d"
     esclient = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
     histoList = list()
@@ -39,8 +39,7 @@ def searchindexes(ilist,wname,wval,lb,dtype,tiname):
         \"query\": {\
             \"filtered\" : {\
                 \"query\": {\
-                    \"bool\": { \"must\": { \"match\" : { \"AA\":\"T\"}},\
-                                \"should\": [\
+                    \"bool\": \"should\": [\
                                     { \"wildcard\": { \"query\": \"*" + tiname + "*\" }},\
                                     { \"wildcard\": { \"answers\": \"*" + tiname + "*\" }}\
                                 ],\
@@ -60,7 +59,7 @@ def searchindexes(ilist,wname,wval,lb,dtype,tiname):
     file2write=open(fname,'w')
     for idx in ilist:
         try:
-            response = scan(client=esclient, query=qry, index=idx, doc_type=dtype, scroll="3m", timeout="3m")
+            response = scan(client=esclient, query=qry, index=idx, doc_type=dtype, scroll="6m", timeout="6m")
             for resp in response:
                 docdict=resp['fields']
                 tstamp = docdict['@timestamp'][0]
