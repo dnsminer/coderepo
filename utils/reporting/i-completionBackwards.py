@@ -24,24 +24,21 @@ sitecfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 
 # The module calling the clik variables needs to be there first it seems.
 def runreport(dname,lookback):
-    print "running the report for " + dname + ", completing a backwards look for the previous " + str(lookback) + " days. "
+    #print "running the report for " + dname + ", completing a backwards look for the previous " + str(lookback) + " days. "
     thisidxlist = getindexlist(lookback)
-    for idxname in thisidxlist:
-        print idxname
+    #for idxname in thisidxlist:
+    #print idxname
     # search the view
     searchindexes(thisidxlist,'AA',"T",lookback,'PDNS',dname)
 
 def searchindexes(ilist,wname,wval,lb,dtype,tiname):
-    print "running search indexes"
+    #print "running search indexes"
     daysback = "now-"+str(lb)+"d"
     esclient = Elasticsearch([{'host':'localhost','port':9200}], sniff_on_start=True, sniff_on_connection_fail=True)
     histoList = list()
     dnsHisto = dict()
     dateHisto = dict()
     requests = 1
-
-
-
 
     qry = "{\"fields\": [\"@timestamp\",\"soans\",\"query\",\"answers\",\"rcodename\",\"qtypename\"],\
         \"query\": {\
@@ -62,7 +59,7 @@ def searchindexes(ilist,wname,wval,lb,dtype,tiname):
         }\
 }'"
 
-    print qry
+    #print qry
     # Temp file just to test timing
     fname = "/var/tmp/rpztest.txt"
     file2write=open(fname,'w')
@@ -84,22 +81,10 @@ def searchindexes(ilist,wname,wval,lb,dtype,tiname):
                 # Temp file just to test timing
                 file2write.write(fileline +"\n")
 
-                #if dom_qtype not in dnsHisto:
-                #    dnsHisto[dom_qtype] = 1
-                #    # write tuple and time stamp to datehistory dictionary
-                #    dateHisto[dom_qtype_ts] = tsint
-                #else:
-                #    dnsHisto[dom_qtype] += 1
-                    # test if dom_type time stamp exits, if not add value,
-                    # select occurances and lowest value at print time.
-                #    if dom_qtype_ts not in dateHisto:
-                #        dateHisto[dom_qtype_ts] = tsint
-
         except NotFoundError:
-            print "Warning, no index found, report may not cover all days scoped"
+            #print "Warning, no index found, report may not cover all days scoped"
             sys.exc_clear()
     file2write.close()
-    #writereport(dnsHisto,wval,dateHisto)
     return
 
 
