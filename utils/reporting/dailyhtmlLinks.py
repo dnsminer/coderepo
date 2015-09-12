@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 __author__ = 'dleece'
 # Set the path to include the dns miner modules directory
-import sys, os, markup, string
+import sys, os, string
 #import MySQLdb as mdb
 #import string
 from dm_modules import cfgparse_dm, bulkdbselect1w_dm,bulkdbselectJoin1w_dm, dbselectSubqueryExclude_dm
@@ -19,29 +19,38 @@ def getreportparams():
     return rptbase
 
 def genvhtml(flist,vpath):
+    # writing the pages out by hand to take advanatge of teh custom style sheet
+    httphdr ="<!DOCTYPE html>\n<HTML><HEAD>\n<meta charset=\"utf-8\" />\n<title> Report Index</title>\n\
+        <meta name=\"keywords\" content=\"Reports DNS Analysis\" />\n\
+        <meta name=\"description\" content=\"DNS Miner automated reports\" />\n\
+        <link href=\"/reports/css/style.css\" rel=\"stylesheet\">\n</head>\n"
+    httpbdy ="<div class=\"wrapper>\n<header class=\"header\">\n\
+            <h1> Daily reports for View </h1>\n</header><!-- .header-->\n\
+            <main class=\"content\">\n\
+            <p> The CSV files below are generated daily. Save a local copy and filter as required using the spreadsheet of your choice.</p>\n\
+            <table><tr><th>Report Name</th><th>Download link</th></tr>\n"
 
-    title = "Daily reports for View"
-    header = "The CSV files below are generated daily, save a local copy and filter using the spreadsheet tool of your choice"
-    footer = "Don't forget to revist the Kibana discover application to do additional drill downs into anything from teh reports that piques your curiosity"
-    styles = ('/css/style.css')
-    blank = "  "
-    page = markup.page()
-    page.init (title=title,header=header, footer=footer, css=styles)
-    page.br()
-
+    # write the table rows
     for f in flist:
-        linkstr = "\"Report: " + f + "\", href='" + f + "' "
-        page.a(linkstr)
-    page.p(blank)
+        httpbdy = httpbdy + "<tr><td> Report: " + f + "</td><td><a href=\"" + f + "\"> download </a></td></tr>"
+    # close the table
+    httpbdy = httpbdy + "</table>\n"
+    httpbdy = httpbdy + "<p>&nbsp</p><p>Don't forget to revist the Kibana discover application to do additional drill downs\
+     into anything from the reports that piques your curiosity</p>"
+    httpbdy = httpbdy + "</main><!-- .content -->\n</div><!-- .wrapper -->"
+    httpftr = "<footer class=\"footer\">\n\
+    <p class=\"foot\"> \"before evil can be done, contact must take place , .... find that which you seek now\" </p>\n\
+    <p class=\"footlegal\"> Copyright 2015, DNS Miner. Apache 2.0 license </p>\n\
+    <img src=\"/reports/images/python.png\">\n</footer><!-- .footer -->\n</body></html>"
+
+    htmlpage= httphdr + httpbdy + httpftr
     # write teh file
-    viewhtml = vpath + "/" + "viewnew.html"
+    viewhtml = vpath + "/" + "view.html"
     print viewhtml
-    htmlstr = str(page)
     file2write=open(viewhtml,'w')
-    file2write.write(htmlstr)
+    file2write.write(htmlpage)
     file2write.close()
     return
-
 
 
 def getviewlist(dirpath):
@@ -57,17 +66,12 @@ def getviewlist(dirpath):
                 filepaths.append(fname)
             if len(filepaths) > 1:
                 genvhtml(filepaths,vdir)
-
-
     return
 
 
-
-def genhtmlwrapper():
+def genviewdailyhtml():
     reppath = getreportparams()
-    vlist = getviewlist(reppath)
-
-
+    getviewlist(reppath)
     return
 
 
@@ -75,4 +79,4 @@ def genhtmlwrapper():
 
 if __name__ == '__main__':
 
-    genhtmlwrapper()
+    genviewdailyhtml()
