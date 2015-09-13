@@ -21,11 +21,8 @@ FIBPKG1 = ""
 DOMAINLIST = list()
 
 os.chdir(LISTHOME)
-print LISTHOME
-print FILEGLOB
 for LFILE in glob.glob(FILEGLOB):
     currentfile= LISTHOME + "/" +LFILE
-    print currentfile
     # open each file and dump to a list
     try:
         fh = open(currentfile,'r')
@@ -33,8 +30,9 @@ for LFILE in glob.glob(FILEGLOB):
         print "List file not available"
         continue
     for DNAME in fh:
-        print DNAME
+        print len(DNAME)
         if not DNAME.strip():
+            print "emptyline?"
             DNAME = DNAME.strip()
             print DNAME + " precheck"
             if DNAME not in DOMAINLIST:
