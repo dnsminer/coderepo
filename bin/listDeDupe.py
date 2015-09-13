@@ -16,7 +16,7 @@ FIBGID = 'fetchItBoy'
 FILEPRE = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d')
 FILEGLOB = FILEPRE +'*' + '.txt'
 FILERPZ = FILEPRE + '-public-list.rpz'
-RPZPATH = FIBHOME + "/" + FILERPZ
+RPZPATH = LISTHOME + "/" + FILERPZ
 FIBPKG1 = ""
 DOMAINLIST = list()
 
