@@ -33,6 +33,7 @@ for LFILE in glob.glob(FILEGLOB):
         print "List file not available"
         continue
     for DNAME in fh:
+        print DNAME
         if not DNAME.strip():
             DNAME = DNAME.strip()
             print DNAME + " precheck"
