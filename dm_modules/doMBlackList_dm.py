@@ -19,7 +19,7 @@ def inputView(vname):
 
 def getViewData(oid):
     qrylist = ['view_name,def_sh_id','bind_views','org_id',oid]
-    resultrow = bulkdbselect1w_dm(qrylist)
+    resultrow = bulkdbselect1w_dm.dbRecordSelect(qrylist)
     print "rows and or colums returned"
     print len(resultrow)
     for rval in resultrow:
