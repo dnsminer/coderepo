@@ -24,6 +24,7 @@ os.chdir(LISTHOME)
 print LISTHOME
 print FILEGLOB
 for LFILE in glob.glob(FILEGLOB):
+    print LFILE
     # open each file and dump to a list
     try:
         fh = open(LFILE)
