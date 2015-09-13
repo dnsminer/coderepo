@@ -31,8 +31,7 @@ for LFILE in glob.glob(FILEGLOB):
         continue
     for DNAME in fh:
         print len(DNAME)
-        if not DNAME.strip():
-            print "emptyline?"
+        if len(DNAME) > 2:
             DNAME = DNAME.strip()
             print DNAME + " precheck"
             if DNAME not in DOMAINLIST:
