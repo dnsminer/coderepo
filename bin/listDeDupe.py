@@ -36,7 +36,7 @@ for LFILE in glob.glob(FILEGLOB):
                 print DNAME + " postcheck"
                 DOMAINLIST.append(DNAME)
 
-        fh.close()
+    fh.close()
     print "DOMAINLIST length: " + str(len(DOMAINLIST))
 # create the source data for the daily RPZ zone using de-duped list
 try:
