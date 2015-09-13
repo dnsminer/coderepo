@@ -25,6 +25,12 @@ def inputSanitizer(inputstring,type):
     if type == 'view':
         charwl = string.ascii_letters + string.digits + '-_'
         chkdstring = checkwhitelist(inputstring,charwl)
+    if type == 'ynprompt':
+        inputstring = str(inputstring).strip()
+        inputstring = inputstring.lower()
+        ynlist = ["yes","no"]
+        if inputstring == ynlist[0] or inputstring == ynlist[1]:
+            chkdstring = inputstring
     if type == 'ip':
         #print "testing IP" + inputstring
         testres = checkIPsock(inputstring)

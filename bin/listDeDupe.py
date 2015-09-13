@@ -6,8 +6,8 @@
 import sys, os, glob, time, datetime, shutil, pwd, grp
 #
 # Define the list home directory and the fetch it boy pickup location ( to do,  import from param files)
-LISTHOME = '/opt/dnsminertmp/fib/lists'
-FIBHOME = '/opt/dnsminertmp/fib/lists'
+LISTHOME = '/opt/dnsminer-alpha/fib/lists'
+FIBHOME = '/opt/dnsminer-alpha/fib'
 FIBUID = 'fetchItBoy'
 FIBGID = 'fetchItBoy'
 
@@ -16,7 +16,7 @@ FIBGID = 'fetchItBoy'
 FILEPRE = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d')
 FILEGLOB = FILEPRE +'*' + '.txt'
 FILERPZ = FILEPRE + '-public-list.rpz'
-RPZPATH = LISTHOME + "/" + FILERPZ
+RPZPATH = FIBHOME + "/" + FILERPZ
 FIBPKG1 = ""
 DOMAINLIST = list()
 

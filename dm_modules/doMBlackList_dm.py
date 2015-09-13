@@ -4,6 +4,7 @@ import dbchk_dm, inputSani_dm, iptoint_dm, genRandomString_dm, insertsinkholedat
 
 #from dm_modules import cfgparse_dm, doMView_dm, inputSani_dm, doMGenOrgView, doMBlackList_dm, bulkdbselect1w_dm
 
+
 def inputView(vname):
     #check for no spaces and make sure it's not already used.
     #viewName = inputSanitizer(vname,'view')
@@ -20,21 +21,47 @@ def inputView(vname):
 def getViewData(oid):
     qrylist = ['view_name,def_sh_id','bind_views','org_id',oid]
     resultrow = bulkdbselect1w_dm.dbRecordSelect(qrylist)
-    print "rows and or colums returned"
-    print len(resultrow)
+    # To deal with more than one record coming back we need to unpack the tuples and present to user
+    vnamelist=[]
+    retlist = []
     for rval in resultrow:
-        print rval
-
-    return
+        (vwstr, defshid) = rval
+        # dump into list iterate by twos and prompt
+        vnamelist.append(vwstr,defshid)
+    # convert to > 1 for proud
+    if len(resultrow) < 5:
+        print "There is more than one View assigned to this organization identifer\nselect the View that will be using this blacklist\n"
+        i=0
+        for i in range(len(vnamelist)):
+            print "View : " + vnamelist[i]
+            vprompt = True
+            while vprompt:
+                uvlinput = raw_input("Select (yes/no)?: ")
+                uvlinput = inputSani_dm.inputSanitizer(uvlinput,'ynprompt')
+                #print uvlinput
+                if uvlinput == 'invalid_format':
+                    continue
+                elif uvlinput == 'no':
+                    i = i + 2
+                else:
+                    retlist.append(vnamelist[i])
+                    retlist.append(vnamelist[i + 1])
+                    vprompt = False
+    return retlist
 
 
 def doBlackList(mwlist):
     #print "do menu view"
     viewdata = getViewData(mwlist[2])
+    for data in viewdata:
+        print data
+    blkDict = dict()
+    blkDict['view_name'] = viewdata[0]
+    blkDict['def_sh_id'] = viewdata[1]
     #for val in mwlist:
     #    print val
     # create a dictionary to collect all the results to generate SQL inserts or update
-    viewDict = dict()
+
     # insert org id into dictionary
     viewDict['org_id'] = mwlist[2]
     if mwlist[1] != 'update':

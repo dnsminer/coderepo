@@ -139,7 +139,7 @@ def genrpzheader(vname):
     rpzname = vname + ".rpz"
     line0 = "; zone file " + rpzname + "\n"
     line1 = "$TTL 10m; keep TTL short to get some time stamping which can be helpful scoping incidents\n"
-    line2 = "$ORIGIN " + rpzname + ".\n"
+    #line2 = "$ORIGIN " + rpzname + ".\n"
     line3 = "@\tSOA " + rpzns + ".\t" + zadmin + " (" + zserial + " 1h 15m 30d 2h)\n"
     line4 = "\tNS " + rpzns + ".\n"
     line5 = "; divert entire domains to an internal host running the user warning/monitoring app\n"
