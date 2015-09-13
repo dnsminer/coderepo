@@ -13,7 +13,7 @@ def dbRecordSelect(selectinput):
     adminPwd= thisCfgDict['databasepwd']
     ivDBName = thisCfgDict['databasename']
     #debug
-    print " sanitizing input data"
+    #print " sanitizing input data"
     selectvalue1 = str(selectinput[0])
     selectvalue1 = inputSani_dm.inputSanitizer(selectvalue1,'sqlval')
     selecttable = str(selectinput[1])
@@ -30,7 +30,7 @@ def dbRecordSelect(selectinput):
     whereval = inputSani_dm.inputSanitizer(whereval,'sqlval')
 
     #debug
-    print "retrieving data"
+    #print "retrieving data"
     resultlist = []
     try:
         dbcon = mdb.connect('localhost',adminVar,adminPwd,ivDBName)
