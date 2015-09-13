@@ -7,7 +7,7 @@ DNSMinerHome='/opt/dnsminer-alpha'
 
 from itertools import izip
 import bcrypt
-from dm_modules import cfgparse_dm, doMView_dm, inputSani_dm, doMGenOrgView
+from dm_modules import cfgparse_dm, doMView_dm, inputSani_dm, doMGenOrgView, doMBlackList_dm
 
 # noinspection PyUnresolvedReferences
 import MySQLdb as mdb
@@ -146,8 +146,12 @@ def doMenuSelect(menulist,orgid,alvl):
     elif menulist[0] == 'blacklist':
         if menulist[1] == 'update':
             print "\nsend blacklist,update to blacklist function for org " + str(orgid)
+            doMWList = [menulist[0],menulist[1],orgid]
+            doMBlackList_dm.getViewData(doMWList[2])
         else:
             print "\nsend blacklist,new to blacklist function for org " + str(orgid)
+            doMWList = [menulist[0],menulist[1],orgid]
+            doMBlackList_dm.getViewData(doMWList[2])
     elif menulist[0] == 'whitelist':
         if menulist[1] == 'update':
             print "\nsend whitelist update to whitelist function for org " + str(orgid)
