@@ -139,13 +139,13 @@ def genrpzheader(vname):
     rpzname = vname + ".rpz"
     line0 = "; zone file " + rpzname + "\n"
     line1 = "$TTL 5m; keep TTL short to get some time stamping which can be helpful scoping incidents\n"
-    #line2 = "$ORIGIN " + rpzname + ".\n"
+    line2 = "$ORIGIN " + rpzname + ".\n"
     # Seems to be an issue with notify slaves failing, reduced the refresh so we get 5 turns an hour, RFC says 20 mins lowest
     # but since there are only 3 devices polling it's still only 15 zontransders and hour.
-    line3 = "@\tSOA " + rpzns + ".\t" + zadmin + " (" + zserial + " 12m 5m 7d 15m)\n"
+    line3 = "\tSOA " + rpzns + ".\t" + zadmin + " (" + zserial + " 12m 5m 7d 15m)\n"
     line4 = "\tNS " + rpzns + ".\n"
     line5 = "; divert entire domains to an internal host running the user warning/monitoring app\n"
-    headerstring = line0 + line1 + line3 + line4 + line5
+    headerstring = line0 + line1 + line2 + line3 + line4 + line5
     return headerstring
 
 
@@ -163,9 +163,9 @@ def writerpzfile(oid,vname,shfqdn,hdr,tilist):
         for val in tilist:
             if val:
                 valstr = val.strip()
-                line = valstr +"."+ " CNAME " + shfqdn + ".\n"
+                line = valstr + " CNAME " + shfqdn + ".\n"
                 fh.write(line)
-                line = "*." + val +"."+ " CNAME " + shfqdn + ".\n"
+                line = "*." + val + " CNAME " + shfqdn + ".\n"
                 fh.write(line)
     except Exception as e:
         print "Unable to create RPZ file in client directory or problem with the file content, please debug"
