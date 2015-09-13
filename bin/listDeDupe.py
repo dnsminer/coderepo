@@ -24,10 +24,11 @@ os.chdir(LISTHOME)
 print LISTHOME
 print FILEGLOB
 for LFILE in glob.glob(FILEGLOB):
-    print LFILE
+    currentfile= LISTHOME + "/" +LFILE
+    print currentfile
     # open each file and dump to a list
     try:
-        fh = open(LFILE)
+        fh = open(currentfile)
         for DNAME in fh:
             if not DNAME.strip():
                 DNAME = DNAME.strip()
