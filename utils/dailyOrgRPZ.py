@@ -162,9 +162,9 @@ def writerpzfile(oid,vname,shfqdn,hdr,tilist):
         for val in tilist:
             if val:
                 valstr = val.strip()
-                line = valstr + " CNAME " + shfqdn + ".\n"
+                line = valstr +"."+ " CNAME " + shfqdn + ".\n"
                 fh.write(line)
-                line = "*." + val + " CNAME " + shfqdn + ".\n"
+                line = "*." + val +"."+ " CNAME " + shfqdn + ".\n"
                 fh.write(line)
     except Exception as e:
         print "Unable to create RPZ file in client directory or problem with the file content, please debug"
