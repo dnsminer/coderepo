@@ -37,7 +37,7 @@ def dbRecordSelect(selectinput):
     resultlist = []
     try:
         dbcon = mdb.connect('localhost',adminVar,adminPwd,ivDBName)
-        #print "connected"
+        print "connected"
     except mdb.Error, e:
         print e.args[0]
         sys.exit(1)
