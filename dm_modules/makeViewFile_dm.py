@@ -43,6 +43,7 @@ def readDict(thisorgdict):
     vfileline="\t// Enable RPZ"
     thislist.append(vfileline)
     vfileline="\tresponse-policy { zone \"" + thisorgdict['rpz_zone'] + "\"; };"
+    thislist.append(vfileline)
     vfileline="\t//Add RPZ definition"
     thislist.append(vfileline)
     vfileline="\tzone \"" + thisorgdict['rpz_zone'] + "\" {"
