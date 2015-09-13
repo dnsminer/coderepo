@@ -30,16 +30,14 @@ for LFILE in glob.glob(FILEGLOB):
         print "List file not available"
         continue
     for DNAME in fh:
-        print len(DNAME)
-        if len(DNAME) > 2:
+        # ignore blank lines and lines with just a invalid domain names  like . or a.b
+        if len(DNAME) > 3:
             DNAME = DNAME.strip()
-            print DNAME + " precheck"
+
             if DNAME not in DOMAINLIST:
                 print DNAME + " postcheck"
-                DOMAINLIST.append(DNAME)
-
-    fh.close()
-    print "DOMAINLIST length: " + str(len(DOMAINLIST))
+        fh.close()
+        print "DOMAINLIST length: " + str(len(DOMAINLIST))
 # create the source data for the daily RPZ zone using de-duped list
 try:
     rpzfh = open(RPZPATH,'w')
