@@ -37,7 +37,7 @@ def dbRecordSelect(selectinput):
     resultlist = []
     try:
         dbcon = mdb.connect('localhost',adminVar,adminPwd,ivDBName)
-        print "connected"
+        #print "connected"
     except mdb.Error, e:
         print e.args[0]
         sys.exit(1)
@@ -48,7 +48,7 @@ def dbRecordSelect(selectinput):
         cur.execute(sqlStr)
         sqlStr = "SELECT " + selectvalue1 + " from " + selecttable + " where " + firsttable + " NOT in ( SELECT "\
                  + subval + " FROM " + subtable + " WHERE " + wherecol + " = '" + whereval +"');"
-        print sqlStr
+        #print sqlStr
         cur.execute(sqlStr)
         rows = cur.fetchall()
         # Make use we got at least one record
