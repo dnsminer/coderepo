@@ -170,7 +170,7 @@ def writerpzfile(oid,vname,shfqdn,hdr,tilist):
         print type(e)
         print str(e)
         return
-
+    print "created RPZ file " + fname
     fh.close()
     try:
         os.chown(fname,uid,gid)
