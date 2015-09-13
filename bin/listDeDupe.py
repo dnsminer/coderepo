@@ -33,9 +33,8 @@ for LFILE in glob.glob(FILEGLOB):
         # ignore blank lines and lines with just a invalid domain names  like . or a.b
         if len(DNAME) > 3:
             DNAME = DNAME.strip()
-
             if DNAME not in DOMAINLIST:
-                print DNAME + " postcheck"
+                DOMAINLIST.append(DNAME)
     fh.close()
     print "DOMAINLIST length: " + str(len(DOMAINLIST))
 # create the source data for the daily RPZ zone using de-duped list
