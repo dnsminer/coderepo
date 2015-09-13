@@ -143,7 +143,7 @@ def genrpzheader(vname):
     line3 = "@\tSOA " + rpzns + ".\t" + zadmin + " (" + zserial + " 1h 15m 30d 2h)\n"
     line4 = "\tNS " + rpzns + ".\n"
     line5 = "; divert entire domains to an internal host running the user warning/monitoring app\n"
-    headerstring = line0 + line1 + line2 + line3 + line4 + line5
+    headerstring = line0 + line1 + line3 + line4 + line5
     return headerstring
 
 
