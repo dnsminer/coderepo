@@ -28,17 +28,16 @@ for LFILE in glob.glob(FILEGLOB):
     # open each file and dump to a list
     try:
         fh = open(LFILE)
+        for DNAME in fh:
+            if not DNAME.strip():
+                DNAME = DNAME.strip()
+                print DNAME + " precheck"
+                if DNAME not in DOMAINLIST:
+                    print DNAME + " postcheck"
+                    DOMAINLIST.append(DNAME)
     except:
         print "List file not available"
         continue
-    for DNAME in fh:
-        if not DNAME.strip():
-            DNAME = DNAME.strip()
-            print DNAME + " precheck"
-            if DNAME not in DOMAINLIST:
-                print DNAME + " postcheck"
-                DOMAINLIST.append(DNAME)
-
     fh.close()
     print "DOMAINLIST length: " + str(len(DOMAINLIST))
 # create the source data for the daily RPZ zone using de-duped list
