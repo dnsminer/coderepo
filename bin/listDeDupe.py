@@ -36,8 +36,8 @@ for LFILE in glob.glob(FILEGLOB):
 
             if DNAME not in DOMAINLIST:
                 print DNAME + " postcheck"
-        fh.close()
-        print "DOMAINLIST length: " + str(len(DOMAINLIST))
+    fh.close()
+    print "DOMAINLIST length: " + str(len(DOMAINLIST))
 # create the source data for the daily RPZ zone using de-duped list
 try:
     rpzfh = open(RPZPATH,'w')
