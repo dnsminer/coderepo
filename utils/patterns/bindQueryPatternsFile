@@ -6,3 +6,5 @@ TTLZ (?:\d+\.\d+|\d\d\d|-)
 ANSWERS (?:\S+|.*?)
 REMCODES ((?:(F|T)\s*(F|T)\s*)|(?:(F|T)\s*(F|T)\s*(F|T)\s*))
 AATYPE (?:F|T)
+RPZTrig \b(?:QNAME|NSDNAME|IP|NSIP)\b
+RPZAct \b%{SPACE}Local-Data%{SPACE}rewrite%{SPACE}\b
