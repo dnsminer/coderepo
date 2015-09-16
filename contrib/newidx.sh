@@ -1,5 +1,5 @@
 #!/bin/bash -x
-curl -XPUT http://localhost:9200/dmlogstash2-2015.09.16 -d '
+curl -XPUT http://localhost:9200/dmlogstash3-2015.09.16 -d '
 {
     "mappings" : {
       "_default_" : {
@@ -205,9 +205,13 @@ curl -XPUT http://localhost:9200/dmlogstash2-2015.09.16 -d '
               }
             }
           },
-          "RQEventDate" : {
-            "type" : "string",
-            "index" : "not_analyzed"
+          "RPZdate" : {
+            "type" : "date",
+            "format" : "dd-MMM-yyyy",
+            "index" : "not_analyzed",
+            "norms" : {
+              "enabled" : false
+            }
           },
           "RQEventFacility" : {
             "type" : "string",
