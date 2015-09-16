@@ -7,4 +7,4 @@ FEHOST="fe2.dnsminer.net"
 TODAYRPZ=$(/bin/date +%Y%m%d)-public-list.rpz
 echo $TODAYRPZ
 
-/usr/bin/scp $(TODAYRPZ) $(FEUSER)@$(FEHOST):
+/usr/bin/scp ${TODAYRPZ} ${FEUSER}@${FEHOST}:
