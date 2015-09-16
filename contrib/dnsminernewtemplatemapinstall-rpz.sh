@@ -211,8 +211,12 @@ curl -XPUT http://localhost:9200/_template/dnsminer_index -d '
             }
           },
           "RQEventDate" : {
-            "type" : "string",
-            "index" : "not_analyzed"
+            "type" : "date",
+            "format" : "dd-MMM-yyyy",
+            "index" : "not_analyzed",
+            "norms" : {
+              "enabled" : false
+            }
           },
           "RQEventFacility" : {
             "type" : "string",
