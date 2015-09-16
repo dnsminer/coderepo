@@ -8,3 +8,5 @@ TODAYRPZ=$(/bin/date +%Y%m%d)-public-list.rpz
 echo $TODAYRPZ
 
 /usr/bin/scp ${TODAYRPZ} ${FEUSER}@${FEHOST}:
+
+echo `date`": RPZ transer complete"
