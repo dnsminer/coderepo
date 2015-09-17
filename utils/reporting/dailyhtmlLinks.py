@@ -24,7 +24,7 @@ def genvhtml(flist,vpath):
     httphdr ="<!DOCTYPE html>\n<HTML><HEAD>\n<meta charset=\"utf-8\" />\n<title> Report Index</title>\n\
         <meta name=\"keywords\" content=\"Reports DNS Analysis\" />\n\
         <meta name=\"description\" content=\"DNS Miner automated reports\" />\n\
-        <link href=\"/reports/css/style.css\" rel=\"stylesheet\">\n</head>\n"
+        <link href=\"/reports/css/dm-style.css\" rel=\"stylesheet\">\n</head>\n"
     httpbdy ="<div class=\"wrapper\">\n<header class=\"header\">\n\
             </header><!-- .header-->\n\
             <main class=\"content\">\n\
