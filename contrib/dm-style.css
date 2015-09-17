@@ -52,13 +52,13 @@ top: 5px;
 -----------------------------------------------------------------------------*/
 .content {
         padding: 0 0 100px;
-        color : #132062;
+        color : #042052;
 
 
 
 }
 .content table{
-width: 40%;
+width: 30%;
 margin: 30px 15px;
 }
 .content table tr{
@@ -85,7 +85,7 @@ background-color: #F5F5F5;
         min-width: 800px;
         height: 100px;
         background: #D4AE29;
-        color : #132062;
+        color : #042052;
         position: relative;
 
 }
