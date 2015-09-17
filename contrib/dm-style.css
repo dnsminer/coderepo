@@ -58,7 +58,7 @@ top: 5px;
 
 }
 .content table{
-width: 50%;
+width: 75%;
 margin: 30px 15px;
 }
 .content table tr{
@@ -72,7 +72,7 @@ text-decoration: none;
 .content table th{
 font-size: 20px;
 border-bottom: 1px solid #EAEAEA;
-background-color: #02699F;
+background-color: #82AEF3;
 }
 
 
