@@ -26,9 +26,10 @@ def genvhtml(flist,vpath):
         <meta name=\"description\" content=\"DNS Miner automated reports\" />\n\
         <link href=\"/reports/css/dm-style.css\" rel=\"stylesheet\">\n</head>\n"
     httpbdy ="<div class=\"wrapper\">\n<header class=\"header\">\n\
+            <img src=\"/reports/images/dns-banner.png\">\n\
             </header><!-- .header-->\n\
             <main class=\"content\">\n\
-            <h1> Daily reports for View </h1>\n<p> The CSV files below are generated daily. Save a local copy and filter as required using the spreadsheet of your choice.</p>\n\
+            <h2> Daily reports for View </h2>\n<p> The CSV files below are generated daily. Save a local copy and filter as required using the spreadsheet of your choice.</p>\n\
             <table><tr><th>Report Name</th><th>Download link</th></tr>\n"
 
     # write the table rows
@@ -78,6 +79,7 @@ def gendailyviewindex(vdl):
         <meta name=\"description\" content=\"DNS Miner automated reports\" />\n\
         <link href=\"/reports/css/dm-style.css\" rel=\"stylesheet\">\n</head>\n"
     httpbdy ="<div class=\"wrapper\">\n<header class=\"header\">\n\
+            <img src=\"/reports/images/dns-banner.png\">\n\
             </header><!-- .header-->\n\
             <main class=\"content\">\n\
             <h2> Daily reports segmented by View </h2>\n\

@@ -42,6 +42,11 @@ h2.hdr {  text-align: center; font-size 20; font-weight: normal; font-style: ita
         color : #033469;
 }
 
+.header img{
+position: absolute;
+left: 15px;
+top: 15px;
+}
 
 /* Middle
 -----------------------------------------------------------------------------*/
