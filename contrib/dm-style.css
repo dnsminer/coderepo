@@ -1,0 +1,93 @@
+* {
+        margin: 0;
+        padding: 2px;
+}
+html {
+        height: 100%;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+        display: block;
+}
+body {
+        font-family: " Arial, sans-serif;
+        font-size: 16em;
+        color : #132062;
+        height: 100%;
+}
+.wrapper {
+        width: 100%;
+        min-width: 800px;
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+}
+
+/* Text styles
+-----------------------------------------------------------------------------*/
+p.foot { text-align: justify; font-size 18em;  }
+p.footlegal { text-align: center; font-size 12em; }
+ul.cir { list-style-type: circle; color: #896112; }
+h1.bdy {  text-align: justify; font-size 24em; font-weight: bold; }
+h2.bdy {  text-align: justify; font-size 20; font-weight: normal; }
+h1.hdr {  text-align: center; font-size 28em; font-weight: bold; }
+h2.hdr {  text-align: center; font-size 20; font-weight: normal; font-style: italic }
+
+
+/* Header
+-----------------------------------------------------------------------------*/
+.header {
+        height: 150px;
+        background: #3D4671;
+        font: 16px/24px Arial, sans-serif;
+        color : #033469;
+}
+
+
+/* Middle
+-----------------------------------------------------------------------------*/
+.content {
+        padding: 0 0 100px;
+        color : #132062;
+
+
+
+}
+.content table{
+width: 40%;
+margin: 30px 15px;
+}
+.content table tr{
+height: 25px;
+padding: 15px;
+}
+.content table tr a{
+font-size: 18px;
+text-decoration: none;
+}
+.content table th{
+font-size: 20px;
+border-bottom: 1px solid #EAEAEA;
+background-color: #F5F5F5;
+}
+
+
+
+
+/* Footer
+-----------------------------------------------------------------------------*/
+.footer {
+        margin: -100px auto 0;
+        min-width: 800px;
+        height: 100px;
+        background: #D4AE29;
+        color : #132062;
+        position: relative;
+
+}
+
+
+.footer img{
+position: absolute;
+right: 15px;
+top: 15px;
+}

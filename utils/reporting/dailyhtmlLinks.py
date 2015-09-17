@@ -76,11 +76,10 @@ def gendailyviewindex(vdl):
     httphdr ="<!DOCTYPE html>\n<HTML><HEAD>\n<meta charset=\"utf-8\" />\n<title> Report Index</title>\n\
         <meta name=\"keywords\" content=\"Reports DNS Analysis\" />\n\
         <meta name=\"description\" content=\"DNS Miner automated reports\" />\n\
-        <link href=\"/reports/css/style.css\" rel=\"stylesheet\">\n</head>\n"
+        <link href=\"/reports/css/dm-style.css\" rel=\"stylesheet\">\n</head>\n"
     httpbdy ="<div class=\"wrapper\">\n<header class=\"header\">\n\
             </header><!-- .header-->\n\
             <main class=\"content\">\n\
-            <h1> DNS Miner Report Home </h1>\n\
             <h2> Daily reports segmented by View </h2>\n\
             <p> The Views listed in the table below have at least one report for the past 10 days. Click the View name to reach the reports.</p>\n\
             <table><tr><th>View Based Reports</th></tr>\n"
