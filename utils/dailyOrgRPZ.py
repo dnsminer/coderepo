@@ -142,7 +142,7 @@ def genrpzheader(vname):
     line2 = "$ORIGIN " + rpzname + ".\n"
     # Seems to be an issue with notify slaves failing, reduced the refresh so we get 5 turns an hour, RFC says 20 mins lowest
     # but since there are only 3 devices polling it's still only 15 zontransders and hour.
-    line3 = "@\tSOA " + rpzns + ".\t" + zadmin + " (" + zserial + " 12m 5m 7d 15m)\n"
+    line3 = "@\tSOA " + rpzns + ".\t" + zadmin + " (" + zserial + " 12m 5m 7d 2h)\n"
     line4 = "\tNS " + rpzns + ".\n"
     line5 = "; divert entire domains to an internal host running the user warning/monitoring app\n"
     headerstring = line0 + line1 + line2 + line3 + line4 + line5
