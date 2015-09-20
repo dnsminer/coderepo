@@ -159,7 +159,7 @@ def searchindexes(idxname,lb,dtype):
                     qtype = docdict['qtypename'][0]
                     rcode = docdict['rcodename'][0]
                     #tsint = getepoch(str(tstamp))
-                    fileline = "TS: " + str(tstamp) + " SOANS: " + str(authns) + "DDQRY: " + dedupeqry + " QRY: " + resqry + " ANS: " + ans \
+                    fileline = "TS: " + str(tstamp) + " SOANS: " + str(authns) + " DDQRY: " + dedupeqry + " QRY: " + resqry + " ANS: " + ans \
                     + " QT: " + qtype + " Resp: " + rcode
                     # Temp file just to test timing
                     file2write.write(fileline +"\n")

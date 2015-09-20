@@ -29,7 +29,7 @@ def readDict(thisorgdict):
     thislist.append(vfileline)
     vfileline="\t\t\t864000\t; expire 10 days"
     thislist.append(vfileline)
-    vfileline="\t\t\t86400 )\t; min ttl 1 day"
+    vfileline="\t\t\t900 )\t; negative cache ttl"
     thislist.append(vfileline)
     vfileline="; resource records"
     thislist.append(vfileline)
