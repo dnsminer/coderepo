@@ -16,7 +16,9 @@ DNSMinerHome='/opt/dnsminer-alpha'
 dbcfg= DNSMinerHome + "/etc/siteSpecific.cfg"
 # DNS server path to be tested; provide at least one DNS server that the tester can reach
 dnstesters=['192.168.59.29','192.168.59.28']
-
+# Define the random window
+randlow = 25
+randhigh = 624
 
 def opendomfile(filename):
     try:
@@ -63,7 +65,6 @@ def genRPZtraffic(dlist,wlist):
     thisfh = openlogfile(plog)
     RDTYPE=['A','MX','NS','A','A','AAAA','TXT','MX','A','A','A','AAAA','A','A']
     while True:
-        print "loop top"
         thisint = (randint(0,499))
         ldns=getldns(thisint)
         thishost = genrandhost(wlist)
@@ -89,8 +90,7 @@ def genRPZtraffic(dlist,wlist):
         except DNSException as ex:
             thisfh.write(logts() + ": Test_exception: " + ex + "\n")
             print ex
-        print "loop bottom"
-        sleep(randint(5,49))
+        sleep(randint(randlow,randhigh))
     thisfh.close()
     return
 
@@ -114,6 +114,7 @@ def confMinInput(miList):
     if not testFilePath:
         print "\n......... attention............"
         print "\nhmm, might want to double check, path to domain list "
+    testFilePath = isPathValid(miList[1])
     if not testFilePath:
         print "\n......... attention............"
         print "\nhmm, might want to double check, path to word list "
