@@ -61,7 +61,7 @@ def genRPZtraffic(dlist,wlist):
     thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionThree')
     usertemp = thisCfgDict['dmtemp']
     plog = usertemp + "/proveitRPZ.log"
-    thisfh = openlogfile(plog,"a")
+    thisfh = openlogfile(plog)
     RDTYPE=['A','MX','NS','A','A','AAAA','TXT','MX','A','A','A','AAAA','A','A']
     while True:
         thisint = (randint(0,499))
