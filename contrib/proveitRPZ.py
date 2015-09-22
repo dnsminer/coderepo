@@ -30,12 +30,11 @@ def opendomfile(filename):
     fh.close()
     return linelist
 
-def genrandhost():
-    thisCfgDict = cfgparse_dm.opencfg(dbcfg,'SectionThree')
-    dmhome = thisCfgDict['dmhome']
-    usertemp = thisCfgDict['dmtemp']
-    wfile = dmhome + "/contrib/top4000words.txt"
-    WORDS = open(wfile).read().splitlines()
+def genrandhost(wfile):
+    try:
+        WORDS = open(wfile,'r').read().splitlines()
+    except Exception as e:
+        print "Unable to read the words list or problem with the file content, please debug"
     word = random.choice(WORDS)
     word = word + random.choice(WORDS)
     return word
@@ -44,7 +43,7 @@ def openlogfile(fname):
     try:
         fh = open(fname,'a')
     except Exception as e:
-        print "Unable to create view file in temp directory or problem with the file content, please debug"
+        print "Unable to create program logfile file in temp directory or problem with the file content, please debug"
         print type(e)
         print str(e)
     return fh
