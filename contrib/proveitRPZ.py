@@ -91,8 +91,8 @@ def genRPZtraffic(dlist,wlist):
             print ex
         print "loop bottom"
         sleep(randint(5,49))
-        thisfh.close()
-        return
+    thisfh.close()
+    return
 
 def logts():
     tsnow=time.time()
