@@ -82,7 +82,8 @@ def genRPZtraffic(dlist,wlist):
             if len(resp.answer) == 0:
                 thisfh.write(logts() + ": Test_result: no response " + fqdn + "\n")
             else:
-                thisfh.write(logts() + ": Test_result: " + resp.answer + "\n")
+                respstr = str(resp.answer)
+                thisfh.write(logts() + ": Test_result: " + respstr + "\n")
             print resp.answer
         except DNSException as ex:
             thisfh.write(logts() + ": Test_exception: " + ex + "\n")
