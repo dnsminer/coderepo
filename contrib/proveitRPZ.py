@@ -63,6 +63,7 @@ def genRPZtraffic(dlist,wlist):
     thisfh = openlogfile(plog)
     RDTYPE=['A','MX','NS','A','A','AAAA','TXT','MX','A','A','A','AAAA','A','A']
     while True:
+        print "loop top"
         thisint = (randint(0,499))
         ldns=getldns(thisint)
         thishost = genrandhost(wlist)
@@ -88,7 +89,8 @@ def genRPZtraffic(dlist,wlist):
         except DNSException as ex:
             thisfh.write(logts() + ": Test_exception: " + ex + "\n")
             print ex
-        sleep(randint(45,549))
+        print "loop bottom"
+        sleep(randint(5,49))
         thisfh.close()
         return
 
